@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>منصة مستر عبد الرحمن بايومي - تعلم مع المرح! 🎓</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;600;800&family=Dancing+Script:wght@600;700&family=Playfair+Display:wght@700;900&family=Anton&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Poppins:wght@400;600;800&family=Dancing+Script:wght@600;700&family=Playfair+Display:wght@700;900&family=Anton&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -918,8 +918,109 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
 .va-lesson-head .lv-chev{color:var(--purple);transition:.25s;}
 .va-panel{display:flex;flex-direction:column;gap:10px;padding:10px 12px 12px;}
 .va-vlist{display:flex;flex-direction:column;gap:8px;}
+
+/* ===== Hero (نفس شكل ميز زينب) ===== */
+.hero{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:34px 16px 0;background:linear-gradient(180deg,#fff 0,#fff 90%,transparent)}
+html.dark-theme .hero{background:none}
+.hero-eyebrow{display:inline-flex;margin:0 0 10px;padding:6px 18px;border:1px solid color-mix(in srgb,var(--primary) 25%,transparent);border-radius:999px;background:color-mix(in srgb,var(--primary) 9%,transparent);font:700 .78rem 'Cairo',sans-serif;color:var(--primary);animation:zFade .7s ease both}
+.hero-photo-wrap{width:min(100%,520px);height:clamp(300px,74vw,500px);display:flex;align-items:flex-end;justify-content:center;position:relative;z-index:2}
+.hero-photo{width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;font-size:5rem;color:color-mix(in srgb,var(--primary) 30%,transparent)}
+.hero-photo>i{align-self:center}
+.hero-photo img{height:100%;width:auto;max-width:100%;object-fit:contain;object-position:bottom;mix-blend-mode:multiply;-webkit-mask-image:linear-gradient(180deg,#000 82%,transparent 99%);mask-image:linear-gradient(180deg,#000 82%,transparent 99%);animation:zReveal 1.2s cubic-bezier(.2,.8,.2,1) .15s both}
+html.dark-theme .hero-photo img{mix-blend-mode:normal}
+.hero-card{position:relative;z-index:4;width:min(100%,760px);margin:-60px auto 0;padding:0 8px 26px;text-align:center}
+.hero-title{margin:0;padding:.1em 0;font:700 clamp(2rem,8.6vw,3.8rem)/1.35 'Dancing Script','Aref Ruqaa','Cairo',serif;background:linear-gradient(100deg,var(--text-dark) 0%,var(--primary) 45%,var(--secondary) 60%,var(--text-dark) 100%);background-size:230% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:zName 1.1s cubic-bezier(.2,.8,.2,1) .5s both,zSheen 2.6s ease-in-out 1.3s both}
+.hero-divider{width:min(240px,55%);height:1px;margin:12px auto 16px;background:linear-gradient(90deg,transparent,var(--primary),transparent);animation:zLine 1s ease 1s both}
+.hero .social-links{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:14px}
+.hero .social-btn{width:50px;height:50px;border-radius:16px;animation:zPop .6s cubic-bezier(.3,1.5,.5,1) 1.2s both}
+@keyframes zFade{from{opacity:0}to{opacity:1}}
+@keyframes zReveal{from{opacity:0;clip-path:inset(100% 0 0 0)}to{opacity:1;clip-path:inset(0)}}
+@keyframes zName{from{opacity:0;filter:blur(12px);translate:0 14px}to{opacity:1;filter:none;translate:0 0}}
+@keyframes zSheen{from{background-position:100% 0}to{background-position:0 0}}
+@keyframes zLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes zPop{from{opacity:0;scale:.6}to{opacity:1;scale:1}}
+/* ===== الكينج ===== */
+.king-ribbon{display:none;max-width:850px;margin:10px auto 0;padding:0 15px}
+body.is-king .king-ribbon{display:block}
+.king-ribbon-in{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border-radius:18px;font-weight:900;font-size:1rem;color:#2a1c05;
+  background:linear-gradient(135deg,#fff1b8,#e2b64a 55%,#c9962b);box-shadow:0 8px 24px rgba(201,150,43,.35),inset 0 1px 0 rgba(255,255,255,.6);animation:kingGlow 2.8s ease-in-out infinite}
+.king-ribbon-in span.k{font-size:1.4rem}
+@keyframes kingGlow{0%,100%{box-shadow:0 8px 24px rgba(201,150,43,.35),inset 0 1px 0 rgba(255,255,255,.6)}50%{box-shadow:0 10px 32px rgba(233,196,106,.65),inset 0 1px 0 rgba(255,255,255,.6)}}
+/* ===== لوحة الشرف (نسخة فخمة: بوديوم أفضل 3 + عرض أفضل 10) ===== */
+.honor-wrap{max-width:850px;margin:6px auto 22px;padding:0 15px}
+.honor-card{position:relative;overflow:hidden;border-radius:28px;padding:20px 14px 14px;color:#f6ecd2;
+  background:radial-gradient(120% 90% at 50% 0%,#2f2748 0%,#1a1524 62%,#120e19 100%);
+  border:1px solid rgba(233,196,106,.5);
+  box-shadow:0 16px 40px rgba(20,12,30,.38),inset 0 1px 0 rgba(255,255,255,.09)}
+.honor-card::before{content:"";position:absolute;top:0;right:12%;left:12%;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,transparent,#f3d98a,transparent)}
+.honor-card::after{content:"";position:absolute;top:-70px;left:50%;width:240px;height:140px;transform:translateX(-50%);
+  background:radial-gradient(closest-side,rgba(233,196,106,.28),transparent);pointer-events:none}
+.honor-h{position:relative;z-index:1;text-align:center;font-weight:900;font-size:1.25rem;letter-spacing:.3px;
+  background:linear-gradient(180deg,#fff3c4,#e2b64a);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.honor-sub{position:relative;z-index:1;text-align:center;font-size:.74rem;font-weight:700;color:rgba(246,236,210,.62);margin:3px 0 0}
+.honor-podium{position:relative;z-index:1;display:flex;justify-content:center;align-items:flex-end;gap:8px;margin-top:18px}
+.hp{flex:1;min-width:0;max-width:210px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:5px;
+  padding:14px 6px 12px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09)}
+.hp.p1{flex:1.18;padding-top:18px;padding-bottom:16px;background:linear-gradient(180deg,rgba(233,196,106,.24),rgba(233,196,106,.05));
+  border-color:rgba(233,196,106,.6);box-shadow:0 8px 24px rgba(233,196,106,.16)}
+.hp-crown{font-size:1.25rem;line-height:1;height:1.25rem;filter:drop-shadow(0 2px 6px rgba(233,196,106,.6))}
+.hp-av{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.25rem;color:#1b1424;
+  background:linear-gradient(135deg,#d9dee5,#8f9aa8);box-shadow:0 0 0 3px rgba(190,200,212,.35)}
+.hp.p1 .hp-av{width:62px;height:62px;font-size:1.55rem;background:linear-gradient(135deg,#fbe9a0,#c9962b);box-shadow:0 0 0 4px rgba(233,196,106,.4),0 0 22px rgba(233,196,106,.4)}
+.hp.p3 .hp-av{background:linear-gradient(135deg,#e3a971,#a8642a);box-shadow:0 0 0 3px rgba(205,127,50,.38)}
+.hp-rank{font-size:.68rem;font-weight:900;letter-spacing:.5px;color:rgba(246,236,210,.7)}
+.hp.p1 .hp-rank{color:#f3d98a}
+.hp-name{width:100%;font-weight:800;font-size:.78rem;line-height:1.45;color:#fff;min-height:2.9em;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+.hp.p1 .hp-name{font-size:.84rem}
+.hp-pts{font-weight:900;font-size:1.05rem;color:#f3d98a;line-height:1}
+.hp-pts small{font-size:.58rem;font-weight:700;color:rgba(246,236,210,.55);margin-right:3px}
+.hp.honor-me,.honor-row.honor-me{outline:2px solid #f3d98a;outline-offset:2px}
+.honor-toggle{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;
+  padding:11px 14px;border-radius:999px;cursor:pointer;font-family:inherit;font-weight:800;font-size:.86rem;color:#f3d98a;
+  background:rgba(233,196,106,.1);border:1px solid rgba(233,196,106,.45);transition:.25s}
+.honor-toggle:hover{background:rgba(233,196,106,.18)}
+.honor-toggle i{transition:transform .3s;font-size:.75rem}
+.honor-toggle.open i{transform:rotate(180deg)}
+.honor-more{position:relative;z-index:1;display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.honor-more.open{grid-template-rows:1fr}
+.honor-more>div{overflow:hidden;min-height:0}
+.honor-more-in{padding-top:12px}
+.honor-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.07);margin-bottom:8px}
+.honor-medal{width:34px;height:34px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.95rem;
+  color:#f3d98a;background:rgba(233,196,106,.12);border:1px solid rgba(233,196,106,.35)}
+.honor-name{flex:1;min-width:0;font-weight:800;line-height:1.5;font-size:.9rem;color:#fff}
+.honor-meta{font-size:.66rem;color:rgba(246,236,210,.58);font-weight:700}
+.honor-pts{font-weight:900;color:#f3d98a;font-size:1rem;white-space:nowrap;text-align:center}
+.honor-pts small{display:block;font-size:.58rem;color:rgba(246,236,210,.55)}
+.honor-empty,.honor-key{position:relative;z-index:1;text-align:center;color:rgba(246,236,210,.62);font-size:.78rem;font-weight:700;padding:10px 0 4px}
+@media (max-width:420px){.hp-av{width:44px;height:44px;font-size:1.1rem}.hp.p1 .hp-av{width:54px;height:54px}.hp-name{font-size:.7rem}.hp.p1 .hp-name{font-size:.76rem}}
+/* ===== تقرير الطلاب ===== */
+.stu-sum{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 12px}
+.stu-sum div{background:color-mix(in srgb,var(--primary) 8%,transparent);border-radius:14px;padding:10px 2px;text-align:center;font-size:.68rem;font-weight:800;color:var(--text-light)}
+.stu-sum b{display:block;font-size:1.3rem;color:var(--text-dark)}
+.stu-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap}
+.stu-phone{direction:ltr;display:inline-block;color:var(--text-light);font-weight:700;font-size:.8rem}
+.stu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px 10px;font-size:.76rem;color:var(--text-light);font-weight:700;margin-top:8px}
+.stu-btns{display:flex;gap:6px;margin-top:10px}
+.stu-btns button{flex:1;border:none;border-radius:10px;padding:9px 4px;font:800 .76rem 'Cairo',sans-serif;cursor:pointer;color:#fff}
+.b-kick{background:#e08a1e}.b-ban{background:#c0392b}.b-unban{background:#2E9C93}.b-del{background:#6b6b6b}
+.student-status-pill.online{background:#d6f5df;color:#1b7a3a}
+.student-status-pill.offline{background:color-mix(in srgb,var(--text-light) 20%,transparent);color:var(--text-light)}
+.student-status-pill.banned{background:#fde0dc;color:#b03225}
+#gateWhatsappBox{display:none!important}
 </style>
 
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#E1654B">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="مستر عبد الرحمن">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 </head>
 <body>
 
@@ -929,11 +1030,11 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
     <button class="gate-settings-btn" id="gateSettingsBtn" title="لوحة الإدارة" onclick="openAdminModal()"><i class="fa-solid fa-gear"></i></button>
     <div class="gate-logo" id="gateLogo">🎓</div>
     <div class="gate-lock-chip"><i class="fa-solid fa-shield-halved"></i> منصة محمية</div>
-    <div class="gate-title">ادخل بياناتك للتأكد من أنك مشترك<br>في كورس <b id="gateTeacherName">مستر عبد الرحمن بيومي</b></div>
-    <div class="gate-sub">اكتب اسمك ثلاثي ورقمك، ولو رقمك جديد هيتم إرسال طلبك للمستر للموافقة عليه 🎧</div>
+    <div class="gate-title">ادخل اسمك ورقمك<br>للدخول لكورس <b id="gateTeacherName">مستر عبد الرحمن بيومي</b></div>
+    <div class="gate-sub">اكتب اسمك ثلاثي ورقم موبايلك وادخل على طول 🎧</div>
     <input type="text" class="gate-input" id="gateNameInput" placeholder="اكتب اسمك ثلاثي" style="margin-bottom:10px;" onkeydown="if(event.key==='Enter') document.getElementById('gateCodeInput').focus();">
-    <input type="text" inputmode="numeric" class="gate-input" id="gateCodeInput" placeholder="اكتب رقمك هنا" onkeydown="if(event.key==='Enter') submitGateCode();">
-    <button class="gate-btn" id="gateSubmitBtn" onclick="submitGateCode()"><i class="fa-solid fa-unlock"></i> <span id="gateSubmitBtnText">تحقق وكمّل الكورس</span></button>
+    <input type="text" inputmode="numeric" class="gate-input" id="gateCodeInput" placeholder="اكتب رقم موبايلك" onkeydown="if(event.key==='Enter') submitGateCode();">
+    <button class="gate-btn" id="gateSubmitBtn" onclick="submitGateCode()"><i class="fa-solid fa-unlock"></i> <span id="gateSubmitBtnText">ادخل الكورس</span></button>
     <div class="gate-error" id="gateErrorMsg"></div>
     <div class="gate-pending-box" id="gatePendingBox"></div>
     <a class="gate-whatsapp-box" id="gateWhatsappBox" href="#" target="_blank" rel="noopener">
@@ -943,7 +1044,7 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
         <span>تواصل مع <span id="gateWhatsappTeacherName">مستر عبد الرحمن بيومي</span> واتساب وابعتله رقمك</span>
       </div>
     </a>
-    <div class="gate-footer"><i class="fa-solid fa-lock"></i> خاص بالمشتركين فقط، لأي استفسار تواصل مع المستر</div>
+    <div class="gate-footer"><i class="fa-solid fa-lock"></i> الاسم والرقم مش بيتكرروا، ولو دخلت من جهاز تاني بيتقفل على الأول</div>
   </div>
 </div>
 
@@ -1094,14 +1195,29 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
   </div>
 </div>
 
-<header class="header-container">
-  <div class="brand-logo" id="brandLogo">🎓</div>
-  <div class="header-badge" id="headerBadgeText">AMERICAN ACCENT</div>
-  <h1 class="main-title" id="teacherNameTitle">Mr. Abdel Rahman Bayomyi</h1>
-  <div id="phoneWrap"><span class="teacher-phone" id="teacherPhone"></span></div>
-  <p class="motivation-text" id="motivationText">🌟 تعلّم الكلمة... واحفظ الجملة... وابقى واثق من نفسك! 🌟</p>
-  <div class="social-links" id="socialLinks"></div>
+<header class="hero">
+  <div class="hero-eyebrow" id="headerBadgeText">AMERICAN ACCENT</div>
+  <div class="hero-photo-wrap"><div class="hero-photo" id="brandLogo"><i class="fa-solid fa-graduation-cap"></i></div></div>
+  <div class="hero-card">
+    <h1 class="hero-title" id="teacherNameTitle">Mr. Abdel Rahman Bayomyi</h1>
+    <div class="hero-divider"></div>
+    <div id="phoneWrap"><span class="teacher-phone" id="teacherPhone"></span></div>
+    <p class="motivation-text" id="motivationText">🌟 تعلّم الكلمة... واحفظ الجملة... وابقى واثق من نفسك! 🌟</p>
+    <div class="social-links" id="socialLinks"></div>
+  </div>
 </header>
+<div class="king-ribbon" id="kingRibbon"><div class="king-ribbon-in"><span class="k">👑</span> أهلاً بالكينج مستر عبد الرحمن بيومي — المنصة منصتك <span class="k">👑</span></div></div>
+
+<section class="honor-wrap"><div class="honor-card">
+  <div class="honor-h">👑 لوحة الشرف</div>
+  <div class="honor-sub">نجوم المذاكرة — أكتر الطلاب التزامًا</div>
+  <div id="honorList"><div class="honor-empty">⏳ جاري التحميل...</div></div>
+  <button type="button" class="honor-toggle" id="honorToggle" onclick="toggleHonorMore()" style="display:none"><span id="honorToggleTxt">عرض أفضل ١٠</span> <i class="fa-solid fa-chevron-down"></i></button>
+  <div class="honor-more" id="honorMore"><div><div class="honor-more-in">
+    <div id="honorMoreList"></div>
+    <div class="honor-key">النقاط = 5 لكل دخول + 1 لكل كلمة + 2 لكل جملة + 1 لكل دقيقة مذاكرة</div>
+  </div></div></div>
+</div></section>
 
 <div class="controls-wrapper">
   <div class="controls-card">
@@ -1188,7 +1304,7 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
       </div></div>
       <div class="admin-tab-group"><div class="admin-tab-group-title">👥 الطلاب والإعدادات</div><div class="admin-tab-row">
         <button class="admin-tab-btn" id="tabBtnStudents" onclick="switchAdminSubTab('students')">👥 الطلاب</button>
-        <button class="admin-tab-btn" id="tabBtnPending" onclick="switchAdminSubTab('pending')">⏳ قائمة الانتظار <span class="pending-tab-badge" id="pendingTabBadge"></span></button>
+        <button class="admin-tab-btn" id="tabBtnPending" style="display:none" onclick="switchAdminSubTab('pending')">⏳ قائمة الانتظار <span class="pending-tab-badge" id="pendingTabBadge"></span></button>
         <button class="admin-tab-btn" id="tabBtnStats" onclick="switchAdminSubTab('stats')">📊 الإحصائيات</button>
         <button class="admin-tab-btn" id="tabBtnSettings" onclick="switchAdminSubTab('settings')">⚙️ الإعدادات</button>
       </div></div>
@@ -1377,13 +1493,7 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
 
     <!-- Students tab -->
     <div class="admin-panel-section" id="adminSecStudents">
-      <label class="control-label">🔢 عدد الكلمات اللي تتسمع قبل ما يظهر طلب الرقم:</label>
-      <div class="slider-container">
-        <input type="range" min="1" max="30" step="1" value="5" id="setGateThreshold" oninput="document.getElementById('gateThresholdLabel').innerText = this.value">
-        <span class="speed-value" id="gateThresholdLabel">5</span>
-      </div>
-      <button class="btn-save" onclick="saveGateThreshold()">💾 حفظ عدد الكلمات</button>
-
+      
       <label class="control-label" style="margin-top:10px;">➕ إضافة طالب جديد (تفعيل اشتراك):</label>
       <input type="text" id="newStudentName" placeholder="اسم الطالب (مطلوب)">
       <div class="add-cat-row">
@@ -1392,13 +1502,14 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
       </div>
 
       <div class="instructions">
-        📌 لازم تكتب اسم الطالب مع رقمه، عشان يبقى واضح لك في القائمة والإحصائيات مين ده بالظبط. أي رقم تضيفه هنا يقدر الطالب يدخل بيه مرة واحدة بس على جهاز واحد. لو حابب تسمح له بالدخول من جهاز جديد، دوس على 🔓 لفك ربط الجهاز. الطرد ⛔ بيوقف اشتراك الطالب فورًا realtime من غير ما تحذف رقمه. الحذف 🗑️ بيمسح الرقم نهائيًا.
+        📌 الطالب بيدخل من اللينك باسمه الثلاثي ورقمه وبيتسجل هنا لوحده. 🚪 طرد = يتقفل عليه فورًا وممكن يدخل تاني. 🚫 حظر = يتطرد ومش هيقدر يدخل (بالرقم أو الاسم أو الجهاز) لحد ما تفك الحظر. 🗑️ حذف = يتمسح من القائمة. أي حد يدخل بنفس الاسم أو الرقم بيقفل على اللي قبله تلقائي.
       </div>
 
       <label class="control-label" style="margin-top:6px;display:flex;justify-content:space-between;align-items:center;">
         <span>📋 قائمة الطلاب المشتركين:</span>
         <span class="students-count-badge" id="studentsCountBadge"></span>
       </label>
+      <div id="studentsSummary" class="stu-sum"></div>
       <input type="text" id="studentsSearchBox" placeholder="🔍 دور بالاسم أو الرقم..." oninput="renderStudentsList()">
       <div class="cat-list" id="studentsList" style="max-height:340px;"></div>
     </div>
@@ -1557,7 +1668,6 @@ let synth = window.speechSynthesis;
 let preferredVoice = null;
 let favoriteWords = JSON.parse(localStorage.getItem('bayomyiFavWords')) || [];
 let appSettings = null;
-let liveAdminPassword = '12345';
 let pendingLogoDataUrl = null; // null = no change, '' = remove, string = new image
 let pendingLogoShape = null; // null = no change, else 'circle'|'square'|'rect'
 let pendingLogoSize = null; // null = no change, else px number
@@ -1754,7 +1864,10 @@ function openExamCertNameOverlay(){
   input.value = saved;
   errBox.style.display = 'none';
   document.getElementById('examCertNameOverlay').classList.add('show');
-  setTimeout(() => input.focus(), 150);
+  const ni = document.getElementById('gateNameInput');
+  if(ni && !ni.value) ni.value = localStorage.getItem('bayomyiLastName') || '';
+  if(input && !input.value) input.value = localStorage.getItem('bayomyiLastCode') || '';
+  setTimeout(() => (ni && !ni.value ? ni : input).focus(), 150);
 }
 
 function closeExamCertNameOverlay(){
@@ -2546,6 +2659,7 @@ let studentsCache = [];
 let pendingStudentsCache = [];
 let pendingRealtimeChannel = null;
 let gatePendingWatchTimer = null;
+let adminPassInMemory = '';
 let adminUnlockedThisSession = (sessionStorage.getItem('bayomyiAdminUnlocked') === '1');
 let gateRevalidateTimer = null;
 let openLoggedThisSession = false;
@@ -2615,11 +2729,12 @@ function applyTheme(name){
   const t = THEMES[name] || THEMES.classic;
   const root = document.documentElement;
   Object.entries(t.vars).forEach(([k,v]) => root.style.setProperty(k, v));
+  try{ let h=(t.vars['--bg-1']||'#fff').replace('#',''); if(h.length===3) h=h.replace(/./g,'$&$&'); const n=parseInt(h,16); if(!isNaN(n)) root.classList.toggle('dark-theme', ((n>>16)*299+((n>>8)&255)*587+(n&255)*114)/1000 < 110); }catch(e){}
 }
 
 function setLogoElementStyle(shape, size){
   const logoEl = document.getElementById('brandLogo');
-  if(!logoEl) return;
+  if(!logoEl || logoEl.classList.contains('hero-photo') || logoEl.id==='brandLogo') return;
   logoEl.classList.remove('shape-square','shape-rect');
   if(shape === 'square') logoEl.classList.add('shape-square');
   if(shape === 'rect') logoEl.classList.add('shape-rect');
@@ -2730,13 +2845,12 @@ async function loadAppSettings(){
     const { data, error } = await _supabase.from('app_settings').select('*').eq('id', 1).single();
     if(error) throw error;
     appSettings = data;
-    liveAdminPassword = data.admin_password || '12345';
-    applyTheme(appSettings.theme_name || 'classic');
+        applyTheme(appSettings.theme_name || 'classic');
     applySettingsToHeader();
     updateExamButtonVisibility();
   }catch(e){
     console.error(e);
-    appSettings = { teacher_name: 'Mr. Abdel Rahman Bayomyi', admin_password: '12345', gate_word_threshold: 5 };
+    appSettings = { teacher_name: 'Mr. Abdel Rahman Bayomyi', gate_word_threshold: 5 };
     applyTheme('classic');
     updateExamButtonVisibility();
   }
@@ -2891,261 +3005,110 @@ function isFullNameValid(name){
   return name.split(/\s+/).filter(Boolean).length >= 3;
 }
 
-async function submitGateCode(){
-  const name = document.getElementById('gateNameInput').value.trim();
-  const raw = document.getElementById('gateCodeInput').value.trim();
-  hideGateError();
-  hidePendingBox();
-  if(!name){ showGateError('من فضلك اكتب اسمك أولاً ✍️'); return; }
-  if(!isFullNameValid(name)){ showGateError('من فضلك اكتب اسمك ثلاثي كامل (3 كلمات على الأقل) ✍️'); return; }
-  if(!raw){ showGateError('من فضلك اكتب رقمك أولاً ✍️'); return; }
-  setGateLoading(true);
-  const result = await verifyStudentCode(raw);
-  setGateLoading(false);
-  if(result.ok){
-    completeGateLogin(raw, result);
-    return;
-  }
-  if(result.reason === 'not_found'){
-    await handleUnregisteredCode(name, raw);
-    return;
-  }
-  if(result.reason === 'device_conflict'){
-    await handleDeviceChangeRequest(name, raw);
-    return;
-  }
-  showGateError(result.message);
+function normalizeDigits(v){
+  return String(v||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/\D/g,'');
 }
 
-// بعد التحقق الناجح: يفعّل دخول الطالب فعليًا
+async function submitGateCode(){
+  const name = document.getElementById('gateNameInput').value.trim().replace(/\s+/g,' ');
+  const code = normalizeDigits(document.getElementById('gateCodeInput').value);
+  hideGateError();
+  if(!name){ showGateError('من فضلك اكتب اسمك أولاً ✍️'); return; }
+  if(!isFullNameValid(name)){ showGateError('من فضلك اكتب اسمك ثلاثي كامل (3 كلمات على الأقل) ✍️'); return; }
+  if(code.length < 10 || code.length > 13){ showGateError('اكتب رقم موبايلك صح (10 إلى 13 رقم) 📱'); return; }
+  setGateLoading(true);
+  try{
+    const { data, error } = await _supabase.rpc('student_login', { p_name: name, p_code: code, p_device: getDeviceId() });
+    if(error) throw error;
+    if(!data || !data.ok){
+      const m = { banned:'⛔ تم إيقاف دخولك من الإدارة. تواصل مع المستر.', bad_name:'اكتب اسمك ثلاثي كامل ✍️', bad_code:'اكتب رقم موبايلك صح 📱' };
+      showGateError(m[data && data.reason] || 'حدث خطأ، حاول تاني.');
+      return;
+    }
+    completeGateLogin(data.code, { full_name: data.name });
+  }catch(e){
+    console.error(e);
+    showGateError('حدث خطأ في الاتصال، حاول تاني.');
+  }finally{ setGateLoading(false); }
+}
+
+// ---------- الكينج: المنصة بتعرف صاحبها من رقمه أول ما يدخل ----------
+const KING_PHONES = ['01553080300', '01212150766'];
+function isKingCode(raw){
+  let d = normalizeDigits(raw);
+  if(d.startsWith('0020')) d = d.slice(4);
+  else if(d.startsWith('20') && d.length === 12) d = d.slice(2);
+  if(d.length === 10) d = '0' + d;
+  return KING_PHONES.indexOf(d) !== -1;
+}
+function applyKingMode(raw){
+  const king = isKingCode(raw);
+  document.body.classList.toggle('is-king', king);
+  return king;
+}
+
 function completeGateLogin(raw, result){
-  stopPendingWatch();
-  hidePendingBox();
-  clearPendingLocal();
   studentCode = raw;
   studentName = result.full_name || '';
   deviceId = getDeviceId();
   gateVerified = true;
   localStorage.setItem('bayomyiVerifiedCode', raw);
   localStorage.setItem('bayomyiVerifiedDevice', deviceId);
+  localStorage.setItem('bayomyiLastName', studentName);
+  localStorage.setItem('bayomyiLastCode', raw);
   closeGateModal();
-  showToast('✅ تم التحقق بنجاح، استمتع بالكورس!');
+  if(applyKingMode(raw)) showToast('👑 أهلاً بالكينج مستر عبد الرحمن! المنصة منصتك');
+  else showToast('✅ أهلاً ' + studentName.split(' ')[0] + '، استمتع بالكورس!');
   subscribeStudentRealtime(raw);
   startGateRevalidationLoop();
   startStatsTracking();
   showWatermark();
+  loadHonorBoard();
 }
 
-// حفظ/مسح بيانات الطلب المُرسل محليًا، عشان لو الطالب قفل وفتح تاني يفضل عارف إنه لسه مستني
-function savePendingLocal(code, name){
-  localStorage.setItem('bayomyiPendingCode', code);
-  localStorage.setItem('bayomyiPendingName', name);
-}
-function clearPendingLocal(){
-  localStorage.removeItem('bayomyiPendingCode');
-  localStorage.removeItem('bayomyiPendingName');
-}
+function savePendingLocal(){} function clearPendingLocal(){} function stopPendingWatch(){} async function resumePendingIfAny(){}
 
-// لو الرقم مش مسجل: يبعت طلب دخول للمستر في قائمة الانتظار (لو مبعتوش قبل كده)، وينتظر الموافقة
-async function handleUnregisteredCode(name, code){
-  try{
-    const { data: existing, error: exErr } = await _supabase.from('pending_students').select('id').eq('student_code', code).maybeSingle();
-    if(exErr) throw exErr;
-    if(!existing){
-      const { error: insErr } = await _supabase.from('pending_students').insert({ student_code: code, full_name: name, request_type: 'new' });
-      if(insErr && insErr.code !== '23505') throw insErr;
-    }
-    savePendingLocal(code, name);
-    showPendingBox('⏳ تم إرسال طلبك للمستر، هيتفعّل اشتراكك تلقائيًا فور الموافقة عليه. من فضلك انتظر...');
-    showWhatsappForPending(name, code);
-    startPendingWatch(code, name);
-  }catch(e){
-    console.error(e);
-    showGateError('حدث خطأ أثناء إرسال طلبك، حاول تاني.');
+// يرجّع رسالة الطرد لو الجلسة دي لازم تتقفل، أو null لو سليمة
+function gateKickMessage(row){
+  if(!row) return '⚠️ اتقفلت جلستك (تم الدخول بنفس الاسم أو الرقم من مكان تاني، أو اتحذفت بياناتك). اكتب اسمك ورقمك للدخول تاني.';
+  if(row.status === 'banned') return '⛔ تم إيقاف دخولك من قبل الإدارة.';
+  if(row.device_id && row.device_id !== getDeviceId()){
+    return String(row.device_id).startsWith('kicked-')
+      ? '🚪 تم إخراجك من قبل الإدارة. تقدر تدخل تاني بكتابة اسمك ورقمك.'
+      : '⚠️ تم الدخول بنفس الاسم أو الرقم من جهاز آخر، فاتقفلت جلستك هنا.';
   }
+  return null;
 }
 
-// الرقم متسجل بالفعل بس على جهاز تاني: بدل ما نمنعه نهائي، نحطه في قائمة الانتظار عشان المستر يوافق على دخوله بالجهاز الجديد
-async function handleDeviceChangeRequest(name, code){
-  try{
-    const { data: existing, error: exErr } = await _supabase.from('pending_students').select('id').eq('student_code', code).maybeSingle();
-    if(exErr) throw exErr;
-    if(!existing){
-      const { error: insErr } = await _supabase.from('pending_students').insert({ student_code: code, full_name: name, request_type: 'device_change' });
-      if(insErr && insErr.code !== '23505') throw insErr;
-    }
-    savePendingLocal(code, name);
-    showPendingBox('⏳ الرقم ده متسجل عندك من قبل على جهاز تاني، فبعتنا طلب للمستر عشان يوافق على دخولك من الجهاز الجديد. من فضلك انتظر أو تواصل معاه واتساب...');
-    showWhatsappForPending(name, code);
-    startPendingWatch(code, name);
-  }catch(e){
-    console.error(e);
-    showGateError('حدث خطأ أثناء إرسال طلبك، حاول تاني.');
-  }
-}
-
-// يعدّل رابط الواتساب مؤقتًا عشان يبقى فيه اسم ورقم الطالب المستني في قائمة الانتظار
-function showWhatsappForPending(name, code){
-  const waBox = document.getElementById('gateWhatsappBox');
-  if(!waBox || waBox.classList.contains('hidden')) return; // المستر مسجلش رقم واتساب أصلاً
-  const msg = `مرحبًا، أنا ${name} ورقمي ${code}، وطلبي دلوقتي في قائمة الانتظار عندك، برجاء الموافقة عليه 🙏`;
-  try{
-    const url = new URL(waBox.href);
-    url.searchParams.set('text', msg);
-    waBox.href = url.toString();
-  }catch(e){
-    console.error(e);
-  }
-}
-
-// يحدد حالة الطلب الحالية بالاعتماد الأساسي على وجوده في قائمة الانتظار،
-// عشان طلب "تغيير جهاز" يفضل شكله "مستني" طول ما لسه في القائمة حتى لو verifyStudentCode لسه بيرجع تضارب جهاز
-async function checkPendingStatus(code){
-  const result = await verifyStudentCode(code);
-  if(result.ok) return { status:'approved', result };
-
-  let stillPending = false;
-  try{
-    const { data, error } = await _supabase.from('pending_students').select('id').eq('student_code', code).maybeSingle();
-    if(error) throw error;
-    stillPending = !!data;
-  }catch(e){
-    console.error(e);
-    return { status:'error' };
-  }
-  if(stillPending) return { status:'pending' };
-
-  if(result.reason === 'kicked' || result.reason === 'device_conflict'){
-    return { status:'blocked', message: result.message };
-  }
-  if(result.reason === 'not_found'){
-    return { status:'rejected' };
-  }
-  return { status:'error' };
-}
-
-// بعد إرسال الطلب، يفحص كل شوية لو المستر وافق عشان يدخّل الطالب أوتوماتيك من غير ما يعيد كتابة بياناته
-function startPendingWatch(code, name){
-  stopPendingWatch();
-  gatePendingWatchTimer = setInterval(async () => {
-    const res = await checkPendingStatus(code);
-    if(res.status === 'approved'){
-      completeGateLogin(code, { full_name: res.result.full_name || name });
-    } else if(res.status === 'rejected'){
-      stopPendingWatch();
-      clearPendingLocal();
-      hidePendingBox();
-      showGateError('❌ للأسف تم رفض طلبك من الإدارة. لو فيه غلطة تواصل مع المستر، أو اكتب بياناتك تاني وابعت طلب جديد.');
-    } else if(res.status === 'blocked'){
-      stopPendingWatch();
-      clearPendingLocal();
-      hidePendingBox();
-      showGateError(res.message);
-    }
-    // status 'pending' أو 'error' -> يفضل مستني ويحاول تاني بعد شوية
-  }, 6000);
-}
-
-function stopPendingWatch(){
-  if(gatePendingWatchTimer){ clearInterval(gatePendingWatchTimer); gatePendingWatchTimer = null; }
-}
-
-// لو الطالب قافل الصفحة وفاتح تاني وعنده طلب لسه مستني، يوريه إنه لسه مستني بدل ما يطلب منه بياناته تاني
-async function resumePendingIfAny(){
-  const code = localStorage.getItem('bayomyiPendingCode');
-  const name = localStorage.getItem('bayomyiPendingName');
-  if(!code) return;
-  const res = await checkPendingStatus(code);
-  if(res.status === 'approved'){
-    completeGateLogin(code, { full_name: res.result.full_name || name });
-  } else if(res.status === 'pending'){
-    openGateModal();
-    const nameInput = document.getElementById('gateNameInput');
-    const codeInput = document.getElementById('gateCodeInput');
-    if(nameInput) nameInput.value = name || '';
-    if(codeInput) codeInput.value = code;
-    showPendingBox('⏳ طلبك لسه قيد المراجعة عند المستر، هيتفعّل اشتراكك تلقائيًا فور الموافقة عليه. من فضلك انتظر...');
-    showWhatsappForPending(name || '', code);
-    startPendingWatch(code, name);
-  } else if(res.status === 'rejected'){
-    clearPendingLocal();
-  }
-  // 'blocked' أو 'error' -> يفضل الوضع زي ما هو، الفلو العادي هيتعامل معاه لما يحاول يدخل تاني
-}
-
-// يتحقق من رقم الطالب في قاعدة البيانات، ويربط الجهاز بالرقم أول مرة
-async function verifyStudentCode(code){
-  try{
-    const { data, error } = await _supabase.from('students').select('*').eq('student_code', code).maybeSingle();
-    if(error) throw error;
-    if(!data){
-      return { ok:false, reason:'not_found', message:'❌ الرقم ده مش مسجل ضمن المشتركين. تواصل مع المستر لتفعيل اشتراكك.' };
-    }
-    if(data.status === 'kicked'){
-      return { ok:false, reason:'kicked', message:'⛔ تم إيقاف اشتراكك من قبل الإدارة. تواصل مع المستر.' };
-    }
-    const myDevice = getDeviceId();
-    if(!data.device_id){
-      const { error: updErr } = await _supabase.from('students').update({ device_id: myDevice }).eq('student_code', code);
-      if(updErr) throw updErr;
-      return { ok:true, full_name: data.full_name };
-    }
-    if(data.device_id !== myDevice){
-      return { ok:false, reason:'device_conflict', message:'⚠️ الرقم ده متسجل بالفعل على جهاز تاني. مينفعش نفس الرقم يتسجل مرتين. تواصل مع المستر لو محتاج تغيّر جهازك.' };
-    }
-    return { ok:true, full_name: data.full_name };
-  }catch(e){
-    console.error(e);
-    return { ok:false, reason:'error', message:'حدث خطأ أثناء التحقق، حاول تاني.' };
-  }
-}
-
-// الاشتراك اللحظي: أي حذف أو طرد أو تغيير جهاز لهذا الرقم يطرد الطالب فورًا
 function subscribeStudentRealtime(code){
-  if(studentRealtimeChannel){
-    _supabase.removeChannel(studentRealtimeChannel);
-    studentRealtimeChannel = null;
-  }
+  if(studentRealtimeChannel){ _supabase.removeChannel(studentRealtimeChannel); studentRealtimeChannel = null; }
   studentRealtimeChannel = _supabase.channel('student-watch-' + code)
     .on('postgres_changes', { event: '*', schema: 'public', table: 'students', filter: `student_code=eq.${code}` }, payload => {
-      if(payload.eventType === 'DELETE'){
-        forceKickOut('🚫 تم حذف اشتراكك من الإدارة. تواصل مع المستر لتفعيله من جديد.');
-        return;
-      }
-      if(payload.new){
-        if(payload.new.status === 'kicked'){
-          forceKickOut('⛔ تم إيقاف اشتراكك من قبل الإدارة.');
-          return;
-        }
-        if(payload.new.device_id && payload.new.device_id !== getDeviceId()){
-          forceKickOut('⚠️ تم فك ربط هذا الجهاز، أو تسجيل الدخول من جهاز آخر بنفس الرقم.');
-        }
-      }
+      const msg = payload.eventType === 'DELETE' ? gateKickMessage(null) : gateKickMessage(payload.new);
+      if(msg) forceKickOut(msg);
     })
     .subscribe();
 }
 
-// شبكة أمان إضافية: تأكيد دوري كل 25 ثانية حتى لو انقطع الاتصال اللحظي مؤقتًا
+// شبكة أمان: تأكيد كل 10 ثواني (بيغطي حالة تغيير الرقم بنفس الاسم)
 function startGateRevalidationLoop(){
   if(gateRevalidateTimer) clearInterval(gateRevalidateTimer);
   gateRevalidateTimer = setInterval(async () => {
     if(!gateVerified || !studentCode) return;
     const { data, error } = await _supabase.from('students').select('status,device_id').eq('student_code', studentCode).maybeSingle();
     if(error) return;
-    if(!data){ forceKickOut('🚫 تم حذف اشتراكك من الإدارة.'); return; }
-    if(data.status === 'kicked'){ forceKickOut('⛔ تم إيقاف اشتراكك من قبل الإدارة.'); return; }
-    if(data.device_id && data.device_id !== getDeviceId()){ forceKickOut('⚠️ تم تسجيل الدخول بهذا الرقم من جهاز آخر.'); }
-  }, 25000);
+    const msg = gateKickMessage(data);
+    if(msg) forceKickOut(msg);
+  }, 10000);
 }
 
 function forceKickOut(message){
+  document.body.classList.remove('is-king');
   gateVerified = false;
   studentName = null;
-  wordsBeforeGateCounter = gateThreshold(); // يمنع أي تشغيل جديد قبل إعادة التحقق
-  localStorage.setItem('bayomyiPreGateCount', String(wordsBeforeGateCounter));
+  pauseSpeaking();
   localStorage.removeItem('bayomyiVerifiedCode');
   localStorage.removeItem('bayomyiVerifiedDevice');
-  pauseSpeaking();
   if(studentRealtimeChannel){ _supabase.removeChannel(studentRealtimeChannel); studentRealtimeChannel = null; }
   if(gateRevalidateTimer){ clearInterval(gateRevalidateTimer); gateRevalidateTimer = null; }
   if(statsFlushTimer){ flushStudentStats(); clearInterval(statsFlushTimer); statsFlushTimer = null; }
@@ -3153,29 +3116,96 @@ function forceKickOut(message){
   openGateModal(message);
 }
 
-// عند تحميل الصفحة: لو فيه رقم متحقق منه محفوظ محليًا، نتأكد إنه لسه سليم بهدوء بدون إزعاج الطالب
+// عند فتح اللينك: لو الجلسة المحفوظة سليمة يدخل على طول، غير كده تظهر شاشة الاسم والرقم إجباري
 async function initGateOnLoad(){
   const savedCode = localStorage.getItem('bayomyiVerifiedCode');
   const savedDevice = localStorage.getItem('bayomyiVerifiedDevice');
-  if(!savedCode || !savedDevice) return;
+  if(!savedCode || !savedDevice){ openGateModal(); return; }
   deviceId = savedDevice;
   try{
     const { data, error } = await _supabase.from('students').select('*').eq('student_code', savedCode).maybeSingle();
-    if(error || !data || data.status === 'kicked' || data.device_id !== savedDevice){
-      localStorage.removeItem('bayomyiVerifiedCode');
-      localStorage.removeItem('bayomyiVerifiedDevice');
-      return;
+    if(!error){
+      const msg = gateKickMessage(data);
+      if(msg){
+        localStorage.removeItem('bayomyiVerifiedCode'); localStorage.removeItem('bayomyiVerifiedDevice');
+        openGateModal(msg); return;
+      }
+      if(!data.device_id) await _supabase.from('students').update({ device_id: savedDevice }).eq('student_code', savedCode);
+      studentName = data.full_name || '';
     }
     studentCode = savedCode;
-    studentName = data.full_name || '';
     gateVerified = true;
+    if(applyKingMode(savedCode)) showToast('👑 أهلاً بالكينج مستر عبد الرحمن! المنصة منصتك');
     subscribeStudentRealtime(savedCode);
     startGateRevalidationLoop();
     startStatsTracking();
     showWatermark();
   }catch(e){
     console.error(e);
+    openGateModal();
   }
+}
+
+// ---------------------------------------------------------
+// لوحة الشرف (أكتر 10 دخولًا ومذاكرة)
+// ---------------------------------------------------------
+// المستر مش بيتحسب في لوحة الشرف (بيسمّع الطلاب في الحصة)
+const HONOR_EXCLUDED_NAMES = ['أحمد عبد الرحمن بيومي', 'عبد الرحمن أحمد بيومي', 'عبد الرحمن بيومي'];
+function normArName(n){
+  return String(n || '').replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ').trim().toLowerCase();
+}
+const _honorExcludedSet = new Set(HONOR_EXCLUDED_NAMES.map(normArName));
+function isHonorExcluded(name){ return _honorExcludedSet.has(normArName(name)); }
+
+async function loadHonorBoard(){
+  const box = document.getElementById('honorList');
+  if(!box) return;
+  const toggle = document.getElementById('honorToggle');
+  const more = document.getElementById('honorMoreList');
+  try{
+    // بنطلب أكتر من 10 عشان لو المستر اتشال من اللوحة يفضل 10 طلاب بالظبط
+    const { data, error } = await _supabase.rpc('get_honor_board', { p_limit: 15 });
+    if(error) throw error;
+    const rows = (data || []).filter(r => !isHonorExcluded(r.full_name)).slice(0, 10).map((r, i) => Object.assign({}, r, { pos: i + 1 }));
+    if(!rows.length){
+      box.innerHTML = '<div class="honor-empty">لسه مفيش حد ذاكر... كن أول واحد في لوحة الشرف! 🌱</div>';
+      if(toggle) toggle.style.display = 'none';
+      if(more) more.innerHTML = '';
+      return;
+    }
+    const mine = r => (studentName && r.full_name === studentName) ? ' honor-me' : '';
+    const top = rows.slice(0, 3);
+    const order = top.length === 3 ? [top[1], top[0], top[2]] : (top.length === 2 ? [top[1], top[0]] : [top[0]]);
+    const rankTxt = ['', 'الأول', 'الثاني', 'الثالث'];
+    box.innerHTML = '<div class="honor-podium">' + order.map(r => {
+      const nm = String(r.full_name || '').trim();
+      return `<div class="hp p${r.pos}${mine(r)}">
+        <div class="hp-crown">${r.pos === 1 ? '👑' : ''}</div>
+        <div class="hp-av">${escapeHtml(nm.charAt(0) || '★')}</div>
+        <div class="hp-rank">${rankTxt[r.pos] || r.pos}</div>
+        <div class="hp-name">${escapeHtml(nm)}</div>
+        <div class="hp-pts">${r.points}<small>نقطة</small></div></div>`;
+    }).join('') + '</div>';
+    const rest = rows.slice(3);
+    if(more) more.innerHTML = rest.map(r => `<div class="honor-row${mine(r)}">
+      <div class="honor-medal">${r.pos}</div>
+      <div class="honor-name">${escapeHtml(r.full_name)}<div class="honor-meta">🔁 ${r.opens} دخول · 🔤 ${r.words} كلمة · 💬 ${r.sentences} جملة · ⏱️ ${formatDuration(r.minutes * 60)}</div></div>
+      <div class="honor-pts">${r.points}<small>نقطة</small></div></div>`).join('');
+    if(toggle) toggle.style.display = rest.length ? 'flex' : 'none';
+  }catch(e){
+    console.error(e);
+    box.innerHTML = '<div class="honor-empty">تعذر تحميل لوحة الشرف.</div>';
+  }
+}
+
+function toggleHonorMore(){
+  const more = document.getElementById('honorMore');
+  const btn = document.getElementById('honorToggle');
+  const txt = document.getElementById('honorToggleTxt');
+  if(!more || !btn) return;
+  const open = more.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  if(txt) txt.textContent = open ? 'إخفاء' : 'عرض أفضل ١٠';
 }
 
 // ---------------------------------------------------------
@@ -3226,13 +3256,7 @@ function applySettingsToHeader(){
   document.getElementById('headerBadgeText').innerText = appSettings.header_badge_text || 'AMERICAN ACCENT';
   document.getElementById('motivationText').innerText = appSettings.motivation_text || '🌟 تعلّم الكلمة... واحفظ الجملة... وابقى واثق من نفسك! 🌟';
   const logoEl = document.getElementById('brandLogo');
-  if(appSettings.logo_url){
-    logoEl.style.background = 'var(--card-bg)';
-    logoEl.innerHTML = `<img src="${appSettings.logo_url}" alt="logo" style="width:100%;height:100%;object-fit:cover;display:block;">`;
-  } else {
-    logoEl.style.background = '';
-    logoEl.innerHTML = '🎓';
-  }
+  logoEl.innerHTML = appSettings.logo_url ? `<img src="${appSettings.logo_url}" alt="">` : '<i class="fa-solid fa-graduation-cap"></i>';
   applyLogoDisplay();
   const phoneEl = document.getElementById('teacherPhone');
   if(appSettings.phone_number){
@@ -3750,15 +3774,17 @@ function toggleTestMode(){ isTestMode = document.getElementById('testModeToggle'
 // ---------------------------------------------------------
 // 8. لوحة الإدارة
 // ---------------------------------------------------------
-function openAdminModal(){
+async function openAdminModal(){
   // طول ما الأدمن دخل بكلمة السر صح مرة واحدة في الجلسة دي، مينفعش يتطلب منه يكتبها تاني
   if(!adminUnlockedThisSession){
     const entered = prompt("🔐 برجاء إدخال كلمة السر الخاصة بالإدارة:");
     if(entered === null) return;
-    if(entered !== liveAdminPassword){
+    const { data: okPass, error: passErr } = await _supabase.rpc('admin_verify', { p_password: entered });
+    if(passErr || !okPass){
       alert("❌ كلمة المرور خاطئة! الدخول غير مصرح به.");
       return;
     }
+    adminPassInMemory = entered;
     adminUnlockedThisSession = true;
     sessionStorage.setItem('bayomyiAdminUnlocked', '1');
   }
@@ -3794,7 +3820,7 @@ function updatePendingTabBadge(count){
   const badge = document.getElementById('pendingTabBadge');
   if(badge) badge.innerText = count > 0 ? String(count) : '';
 }
-function closeAdminModal(){ document.getElementById('adminModal').style.display = 'none'; }
+function closeAdminModal(){ document.getElementById('adminModal').style.display = 'none'; if(!gateVerified) openGateModal(); }
 
 function switchAdminSubTab(target){
   document.querySelectorAll('.admin-panel-section').forEach(s => s.classList.remove('active'));
@@ -3842,8 +3868,6 @@ function switchAdminSubTab(target){
   } else if(target === 'students'){
     document.getElementById('adminSecStudents').classList.add('active');
     document.getElementById('tabBtnStudents').classList.add('active');
-    document.getElementById('setGateThreshold').value = (appSettings && appSettings.gate_word_threshold) || 5;
-    document.getElementById('gateThresholdLabel').innerText = (appSettings && appSettings.gate_word_threshold) || 5;
     loadStudentsList();
     loadExamResultsList();
     subscribeAdminStudentsRealtime();
@@ -4675,51 +4699,56 @@ function escapeHtml(str){
   return String(str == null ? '' : str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
+function studentState(s){
+  if(s.status === 'banned') return { cls:'banned', txt:'🚫 محظور', rank:3 };
+  if(String(s.device_id || '').startsWith('kicked-')) return { cls:'offline', txt:'🚪 تم طرده', rank:2 };
+  const online = s.last_seen_at && (Date.now() - new Date(s.last_seen_at).getTime()) < 120000;
+  return online ? { cls:'online', txt:'🟢 متصل الآن', rank:0 } : { cls:'offline', txt:'⚪ غير متصل', rank:1 };
+}
+
 function renderStudentsList(){
   const list = document.getElementById('studentsList');
-  const search = (document.getElementById('studentsSearchBox')?.value || '').trim();
-  const filtered = search ? studentsCache.filter(s =>
-    s.student_code.includes(search) || (s.full_name || '').includes(search)
-  ) : studentsCache;
+  const search = normalizeDigits(document.getElementById('studentsSearchBox')?.value || '') || (document.getElementById('studentsSearchBox')?.value || '').trim();
+  const rawSearch = (document.getElementById('studentsSearchBox')?.value || '').trim();
+  const filtered = rawSearch ? studentsCache.filter(s => s.student_code.includes(search) || (s.full_name || '').includes(rawSearch)) : studentsCache;
+  const today = new Date().toDateString();
+  const online = studentsCache.filter(s => studentState(s).cls === 'online').length;
+  const todayN = studentsCache.filter(s => s.last_seen_at && new Date(s.last_seen_at).toDateString() === today).length;
+  const bannedN = studentsCache.filter(s => s.status === 'banned').length;
   document.getElementById('studentsCountBadge').innerText = `${studentsCache.length} طالب مسجل`;
-  if(filtered.length === 0){
-    list.innerHTML = '<div style="color:#888;font-size:.9rem;text-align:center;padding:20px 0;">لا يوجد طلاب مطابقين.</div>';
-    return;
-  }
+  const sum = document.getElementById('studentsSummary');
+  if(sum) sum.innerHTML = `<div><b>${studentsCache.length}</b>إجمالي الطلاب</div><div><b>${online}</b>متصل الآن</div><div><b>${todayN}</b>دخلوا النهاردة</div><div><b>${bannedN}</b>محظور</div>`;
+  if(filtered.length === 0){ list.innerHTML = '<div style="color:#888;font-size:.9rem;text-align:center;padding:20px 0;">لا يوجد طلاب مطابقين.</div>'; return; }
+  const sorted = [...filtered].sort((a, b) => studentState(a).rank - studentState(b).rank || new Date(b.last_seen_at || 0) - new Date(a.last_seen_at || 0));
+  const names = {1:'الأول', 2:'الثاني', 3:'الثالث'};
   list.innerHTML = '';
-  filtered.forEach(s => {
+  sorted.forEach(s => {
+    const st = studentState(s), c = s.student_code;
+    let perms = '';
+    for(let lvl = 1; lvl <= 3; lvl++){
+      const allowed = s['exam_allowed_' + lvl] || 0, used = countExamAttemptsUsed(c, lvl);
+      perms += `<div class="exam-perm-chip ${allowed - used > 0 ? 'has-attempts' : 'locked'}"><span>مستوى ${names[lvl]}: ${used}/${allowed}</span>
+        <button class="exam-perm-set-btn" title="تحديد عدد المحاولات" onclick="setExamAllowed('${c}', ${lvl}, ${allowed})"><i class="fa-solid fa-pen"></i></button>
+        ${used > 0 ? `<button class="exam-perm-reset-btn" title="مسح المحاولات" onclick="resetExamAttempts('${c}', ${lvl})"><i class="fa-solid fa-rotate-left"></i></button>` : ''}</div>`;
+    }
     const row = document.createElement('div');
     row.className = 'student-row';
-    const statusClass = s.status === 'kicked' ? 'kicked' : (s.device_id ? 'active' : 'nodevice');
-    const statusText = s.status === 'kicked' ? '⛔ موقوف' : (s.device_id ? '✅ مفعّل على جهاز' : '⏳ لسه ما دخلش');
-    const names = {1:'الأول', 2:'الثاني', 3:'الثالث'};
-    let permsHtml = '';
-    for(let lvl = 1; lvl <= 3; lvl++){
-      const allowed = s['exam_allowed_' + lvl] || 0;
-      const used = countExamAttemptsUsed(s.student_code, lvl);
-      const remaining = allowed - used;
-      const chipClass = remaining > 0 ? 'has-attempts' : 'locked';
-      permsHtml += `<div class="exam-perm-chip ${chipClass}">
-          <span>مستوى ${names[lvl]}: ${used}/${allowed}</span>
-          <button class="exam-perm-set-btn" title="تحديد عدد المحاولات المسموحة" onclick="setExamAllowed('${s.student_code}', ${lvl}, ${allowed})"><i class="fa-solid fa-pen"></i></button>
-          ${used > 0 ? `<button class="exam-perm-reset-btn" title="مسح محاولاته السابقة في هذا المستوى وإعادة الفرصة" onclick="resetExamAttempts('${s.student_code}', ${lvl})"><i class="fa-solid fa-rotate-left"></i></button>` : ''}
-        </div>`;
-    }
+    row.style.cssText = 'flex-direction:column;align-items:stretch;';
     row.innerHTML = `
-      <div class="student-row-top">
-        <div class="student-code-cell">
-          <b>${escapeHtml(s.full_name) || '(بدون اسم)'} <span style="color:var(--text-light);font-weight:700;">— ${escapeHtml(s.student_code)}</span></b>
-          <span class="student-status-pill ${statusClass}">${statusText}</span>
-        </div>
-        <div class="actions">
-          ${s.status === 'kicked'
-            ? `<button class="btn-unkick" title="إعادة التفعيل" onclick="unkickStudent('${s.student_code}')"><i class="fa-solid fa-rotate-left"></i></button>`
-            : `<button class="btn-kick" title="طرد/إيقاف فوري" onclick="kickStudent('${s.student_code}')"><i class="fa-solid fa-ban"></i></button>`}
-          <button class="btn-unlink" title="فك ربط الجهاز" onclick="unlinkStudentDevice('${s.student_code}')"><i class="fa-solid fa-mobile-screen"></i></button>
-          <button class="btn-del-student" title="حذف نهائي" onclick="deleteStudent('${s.student_code}')"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      </div>
-      <div class="student-exam-perms">${permsHtml}</div>`;
+      <div class="stu-top"><div><b>${escapeHtml(s.full_name) || '(بدون اسم)'}</b><br><span class="stu-phone">${escapeHtml(c)}</span></div>
+        <span class="student-status-pill ${st.cls}">${st.txt}</span></div>
+      <div class="stu-grid">
+        <span>🕒 آخر ظهور: ${s.last_seen_at ? formatRelativeTime(s.last_seen_at) : 'لسه ما دخلش'}</span>
+        <span>📅 أول دخول: ${s.created_at ? new Date(s.created_at).toLocaleDateString('ar-EG', {day:'numeric', month:'short'}) : '-'}</span>
+        <span>🔁 مرات الدخول: ${s.total_opens || 0}</span>
+        <span>⏱️ وقت المذاكرة: ${formatDuration(s.total_seconds_active)}</span>
+        <span>🔤 كلمات: ${s.total_words_heard || 0}</span>
+        <span>💬 جمل: ${s.total_sentences_heard || 0}</span></div>
+      <div class="student-exam-perms">${perms}</div>
+      <div class="stu-btns">
+        <button class="b-kick" onclick="kickStudent('${c}')">🚪 طرد</button>
+        ${s.status === 'banned' ? `<button class="b-unban" onclick="unbanStudent('${c}')">✅ فك الحظر</button>` : `<button class="b-ban" onclick="banStudent('${c}')">🚫 حظر</button>`}
+        <button class="b-del" onclick="deleteStudent('${c}')">🗑️ حذف</button></div>`;
     list.appendChild(row);
   });
 }
@@ -4907,41 +4936,23 @@ async function addStudent(){
 }
 
 async function kickStudent(code){
-  if(!confirm(`متأكد إنك عايز توقف اشتراك الرقم ${code}؟ هيتم طرده فورًا لو داخل دلوقتي.`)) return;
-  try{
-    const { error } = await _supabase.from('students').update({ status: 'kicked' }).eq('student_code', code);
-    if(error) throw error;
-    showToast(`⛔ تم إيقاف اشتراك ${code} فورًا`);
-    await loadStudentsList();
-  }catch(e){
-    console.error(e);
-    alert('حدث خطأ أثناء إيقاف الطالب.');
-  }
+  if(!confirm(`طرد الرقم ${code} دلوقتي؟ هيتقفل عليه فورًا وممكن يدخل تاني بكتابة اسمه ورقمه.`)) return;
+  const { error } = await _supabase.from('students').update({ device_id: 'kicked-' + Date.now() }).eq('student_code', code);
+  if(error){ console.error(error); alert('حدث خطأ أثناء الطرد.'); return; }
+  showToast(`🚪 تم طرد ${code}`); await loadStudentsList();
 }
 
-async function unkickStudent(code){
-  try{
-    const { error } = await _supabase.from('students').update({ status: 'active' }).eq('student_code', code);
-    if(error) throw error;
-    showToast(`✅ تم إعادة تفعيل ${code}`);
-    await loadStudentsList();
-  }catch(e){
-    console.error(e);
-    alert('حدث خطأ أثناء إعادة التفعيل.');
-  }
+async function banStudent(code){
+  if(!confirm(`حظر الرقم ${code}؟ هيتطرد فورًا ومش هيقدر يدخل تاني (لا بالرقم ولا بالاسم ولا من نفس الجهاز) لحد ما تفك الحظر.`)) return;
+  const { error } = await _supabase.from('students').update({ status: 'banned' }).eq('student_code', code);
+  if(error){ console.error(error); alert('حدث خطأ أثناء الحظر.'); return; }
+  showToast(`🚫 تم حظر ${code}`); await loadStudentsList();
 }
 
-async function unlinkStudentDevice(code){
-  if(!confirm(`فك ربط الجهاز عن الرقم ${code}؟ هيقدر يدخل من أي جهاز جديد بعدها.`)) return;
-  try{
-    const { error } = await _supabase.from('students').update({ device_id: null }).eq('student_code', code);
-    if(error) throw error;
-    showToast(`🔓 تم فك ربط الجهاز عن ${code}`);
-    await loadStudentsList();
-  }catch(e){
-    console.error(e);
-    alert('حدث خطأ أثناء فك ربط الجهاز.');
-  }
+async function unbanStudent(code){
+  const { error } = await _supabase.from('students').update({ status: 'active', device_id: null }).eq('student_code', code);
+  if(error){ console.error(error); alert('حدث خطأ أثناء فك الحظر.'); return; }
+  showToast(`✅ تم فك الحظر عن ${code}`); await loadStudentsList();
 }
 
 async function deleteStudent(code){
@@ -5126,7 +5137,7 @@ function renderStatsList(){
     row.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
         <b style="color:var(--text-dark);">${escapeHtml(s.full_name) || '(بدون اسم)'} <span style="color:var(--text-light);font-weight:700;font-size:.82rem;">— ${escapeHtml(s.student_code)}</span></b>
-        <span class="student-status-pill ${s.status === 'kicked' ? 'kicked' : 'active'}" style="font-size:.7rem;">${formatRelativeTime(s.last_seen_at)}</span>
+        <span class="student-status-pill ${s.status === 'banned' ? 'banned' : 'active'}" style="font-size:.7rem;">${formatRelativeTime(s.last_seen_at)}</span>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:10px;font-size:.78rem;color:var(--text-light);font-weight:700;">
         <span>🔤 كلمات: ${s.total_words_heard || 0}</span>
@@ -5406,7 +5417,7 @@ function handleLogoFileSelect(event){
   reader.onload = (e) => {
     const img = new Image();
     img.onload = () => {
-      const maxSize = 300;
+      const maxSize = 1000;
       let w = img.width, h = img.height;
       if(w > h){ if(w > maxSize){ h = Math.round(h * maxSize / w); w = maxSize; } }
       else { if(h > maxSize){ w = Math.round(w * maxSize / h); h = maxSize; } }
@@ -5473,9 +5484,11 @@ async function changeAdminPassword(){
   const newPass = document.getElementById('newAdminPassword').value.trim();
   if(newPass.length < 4){ alert('برجاء إدخال كلمة مرور لا تقل عن 4 خانات!'); return; }
   try{
-    const { error } = await _supabase.from('app_settings').update({ admin_password: newPass }).eq('id', 1);
+    let old = adminPassInMemory || prompt('اكتب كلمة المرور الحالية للتأكيد:') || '';
+    const { data: changed, error } = await _supabase.rpc('admin_change_password', { p_old: old, p_new: newPass });
     if(error) throw error;
-    liveAdminPassword = newPass;
+    if(!changed){ alert('❌ كلمة المرور الحالية غير صحيحة.'); return; }
+    adminPassInMemory = newPass;
     alert('🔒 تم تحديث كلمة المرور بنجاح!');
     document.getElementById('newAdminPassword').value = '';
     closeAdminModal();
@@ -6056,11 +6069,189 @@ async function vaDeleteVideo(id){
 window.onload = async () => {
   await loadAppSettings();
   await initGateOnLoad();
-  if(!gateVerified) await resumePendingIfAny();
+  loadHonorBoard(); setInterval(loadHonorBoard, 60000);
+  setInterval(() => { const sec = document.getElementById('adminSecStudents'); if(sec && sec.classList.contains('active')) renderStudentsList(); }, 30000);
   await loadCategories();
   renderLevelSwitcher();
   renderCertBanner();
 };
+</script>
+
+<!-- ===== القائمة السريعة (☰) + مميزات الطالب — sq ===== -->
+<style id="sq-css">
+#sqBtn{position:fixed;top:14px;right:14px;z-index:150;width:44px;height:44px;border-radius:14px;border:1px solid color-mix(in srgb,var(--text-light) 30%,transparent);background:color-mix(in srgb,var(--card-bg) 82%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.14);transition:.25s}
+#sqBtn i{display:block;width:19px;height:2px;border-radius:2px;background:var(--text-dark);transition:.3s}
+#sqBtn.open i:nth-child(1){transform:translateY(7px) rotate(45deg)}#sqBtn.open i:nth-child(2){opacity:0}#sqBtn.open i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+#sqBtn.focus{border-color:var(--purple);box-shadow:0 0 0 3px color-mix(in srgb,var(--purple) 30%,transparent)}
+#sqPanel{position:fixed;top:66px;right:14px;z-index:151;width:300px;max-width:calc(100vw - 28px);max-height:calc(100vh - 90px);overflow:auto;border-radius:22px;padding:8px;background:var(--card-bg);color:var(--text-dark);border:1px solid color-mix(in srgb,var(--text-light) 22%,transparent);box-shadow:0 18px 44px rgba(0,0,0,.28);display:none}
+#sqPanel.show{display:block;animation:sqIn .22s ease}@keyframes sqIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.sq-h{padding:10px 12px 8px;font-weight:900;font-size:.9rem;display:flex;gap:8px;align-items:center}.sq-h i{color:var(--primary)}
+.sq-row{display:flex;align-items:center;gap:10px;width:100%;padding:10px;border:none;background:none;border-radius:14px;cursor:pointer;text-align:right;color:inherit;font-family:inherit}
+.sq-row:hover{background:color-mix(in srgb,var(--primary) 8%,transparent)}
+.sq-ic{width:34px;height:34px;flex:none;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:#fff;background:var(--primary)}
+.sq-ic.g{background:var(--accent)}.sq-ic.p{background:var(--purple)}.sq-ic.t{background:var(--secondary)}.sq-ic.k{background:linear-gradient(135deg,#f3d98a,#c9962b);color:#2a1c05}
+.sq-lb{flex:1;font-weight:800;font-size:.85rem;line-height:1.35}.sq-lb small{display:block;font-weight:700;font-size:.66rem;color:var(--text-light)}
+.sq-div{height:1px;margin:6px 10px;background:color-mix(in srgb,var(--text-light) 22%,transparent)}
+.sq-sw{position:relative;width:46px;height:26px;flex:none}.sq-sw input{opacity:0;width:0;height:0}.sq-sw span{position:absolute;inset:0;border-radius:20px;background:color-mix(in srgb,var(--text-light) 40%,transparent);transition:.25s;cursor:pointer}
+.sq-sw span::before{content:"";position:absolute;width:20px;height:20px;top:3px;right:3px;border-radius:50%;background:#fff;transition:.25s}.sq-sw input:checked+span{background:var(--primary)}.sq-sw input:checked+span::before{transform:translateX(-20px)}
+.sq-pal{display:flex;gap:8px;padding:2px 10px 10px;flex-wrap:wrap}
+.sq-dot{width:30px;height:30px;border-radius:50%;border:3px solid transparent;cursor:pointer;background:var(--c);box-shadow:0 2px 8px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#fff}
+.sq-dot.on{border-color:var(--text-dark)}.sq-dot.def{background:conic-gradient(#E1654B,#D2A23A,#2E9C93,#8E72C4,#E1654B)}
+.sq-size{display:flex;align-items:center;gap:8px;padding:2px 10px 8px}.sq-size button{flex:1;padding:8px;border-radius:12px;border:1px solid color-mix(in srgb,var(--text-light) 30%,transparent);background:none;color:inherit;font-weight:900;cursor:pointer;font-family:inherit}.sq-size b{min-width:46px;text-align:center;font-size:.85rem}
+#sqModal{position:fixed;inset:0;z-index:320;background:rgba(20,16,28,.6);display:none;align-items:center;justify-content:center;padding:16px}#sqModal.show{display:flex}
+.sq-box{width:100%;max-width:420px;max-height:84vh;overflow:auto;border-radius:24px;padding:18px;background:var(--card-bg);color:var(--text-dark);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.sq-box h3{display:flex;justify-content:space-between;align-items:center;font-size:1.05rem;font-weight:900;margin-bottom:12px}.sq-x{border:none;background:none;color:var(--text-light);font-size:1.1rem;cursor:pointer}
+.sq-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}.sq-tile{text-align:center;padding:12px 4px;border-radius:16px;background:color-mix(in srgb,var(--primary) 9%,transparent)}.sq-tile b{display:block;font-size:1.3rem;font-weight:900;color:var(--primary)}.sq-tile small{font-size:.66rem;font-weight:800;color:var(--text-light)}
+.sq-lvl{padding:14px;border-radius:18px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 24%,transparent),color-mix(in srgb,var(--primary) 12%,transparent));text-align:center;font-weight:900}.sq-lvl div{font-size:1.15rem;margin-bottom:8px}.sq-bar{height:10px;border-radius:8px;background:color-mix(in srgb,var(--text-light) 25%,transparent);overflow:hidden}.sq-bar i{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--primary),var(--accent))}.sq-lvl small{display:block;margin-top:6px;font-size:.7rem;color:var(--text-light)}
+.sq-fav{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:color-mix(in srgb,var(--primary) 7%,transparent);margin-bottom:8px;font-family:'Poppins',sans-serif;font-weight:800;direction:ltr}.sq-fav span{flex:1}.sq-fav button{border:none;background:none;cursor:pointer;font-size:1rem;color:var(--primary)}.sq-empty{text-align:center;color:var(--text-light);font-weight:700;padding:18px 6px;font-size:.85rem}
+#sqTop{position:fixed;bottom:20px;left:16px;z-index:140;width:46px;height:46px;border:none;border-radius:50%;background:var(--primary);color:#fff;font-size:1.05rem;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.28);opacity:0;pointer-events:none;transform:translateY(12px);transition:.3s}#sqTop.show{opacity:1;pointer-events:auto;transform:none}
+#sqWelcome{position:fixed;top:70px;left:50%;z-index:160;width:min(92vw,380px);display:none;align-items:center;gap:12px;padding:14px 16px;border-radius:20px;background:var(--card-bg);color:var(--text-dark);box-shadow:0 14px 38px rgba(0,0,0,.3);border:1px solid color-mix(in srgb,var(--accent) 50%,transparent);transform:translateX(-50%)}#sqWelcome.show{display:flex}#sqWelcome em{font-size:1.8rem;font-style:normal}#sqWelcome div{flex:1;font-weight:800;font-size:.85rem;line-height:1.5}#sqWelcome button{border:none;background:none;color:var(--text-light);font-size:1rem;cursor:pointer}
+html.s-night{--bg-1:#241B27!important;--bg-2:#2A2030!important;--bg-3:#1E1720!important;--card-bg:#2E2534!important;--text-dark:#F2E9EF!important;--text-light:#B9A6B7!important}
+body.s-focus .honor-wrap,body.s-focus .king-ribbon,body.s-focus #sqWelcome{display:none!important}
+body.is-king #sqAdmin{display:flex!important}
+</style>
+<button id="sqBtn" onclick="sqToggle()" title="القائمة السريعة"><i></i><i></i><i></i></button>
+<div id="sqPanel"></div>
+<div id="sqModal" onclick="if(event.target===this)sqCloseModal()"><div class="sq-box" id="sqBox"></div></div>
+<div id="sqWelcome"><em>👋</em><div id="sqWelcomeTx"></div><button onclick="this.parentNode.classList.remove('show')"><i class="fa-solid fa-xmark"></i></button></div>
+<button id="sqTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="لفوق"><i class="fa-solid fa-arrow-up"></i></button>
+<script id="sq-js">
+(function(){
+  var $=function(i){return document.getElementById(i)}, root=document.documentElement;
+  function LS(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function SS(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function LJ(k,d){try{return JSON.parse(LS(k))||d}catch(e){return d}}
+  function today(d){return (d||new Date()).toLocaleDateString('en-CA')}
+  var PAL={sea:['محيط','#1E88C9','#17A2A2','#F2B84B','#E3F2FD','#E0F7FA','#EAF4FF'],rose:['ورد','#D6477A','#8E72C4','#E8A33D','#FDE7EF','#FFF1F6','#F6E8FF'],mint:['نعناع','#2E9C6A','#2E8CB0','#D2A23A','#E4F7EC','#F0FBF3','#E6F6F9'],sunset:['غروب','#E4572E','#8E44AD','#F2A93B','#FFE9D6','#FFF3E0','#FCE4EC'],royal:['ملكي','#6D3FD6','#2E9C93','#D2A23A','#EDE5FF','#F5EFFF','#E8EEFF']};
+  var css='';for(var k in PAL){var p=PAL[k];css+='html[data-sth="'+k+'"]{--primary:'+p[1]+'!important;--secondary:'+p[2]+'!important;--accent:'+p[3]+'!important}html:not(.s-night)[data-sth="'+k+'"]{--bg-1:'+p[4]+'!important;--bg-2:'+p[5]+'!important;--bg-3:'+p[6]+'!important;--card-bg:#fff!important;--text-dark:#2b2430!important;--text-light:#7d7388!important}'}
+  var st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
+  var origTheme=window.applyTheme;
+  function restoreTheme(){try{origTheme(appSettings&&appSettings.theme_name||'classic')}catch(e){}}
+  function sync(restore){
+    var night=LS('sq_night')==='1', sth=LS('sq_sth')||'';
+    root.classList.toggle('s-night',night);
+    if(sth) root.setAttribute('data-sth',sth); else root.removeAttribute('data-sth');
+    if(night) root.classList.add('dark-theme'); else if(sth) root.classList.remove('dark-theme'); else if(restore) restoreTheme();
+    root.style.fontSize=(LS('sq_size')||'100')+'%';
+    document.body.classList.toggle('s-focus',LS('sq_focus')==='1');
+    $('sqBtn').classList.toggle('focus',LS('sq_focus')==='1');
+  }
+  if(origTheme) window.applyTheme=function(){origTheme.apply(this,arguments);sync(false)};
+  var origMot=window.maybeShowMotivation;
+  if(origMot) window.maybeShowMotivation=function(){if(LS('sq_focus')==='1')return;return origMot.apply(this,arguments)};
+  var origTrack=window.trackHeardStat;
+  window.trackHeardStat=function(kind){
+    var s=LJ('sq_stats',{total:0,days:{},open:{}}),d=today();s.total++;s.days[d]=(s.days[d]||0)+1;SS('sq_stats',JSON.stringify(s));
+    if(origTrack) return origTrack.apply(this,arguments);
+  };
+  document.addEventListener('click',function(e){
+    var t=e.target.closest&&e.target.closest('#unitsNav .unit-tab,#lessonsNav .lesson-tab');
+    if(!t||t.classList.contains('locked'))return;
+    var sp=t.querySelector('span'),txt=(sp?sp.innerText:t.innerText).trim(),l=LJ('sq_last',{});
+    if(t.closest('#lessonsNav')) l.l=txt; else l={c:txt,l:''};
+    SS('sq_last',JSON.stringify(l));
+  },true);
+  function tabByText(sel,txt){var a=document.querySelectorAll(sel);for(var i=0;i<a.length;i++){var sp=a[i].querySelector('span'),v=(sp?sp.innerText:a[i].innerText).trim();if(v===txt)return a[i]}return null}
+  window.sqContinue=function(){
+    sqClose();var l=LJ('sq_last',null);
+    if(!l||!l.c){showToast('لسه مفيش حصة محفوظة، ابدأ مذاكرة وهفتكرها 📌');return}
+    var c=tabByText('#unitsNav .unit-tab',l.c);if(c)c.click();
+    if(l.l){var n=0,iv=setInterval(function(){var t=tabByText('#lessonsNav .lesson-tab',l.l);if(t){clearInterval(iv);t.click();window.scrollTo({top:0,behavior:'smooth'})}else if(++n>20)clearInterval(iv)},300)}
+    showToast('📌 رجعتلك لآخر حصة كنت فيها');
+  };
+  var LV=[[0,'مبتدئ 🌱'],[50,'متحمّس 🔥'],[150,'مجتهد 💪'],[400,'متميّز ⭐'],[800,'نجم الكورس 🌟'],[1500,'أسطورة 👑']];
+  function streak(){var s=LJ('sq_stats',{open:{}}),o=s.open||{},dt=new Date(),n=0;if(!o[today(dt)])dt.setDate(dt.getDate()-1);while(o[today(dt)]){n++;dt.setDate(dt.getDate()-1)}return n}
+  window.sqProgress=function(){
+    sqClose();var s=LJ('sq_stats',{total:0,days:{}}),tot=s.total||0,td=(s.days||{})[today()]||0,i=0;
+    for(var j=0;j<LV.length;j++) if(tot>=LV[j][0]) i=j;
+    var nx=LV[i+1],pct=nx?Math.round((tot-LV[i][0])/(nx[0]-LV[i][0])*100):100;
+    sqModal('<h3><span>🚀 تقدّمي</span><button class="sq-x" onclick="sqCloseModal()"><i class="fa-solid fa-xmark"></i></button></h3><div class="sq-tiles"><div class="sq-tile"><b>'+streak()+'</b><small>🔥 أيام ورا بعض</small></div><div class="sq-tile"><b>'+td+'</b><small>🎧 سمعت النهاردة</small></div><div class="sq-tile"><b>'+((typeof favoriteWords!=='undefined'?favoriteWords.length:0))+'</b><small>⭐ مفضّلة</small></div></div><div class="sq-lvl"><div>لقبك: '+LV[i][1]+'</div><div class="sq-bar"><i style="width:'+pct+'%"></i></div><small>'+(nx?'فاضل '+(nx[0]-tot)+' سماع على لقب '+nx[1]:'وصلت لأعلى لقب! 👑')+' · إجمالي '+tot+'</small></div>');
+  };
+  window.sqFavs=function(){
+    sqClose();var f=(typeof favoriteWords!=='undefined'?favoriteWords:[]);
+    sqModal('<h3><span>⭐ كلماتي المفضّلة</span><button class="sq-x" onclick="sqCloseModal()"><i class="fa-solid fa-xmark"></i></button></h3>'+(f.length?f.map(function(w,i){return '<div class="sq-fav"><span>'+String(w).replace(/[<>&"]/g,'')+'</span><button onclick="sqSay('+i+')"><i class="fa-solid fa-volume-high"></i></button><button onclick="sqUnfav('+i+')"><i class="fa-solid fa-trash"></i></button></div>'}).join(''):'<div class="sq-empty">لسه مفيش كلمات مفضّلة. دوس على ⭐ في أي كلمة تحفظها هنا 🌟</div>'));
+  };
+  window.sqSay=function(i){try{speakText(favoriteWords[i],document.createElement('div'))}catch(e){}};
+  window.sqUnfav=function(i){favoriteWords=favoriteWords.filter(function(_,j){return j!==i});SS('bayomyiFavWords',JSON.stringify(favoriteWords));document.querySelectorAll('.star-btn.starred').forEach(function(x){x.classList.remove('starred')});sqFavs();showToast('اتشالت من المفضّلة')};
+  function sqModal(h){$('sqBox').innerHTML=h;$('sqModal').classList.add('show')}
+  window.sqCloseModal=function(){$('sqModal').classList.remove('show')};
+  window.sqClose=function(){$('sqPanel').classList.remove('show');$('sqBtn').classList.remove('open')};
+  window.sqToggle=function(){var o=$('sqPanel').classList.toggle('show');$('sqBtn').classList.toggle('open',o);if(o)build()};
+  window.sqNight=function(on){SS('sq_night',on?'1':'0');sync(true);showToast(on?'🌙 اتفعّل الوضع الليلي':'☀️ اتقفل الوضع الليلي')};
+  window.sqFocus=function(on){SS('sq_focus',on?'1':'0');sync(false);showToast(on?'🎯 وضع التركيز: وقفت التنبيهات واللوحة عشان تذاكر':'🔔 رجعت التنبيهات تاني')};
+  window.sqRemind=function(on){SS('sq_remind',on?'1':'0');showToast(on?'⏰ هفكّرك لو غبت عن المذاكرة':'⏰ اتقفل التذكير اليومي')};
+  window.sqTheme=function(k){SS('sq_sth',k);sync(true);build()};
+  window.sqSize=function(d){var v=Math.min(125,Math.max(88,(parseInt(LS('sq_size')||'100',10))+d));SS('sq_size',String(v));sync(false);build()};
+  function sw(id,on,fn){return '<label class="sq-sw"><input type="checkbox" '+(on?'checked':'')+' onchange="'+fn+'(this.checked)"><span></span></label>'}
+  function build(){
+    var cur=LS('sq_sth')||'',dots='<div class="sq-dot def'+(cur===''?' on':'')+'" title="الافتراضي" onclick="sqTheme(\'\')"></div>';
+    for(var k in PAL) dots+='<div class="sq-dot'+(cur===k?' on':'')+'" style="--c:linear-gradient(135deg,'+PAL[k][1]+','+PAL[k][3]+')" title="'+PAL[k][0]+'" onclick="sqTheme(\''+k+'\')">'+(cur===k?'✓':'')+'</div>';
+    $('sqPanel').innerHTML='<div class="sq-h"><i class="fa-solid fa-sliders"></i> القائمة السريعة</div>'
+    +'<button class="sq-row" id="sqAdmin" style="display:none" onclick="sqClose();openAdminModal()"><span class="sq-ic k"><i class="fa-solid fa-crown"></i></span><span class="sq-lb">لوحة الإدارة<small>الكينج بس 👑</small></span></button>'
+    +'<button class="sq-row" onclick="sqContinue()"><span class="sq-ic"><i class="fa-solid fa-bookmark"></i></span><span class="sq-lb">كمل من هنا<small>ارجع لآخر حصة كنت فيها</small></span></button>'
+    +'<button class="sq-row" onclick="sqProgress()"><span class="sq-ic g"><i class="fa-solid fa-rocket"></i></span><span class="sq-lb">تقدّمي<small>لقبك وأيام مذاكرتك</small></span></button>'
+    +'<button class="sq-row" onclick="sqFavs()"><span class="sq-ic t"><i class="fa-solid fa-star"></i></span><span class="sq-lb">كلماتي المفضّلة<small>'+((typeof favoriteWords!=='undefined'?favoriteWords.length:0))+' كلمة</small></span></button>'
+    +'<div class="sq-div"></div>'
+    +'<div class="sq-row"><span class="sq-ic p"><i class="fa-solid fa-moon"></i></span><span class="sq-lb">الوضع الليلي<small>مريح للعين بالليل</small></span>'+sw('n',LS('sq_night')==='1','sqNight')+'</div>'
+    +'<div class="sq-row"><span class="sq-ic t"><i class="fa-solid fa-bullseye"></i></span><span class="sq-lb">وضع التركيز<small>يوقف التنبيهات ولوحة الشرف</small></span>'+sw('f',LS('sq_focus')==='1','sqFocus')+'</div>'
+    +'<div class="sq-row"><span class="sq-ic g"><i class="fa-solid fa-clock-rotate-left"></i></span><span class="sq-lb">تذكير المذاكرة<small>يفكّرك لو غبت يوم أو أكتر</small></span>'+sw('r',LS('sq_remind')==='1','sqRemind')+'</div>'
+    +'<div class="sq-div"></div><div class="sq-h"><i class="fa-solid fa-palette"></i> الألوان (سيمز)</div><div class="sq-pal">'+dots+'</div>'
+    +'<div class="sq-h"><i class="fa-solid fa-text-height"></i> حجم الخط</div><div class="sq-size"><button onclick="sqSize(-6)">A−</button><b>'+(LS('sq_size')||'100')+'%</b><button onclick="sqSize(6)">A+</button></div>';
+  }
+  document.addEventListener('click',function(e){if(!e.target.closest('#sqPanel,#sqBtn'))sqClose()});
+  window.addEventListener('scroll',function(){$('sqTop').classList.toggle('show',window.scrollY>500)},{passive:true});
+  var s0=LJ('sq_stats',{total:0,days:{},open:{}});s0.open=s0.open||{};s0.open[today()]=1;SS('sq_stats',JSON.stringify(s0));
+  var last=LS('sq_lastopen');
+  if(LS('sq_remind')==='1'&&last){var dy=Math.floor((Date.now()-new Date(last).getTime())/864e5);if(dy>=1)setTimeout(function(){$('sqWelcomeTx').textContent=(dy===1?'وحشتنا! 🌸':'من زمان مبانلكش! 🌸')+' بقالك '+(dy===1?'يوم':dy+' يوم')+' ما ذاكرتش، يلا نرجع للمذاكرة 💪';$('sqWelcome').classList.add('show');setTimeout(function(){$('sqWelcome').classList.remove('show')},7000)},1500)}
+  SS('sq_lastopen',new Date().toISOString());
+  sync(false);
+})();
+</script>
+
+<!-- ===== تثبيت البرنامج على الموبايل (PWA) ===== -->
+<style id="pwa-css">
+#pwaBar{position:fixed;left:50%;bottom:14px;z-index:310;width:min(94vw,440px);transform:translate(-50%,140%);transition:transform .45s cubic-bezier(.2,.9,.3,1.1);display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:24px;background:var(--card-bg);color:var(--text-dark);border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+#pwaBar.show{transform:translate(-50%,0)}
+#pwaBar .pw-top{display:flex;align-items:center;gap:12px}
+#pwaBar img{width:56px;height:56px;border-radius:16px;flex:none;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+#pwaBar .pw-t{flex:1;font-weight:900;font-size:.95rem;line-height:1.4}#pwaBar .pw-t small{display:block;font-weight:700;font-size:.72rem;color:var(--text-light);margin-top:2px}
+#pwaBar .pw-x{border:none;background:none;color:var(--text-light);font-size:1.1rem;cursor:pointer;align-self:flex-start}
+#pwaBar .pw-go{border:none;border-radius:14px;padding:12px;font-family:inherit;font-weight:900;font-size:.95rem;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--primary),var(--accent))}
+#pwaBar .pw-steps{display:none;font-size:.8rem;font-weight:700;line-height:1.9;padding:10px 12px;border-radius:14px;background:color-mix(in srgb,var(--primary) 8%,transparent)}
+#pwaBar .pw-steps.show{display:block}
+</style>
+<div id="pwaBar" role="dialog" aria-label="تثبيت البرنامج">
+  <div class="pw-top"><img src="icons/icon-192.png" alt="">
+    <div class="pw-t">ثبّت البرنامج على موبايلك 📲<small>هيتحط على الشاشة الرئيسية بصورة المستر وتفتحه بضغطة</small></div>
+    <button class="pw-x" onclick="pwaDismiss()" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button></div>
+  <div class="pw-steps" id="pwaSteps"></div>
+  <button class="pw-go" id="pwaGo" onclick="pwaInstall()">تثبيت البرنامج</button>
+</div>
+<script id="pwa-js">
+(function(){
+  if('serviceWorker' in navigator) window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})});
+  var standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+  if(standalone) return;
+  var ua=navigator.userAgent||'',isIOS=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  var inApp=/FBAN|FBAV|Instagram|Messenger|WhatsApp|Line\//i.test(ua);
+  var deferred=null,bar=document.getElementById('pwaBar');
+  function LS(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function SS(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function snoozed(){var t=parseInt(LS('pwa_dismiss')||'0',10);return LS('pwa_installed')==='1'||(t&&Date.now()-t<3*864e5)}
+  function show(){if(snoozed())return;bar.classList.add('show')}
+  window.pwaDismiss=function(){bar.classList.remove('show');SS('pwa_dismiss',String(Date.now()))};
+  window.pwaInstall=function(){
+    var steps=document.getElementById('pwaSteps');
+    if(deferred){deferred.prompt();deferred.userChoice.then(function(c){if(c.outcome==='accepted'){SS('pwa_installed','1');bar.classList.remove('show')}else pwaDismiss();deferred=null});return}
+    var h;
+    if(isIOS) h='١) دوس على زرار <b>المشاركة</b> <i class="fa-solid fa-arrow-up-from-bracket"></i> تحت في سفاري<br>٢) اختار <b>إضافة إلى الشاشة الرئيسية</b><br>٣) دوس <b>إضافة</b> وهتلاقي البرنامج بصورة المستر 🎉'+(inApp?'<br><small>لو فاتح من فيسبوك أو واتساب، افتح اللينك في Safari الأول.</small>':'');
+    else h='١) دوس على قايمة المتصفح <b>⋮</b> فوق<br>٢) اختار <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b><br>٣) أكّد وهتلاقي البرنامج بصورة المستر 🎉'+(inApp?'<br><small>لو فاتح من فيسبوك أو واتساب، افتح اللينك في Chrome الأول.</small>':'');
+    steps.innerHTML=h;steps.classList.add('show');document.getElementById('pwaGo').style.display='none';
+  };
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferred=e;setTimeout(show,2500)});
+  window.addEventListener('appinstalled',function(){SS('pwa_installed','1');bar.classList.remove('show')});
+  setTimeout(function(){if(!deferred)show()},4000);
+})();
 </script>
 </body>
 </html>
