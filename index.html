@@ -921,14 +921,14 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
 
 /* ===== Hero (نفس شكل ميز زينب) ===== */
 .hero{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:34px 0 0;background:linear-gradient(180deg,#fff 0,#fff 90%,transparent)}
-html.dark-theme .hero{background:none}
+/* الوضع الليلي مبيلمسش قسم صورة المستر: بنثبّت ألوانه على الوضع النهاري */
+html.dark-theme .hero,html.s-night .hero{--text-dark:#332B24;--text-light:#8B8073;--card-bg:#FFFDF8;--bg-1:#FBF5E9;--bg-2:#EEF6F3;--bg-3:#FBEEF0;color:#332B24}
 .hero-eyebrow{display:inline-flex;margin:0 0 10px;padding:6px 18px;border:1px solid color-mix(in srgb,var(--primary) 25%,transparent);border-radius:999px;background:color-mix(in srgb,var(--primary) 9%,transparent);font:700 .78rem 'Cairo',sans-serif;color:var(--primary);animation:zFade .7s ease both}
 :root{--hero-h:clamp(460px,128vw,780px)}
 .hero-photo-wrap{width:min(100%,760px);height:var(--hero-h);display:flex;align-items:flex-end;justify-content:center;position:relative;z-index:2}
 .hero-photo{width:100%;height:100%;display:flex;align-items:flex-end;justify-content:center;font-size:5rem;color:color-mix(in srgb,var(--primary) 30%,transparent)}
 .hero-photo>i{align-self:center}
 .hero-photo img{height:100%;width:auto;max-width:100%;object-fit:contain;object-position:bottom;mix-blend-mode:multiply;-webkit-mask-image:linear-gradient(180deg,#000 82%,transparent 99%);mask-image:linear-gradient(180deg,#000 82%,transparent 99%);animation:zReveal 1.2s cubic-bezier(.2,.8,.2,1) .15s both}
-html.dark-theme .hero-photo img{mix-blend-mode:normal}
 .hero-card{position:relative;z-index:4;width:min(100%,760px);margin:-90px auto 0;padding:0 8px 26px;text-align:center}
 .hero-title{margin:0;padding:.1em 0;font:700 clamp(2rem,8.6vw,3.8rem)/1.35 'Dancing Script','Aref Ruqaa','Cairo',serif;background:linear-gradient(100deg,var(--text-dark) 0%,var(--primary) 45%,var(--secondary) 60%,var(--text-dark) 100%);background-size:230% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:zName 1.1s cubic-bezier(.2,.8,.2,1) .5s both,zSheen 2.6s ease-in-out 1.3s both}
 .hero-divider{width:min(240px,55%);height:1px;margin:12px auto 16px;background:linear-gradient(90deg,transparent,var(--primary),transparent);animation:zLine 1s ease 1s both}
@@ -978,6 +978,10 @@ body.is-king .king-ribbon{display:block}
 .hp-pts{font-weight:900;font-size:1.05rem;color:#f3d98a;line-height:1}
 .hp-pts small{font-size:.58rem;font-weight:700;color:rgba(246,236,210,.55);margin-right:3px}
 .hp.honor-me,.honor-row.honor-me{outline:2px solid #f3d98a;outline-offset:2px}
+.honor-king-hint{display:none;position:relative;z-index:1;text-align:center;font-size:.7rem;font-weight:800;color:#f3d98a;margin:8px 0 0}
+body.is-king .honor-king-hint{display:block}
+body.is-king .honor-card .hp,body.is-king .honor-card .honor-row{cursor:pointer}
+body.is-king .honor-card .hp:active,body.is-king .honor-card .honor-row:active{transform:scale(.97)}
 .honor-toggle{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;
   padding:11px 14px;border-radius:999px;cursor:pointer;font-family:inherit;font-weight:800;font-size:.86rem;color:#f3d98a;
   background:rgba(233,196,106,.1);border:1px solid rgba(233,196,106,.45);transition:.25s}
@@ -1012,6 +1016,8 @@ body.is-king .king-ribbon{display:block}
 .student-status-pill.offline{background:color-mix(in srgb,var(--text-light) 20%,transparent);color:var(--text-light)}
 .student-status-pill.banned{background:#fde0dc;color:#b03225}
 #gateWhatsappBox{display:none!important}
+/* مداخل لوحة الإدارة مخفية: الدخول بـ ٥ ضغطات في مكان فاضي */
+#gateSettingsBtn,.btn-admin,#sqAdmin,body.is-king #sqAdmin{display:none!important}
 </style>
 
 <link rel="manifest" href="manifest.json">
@@ -1212,6 +1218,7 @@ body.is-king .king-ribbon{display:block}
 <section class="honor-wrap"><div class="honor-card">
   <div class="honor-h">👑 لوحة الشرف</div>
   <div class="honor-sub">نجوم المذاكرة — أكتر الطلاب التزامًا</div>
+  <div class="honor-king-hint">👑 اضغط على أي طالب لفتح ملفه في الإدارة</div>
   <div id="honorList"><div class="honor-empty">⏳ جاري التحميل...</div></div>
   <button type="button" class="honor-toggle" id="honorToggle" onclick="toggleHonorMore()" style="display:none"><span id="honorToggleTxt">عرض أفضل ١٠</span> <i class="fa-solid fa-chevron-down"></i></button>
   <div class="honor-more" id="honorMore"><div><div class="honor-more-in">
@@ -3159,6 +3166,26 @@ const _noSp = n => normArName(n).replace(/ /g, '');
 const _honorExcludedSet = new Set(HONOR_EXCLUDED_NAMES.map(_noSp));
 function isHonorExcluded(name){ return _honorExcludedSet.has(_noSp(name)); }
 
+// الكينج بس: الضغط على أي طالب في لوحة الشرف يفتح ملفه في لوحة الإدارة على طول
+document.addEventListener('click', function(e){
+  if(!document.body.classList.contains('is-king')) return;
+  const el = e.target.closest && e.target.closest('.hp[data-name], .honor-row[data-name]');
+  if(!el || !el.closest('.honor-card')) return;
+  honorOpenStudent(el.getAttribute('data-name'));
+});
+async function honorOpenStudent(name){
+  if(!document.body.classList.contains('is-king') || !name) return;
+  await openAdminModal();
+  const modal = document.getElementById('adminModal');
+  if(!modal || modal.style.display !== 'block') return;
+  switchAdminSubTab('students');
+  await loadStudentsList();
+  const box = document.getElementById('studentsSearchBox');
+  if(box){ box.value = name; renderStudentsList(); }
+  const sec = document.getElementById('adminSecStudents');
+  if(sec) sec.scrollIntoView({ block: 'start' });
+}
+
 async function loadHonorBoard(){
   const box = document.getElementById('honorList');
   if(!box) return;
@@ -3181,7 +3208,7 @@ async function loadHonorBoard(){
     const rankTxt = ['', 'الأول', 'الثاني', 'الثالث'];
     box.innerHTML = '<div class="honor-podium">' + order.map(r => {
       const nm = String(r.full_name || '').trim();
-      return `<div class="hp p${r.pos}${mine(r)}">
+      return `<div class="hp p${r.pos}${mine(r)}" data-name="${escapeHtml(nm)}">
         <div class="hp-crown">${r.pos === 1 ? '👑' : ''}</div>
         <div class="hp-av">${escapeHtml(nm.charAt(0) || '★')}</div>
         <div class="hp-rank">${rankTxt[r.pos] || r.pos}</div>
@@ -3189,7 +3216,7 @@ async function loadHonorBoard(){
         <div class="hp-pts">${r.points}<small>نقطة</small></div></div>`;
     }).join('') + '</div>';
     const rest = rows.slice(3);
-    if(more) more.innerHTML = rest.map(r => `<div class="honor-row${mine(r)}">
+    if(more) more.innerHTML = rest.map(r => `<div class="honor-row${mine(r)}" data-name="${escapeHtml(r.full_name)}">
       <div class="honor-medal">${r.pos}</div>
       <div class="honor-name">${escapeHtml(r.full_name)}<div class="honor-meta">🔁 ${r.opens} دخول · 🔤 ${r.words} كلمة · 💬 ${r.sentences} جملة · ⏱️ ${formatDuration(r.minutes * 60)}</div></div>
       <div class="honor-pts">${r.points}<small>نقطة</small></div></div>`).join('');
@@ -3778,6 +3805,9 @@ function toggleTestMode(){ isTestMode = document.getElementById('testModeToggle'
 // ---------------------------------------------------------
 async function openAdminModal(){
   // طول ما الأدمن دخل بكلمة السر صح مرة واحدة في الجلسة دي، مينفعش يتطلب منه يكتبها تاني
+  const _king = document.body.classList.contains('is-king');
+  let _until = 0; try{ _until = +localStorage.getItem('bayomyiAdminUntil') || 0; }catch(e){}
+  if(!adminUnlockedThisSession && _king && _until > Date.now()) adminUnlockedThisSession = true;
   if(!adminUnlockedThisSession){
     const entered = prompt("🔐 برجاء إدخال كلمة السر الخاصة بالإدارة:");
     if(entered === null) return;
@@ -3789,6 +3819,8 @@ async function openAdminModal(){
     adminPassInMemory = entered;
     adminUnlockedThisSession = true;
     sessionStorage.setItem('bayomyiAdminUnlocked', '1');
+    // الكينج بس: مايتسألش على كلمة السر تاني لمدة ٣٠ يوم على الجهاز ده
+    if(document.body.classList.contains('is-king')){ try{ localStorage.setItem('bayomyiAdminUntil', String(Date.now() + 30*864e5)); }catch(e){} }
   }
   closeGateModal();
   document.getElementById('adminModal').style.display = 'block';
@@ -6274,6 +6306,20 @@ body.is-king #sqAdmin{display:flex!important}
     if(ch&&ch.outcome==='accepted'){SS('pwa_installed','1');hide(false)}else hide(true);
   });
   if(isIOS) window.addEventListener('load',function(){setTimeout(tryShow,2500)});
+})();
+</script>
+
+<script id="secret-admin-js">
+(function(){
+  var n=0,last=0;
+  var SKIP='a,button,input,select,textarea,label,video,iframe,audio,[onclick],[role="button"],#adminModal,#sqPanel,#sqModal,#sqBtn,.honor-card,.hp,.honor-row,.social-btn';
+  document.addEventListener('pointerup',function(e){
+    var t=e.target;
+    if(t&&t.closest&&t.closest(SKIP)){n=0;return}
+    var now=Date.now();
+    n=(now-last<1200)?n+1:1; last=now;
+    if(n>=5){ n=0; if(typeof openAdminModal==='function') openAdminModal(); }
+  },true);
 })();
 </script>
 </body>
