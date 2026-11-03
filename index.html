@@ -6210,22 +6210,35 @@ body.is-king #sqAdmin{display:flex!important}
 
 <!-- ===== تثبيت البرنامج على الموبايل (PWA) ===== -->
 <style id="pwa-css">
-#pwaBar{position:fixed;left:50%;bottom:14px;z-index:310;width:min(94vw,440px);transform:translate(-50%,140%);transition:transform .45s cubic-bezier(.2,.9,.3,1.1);display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:24px;background:var(--card-bg);color:var(--text-dark);border:1px solid color-mix(in srgb,var(--accent) 55%,transparent);box-shadow:0 18px 50px rgba(0,0,0,.35)}
-#pwaBar.show{transform:translate(-50%,0)}
-#pwaBar .pw-top{display:flex;align-items:center;gap:12px}
-#pwaBar img{width:56px;height:56px;border-radius:16px;flex:none;box-shadow:0 6px 16px rgba(0,0,0,.25)}
-#pwaBar .pw-t{flex:1;font-weight:900;font-size:.95rem;line-height:1.4}#pwaBar .pw-t small{display:block;font-weight:700;font-size:.72rem;color:var(--text-light);margin-top:2px}
-#pwaBar .pw-x{border:none;background:none;color:var(--text-light);font-size:1.1rem;cursor:pointer;align-self:flex-start}
-#pwaBar .pw-go{border:none;border-radius:14px;padding:12px;font-family:inherit;font-weight:900;font-size:.95rem;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--primary),var(--accent))}
-#pwaBar .pw-steps{display:none;font-size:.8rem;font-weight:700;line-height:1.9;padding:10px 12px;border-radius:14px;background:color-mix(in srgb,var(--primary) 8%,transparent)}
-#pwaBar .pw-steps.show{display:block}
+#pwaModal{position:fixed;inset:0;z-index:330;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(18,12,28,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#pwaModal.show{display:flex;animation:pwFade .3s ease}
+@keyframes pwFade{from{opacity:0}to{opacity:1}}@keyframes pwPop{from{opacity:0;transform:translateY(24px) scale(.92)}to{opacity:1;transform:none}}
+#pwaModal .pw-card{position:relative;width:100%;max-width:360px;text-align:center;padding:30px 22px 20px;border-radius:30px;background:var(--card-bg);color:var(--text-dark);border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);box-shadow:0 30px 80px rgba(0,0,0,.45);animation:pwPop .45s cubic-bezier(.2,.9,.3,1.15)}
+#pwaModal .pw-card::before{content:"";position:absolute;top:0;right:18%;left:18%;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+#pwaModal .pw-ico{width:96px;height:96px;border-radius:26px;display:block;margin:0 auto 14px;box-shadow:0 12px 30px rgba(0,0,0,.28),0 0 0 4px color-mix(in srgb,var(--accent) 35%,transparent)}
+#pwaModal .pw-title{font-weight:900;font-size:1.2rem;line-height:1.5;margin-bottom:6px}
+#pwaModal .pw-sub{font-weight:700;font-size:.84rem;line-height:1.8;color:var(--text-light);margin-bottom:18px}
+#pwaModal .pw-yes{width:100%;border:none;border-radius:16px;padding:14px;font-family:inherit;font-weight:900;font-size:1.05rem;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--primary),var(--accent));box-shadow:0 10px 24px color-mix(in srgb,var(--primary) 45%,transparent)}
+#pwaModal .pw-yes:active{transform:scale(.97)}
+#pwaModal .pw-no{width:100%;margin-top:8px;border:none;background:none;padding:10px;font-family:inherit;font-weight:800;font-size:.85rem;color:var(--text-light);cursor:pointer}
+#pwaModal .pw-ios{display:none;text-align:right;margin:0 0 14px}
+#pwaModal.ios .pw-ios{display:block}
+#pwaModal .pw-st{display:flex;align-items:center;gap:10px;padding:10px 12px;margin-bottom:8px;border-radius:14px;font-weight:800;font-size:.82rem;line-height:1.5;background:color-mix(in srgb,var(--primary) 8%,transparent)}
+#pwaModal .pw-st b{flex:none;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;background:var(--primary)}
 </style>
-<div id="pwaBar" role="dialog" aria-label="تثبيت البرنامج">
-  <div class="pw-top"><img src="icons/icon-192.png" alt="">
-    <div class="pw-t">ثبّت البرنامج على موبايلك 📲<small>هيتحط على الشاشة الرئيسية بصورة المستر وتفتحه بضغطة</small></div>
-    <button class="pw-x" onclick="pwaDismiss()" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button></div>
-  <div class="pw-steps" id="pwaSteps"></div>
-  <button class="pw-go" id="pwaGo" onclick="pwaInstall()">تثبيت البرنامج</button>
+<div id="pwaModal" dir="rtl" role="dialog" aria-modal="true">
+  <div class="pw-card">
+    <img class="pw-ico" src="data:image/jpeg;base64,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" alt="">
+    <div class="pw-title">📲 ثبّت البرنامج على موبايلك</div>
+    <div class="pw-sub" id="pwSub">افتحه بضغطة واحدة من الشاشة الرئيسية زي أي تطبيق، وبصورة المستر عبد الرحمن.</div>
+    <div class="pw-ios" id="pwIos">
+      <div class="pw-st"><b>١</b><span>دوس على زرار <b style="display:inline-flex;width:auto;padding:0 6px;border-radius:8px;background:var(--secondary)">المشاركة ⬆️</b> تحت في Safari</span></div>
+      <div class="pw-st"><b>٢</b><span>اختار <u>إضافة إلى الشاشة الرئيسية</u></span></div>
+      <div class="pw-st"><b>٣</b><span>دوس <u>إضافة</u> وخلاص 🎉</span></div>
+    </div>
+    <button class="pw-yes" id="pwYes" type="button">📲 تثبيت الآن</button>
+    <button class="pw-no" id="pwNo" type="button">مش دلوقتي</button>
+  </div>
 </div>
 <script id="pwa-js">
 (function(){
@@ -6233,24 +6246,32 @@ body.is-king #sqAdmin{display:flex!important}
   var standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
   if(standalone) return;
   var ua=navigator.userAgent||'',isIOS=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-  var inApp=/FBAN|FBAV|Instagram|Messenger|WhatsApp|Line\//i.test(ua);
-  var deferred=null,bar=document.getElementById('pwaBar');
+  var box=document.getElementById('pwaModal'),yes=document.getElementById('pwYes'),no=document.getElementById('pwNo'),deferred=null,armed=false,DAYS=[3,7,14,30];
   function LS(k){try{return localStorage.getItem(k)}catch(e){return null}}
   function SS(k,v){try{localStorage.setItem(k,v)}catch(e){}}
-  function snoozed(){var t=parseInt(LS('pwa_dismiss')||'0',10);return LS('pwa_installed')==='1'||(t&&Date.now()-t<3*864e5)}
-  function show(){if(snoozed())return;bar.classList.add('show')}
-  window.pwaDismiss=function(){bar.classList.remove('show');SS('pwa_dismiss',String(Date.now()))};
-  window.pwaInstall=function(){
-    var steps=document.getElementById('pwaSteps');
-    if(deferred){deferred.prompt();deferred.userChoice.then(function(c){if(c.outcome==='accepted'){SS('pwa_installed','1');bar.classList.remove('show')}else pwaDismiss();deferred=null});return}
-    var h;
-    if(isIOS) h='١) دوس على زرار <b>المشاركة</b> <i class="fa-solid fa-arrow-up-from-bracket"></i> تحت في سفاري<br>٢) اختار <b>إضافة إلى الشاشة الرئيسية</b><br>٣) دوس <b>إضافة</b> وهتلاقي البرنامج بصورة المستر 🎉'+(inApp?'<br><small>لو فاتح من فيسبوك أو واتساب، افتح اللينك في Safari الأول.</small>':'');
-    else h='١) دوس على قايمة المتصفح <b>⋮</b> فوق<br>٢) اختار <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b><br>٣) أكّد وهتلاقي البرنامج بصورة المستر 🎉'+(inApp?'<br><small>لو فاتح من فيسبوك أو واتساب، افتح اللينك في Chrome الأول.</small>':'');
-    steps.innerHTML=h;steps.classList.add('show');document.getElementById('pwaGo').style.display='none';
-  };
-  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferred=e;setTimeout(show,2500)});
-  window.addEventListener('appinstalled',function(){SS('pwa_installed','1');bar.classList.remove('show')});
-  setTimeout(function(){if(!deferred)show()},4000);
+  function snoozed(){if(LS('pwa_installed')==='1')return true;var n=+LS('pwa_asked_n')||0,t=+LS('pwa_asked')||0;return !!t&&Date.now()-t<DAYS[Math.min(Math.max(n-1,0),3)]*864e5}
+  function hide(count){box.classList.remove('show');if(count){SS('pwa_asked_n',String((+LS('pwa_asked_n')||0)+1));SS('pwa_asked',String(Date.now()))}}
+  function loggedIn(){return typeof gateVerified!=='undefined'&&gateVerified===true}
+  function tryShow(){
+    if(armed||snoozed()||!(isIOS||deferred))return;
+    if(!loggedIn()){setTimeout(tryShow,1500);return}
+    armed=true;
+    setTimeout(function(){
+      if(isIOS){box.classList.add('ios');document.getElementById('pwSub').textContent='آبل مبتسمحش بالتثبيت بضغطة واحدة، فاعمل ٣ خطوات بسيطة بس:';yes.style.display='none';no.textContent='تمام، فهمت'}
+      box.classList.add('show');
+    },1800);
+  }
+  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferred=e;tryShow()});
+  window.addEventListener('appinstalled',function(){SS('pwa_installed','1');deferred=null;box.classList.remove('show')});
+  no.addEventListener('click',function(){hide(true)});
+  box.addEventListener('click',function(e){if(e.target===box)hide(true)});
+  yes.addEventListener('click',async function(){
+    if(!deferred){hide(false);return}
+    var ch=null;try{deferred.prompt();ch=await deferred.userChoice}catch(_){}
+    deferred=null;
+    if(ch&&ch.outcome==='accepted'){SS('pwa_installed','1');hide(false)}else hide(true);
+  });
+  if(isIOS) window.addEventListener('load',function(){setTimeout(tryShow,2500)});
 })();
 </script>
 </body>
