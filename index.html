@@ -785,6 +785,64 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
 .vid-helper .vid-hint{font-size:.74rem;font-weight:700;color:var(--text-light);line-height:1.8;margin-top:6px;}
 .vid-helper input{direction:ltr;text-align:left;margin-bottom:6px;}
 .vid-helper input#vidHelperTitle{direction:rtl;text-align:right;}
+
+/* ================= 🗂️ إدارة: تجميع التبويبات + محرر المستويات ================= */
+.admin-tabs{flex-direction:column;gap:14px;}
+.admin-tab-group-title{font-weight:900;font-size:.82rem;color:var(--text-light);margin-bottom:6px;}
+.admin-tab-row{display:flex;gap:8px;flex-wrap:wrap;}
+.admin-tab-row .admin-tab-btn{min-width:90px;padding:10px;font-size:.84rem;}
+.lv-card{--lv-c:var(--secondary);border-radius:18px;border:2px solid var(--lv-c);background:var(--card-bg);overflow:hidden;}
+.lv-card.lv-2{--lv-c:var(--accent);}
+.lv-card.lv-3{--lv-c:var(--purple);}
+.lv-head{width:100%;display:flex;align-items:center;gap:10px;padding:14px;border:none;cursor:pointer;font-family:inherit;text-align:right;
+  background:color-mix(in srgb,var(--lv-c) 14%,var(--card-bg));color:var(--text-dark);}
+.lv-icon{font-size:1.4rem;}
+.lv-name{font-weight:900;font-size:1rem;}
+.lv-count{margin-right:auto;font-size:.74rem;font-weight:800;color:var(--text-light);background:var(--card-bg);padding:4px 10px;border-radius:20px;white-space:nowrap;}
+.lv-chev{transition:.25s;color:var(--lv-c);}
+.lv-card.open .lv-chev{transform:rotate(180deg);}
+.lv-body{display:none;flex-direction:column;gap:10px;padding:14px;}
+.lv-card.open .lv-body{display:flex;}
+.lv-hint{font-size:.76rem;color:var(--text-light);font-weight:700;line-height:1.9;}
+.lv-hint code{background:color-mix(in srgb,var(--lv-c) 18%,var(--card-bg));padding:2px 6px;border-radius:6px;direction:ltr;display:inline-block;}
+.lv-vid-list{display:flex;flex-direction:column;gap:8px;}
+.lv-vid-row{display:flex;align-items:center;gap:10px;background:color-mix(in srgb,var(--purple) 8%,var(--card-bg));border-radius:12px;padding:8px 10px;}
+.lv-vid-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.lv-vid-info b{font-size:.85rem;}
+.lv-vid-info small{font-size:.72rem;color:var(--text-light);font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.lv-vid-del{border:none;background:var(--primary);color:#fff;width:34px;height:34px;border-radius:10px;cursor:pointer;flex:0 0 auto;}
+.lv-empty{font-size:.78rem;color:var(--text-light);font-weight:700;}
+.lv-vid-add{display:flex;flex-direction:column;gap:8px;padding:10px;border-radius:14px;border:2px dashed color-mix(in srgb,var(--purple) 45%,transparent);}
+
+/* ================= 🎬 تبويب الفيديوهات على مستوى الكورس ================= */
+.view-nav{display:none;gap:10px;max-width:1200px;margin:0 auto 12px;padding:0 15px;}
+.view-tab{
+  flex:1;border:none;cursor:pointer;font-family:inherit;font-weight:900;font-size:.92rem;padding:11px 14px;border-radius:30px;
+  background:var(--card-bg);color:var(--text-light);transition:var(--transition);
+  border:2px solid color-mix(in srgb,var(--text-light) 22%,transparent);
+}
+.view-tab.active{background:linear-gradient(135deg,var(--secondary),color-mix(in srgb,var(--secondary) 80%,black));color:#fff;border-color:transparent;box-shadow:0 6px 18px color-mix(in srgb,var(--secondary) 30%,transparent);}
+.view-tab-vid.active{background:linear-gradient(135deg,var(--purple),color-mix(in srgb,var(--purple) 75%,black));box-shadow:0 6px 18px color-mix(in srgb,var(--purple) 32%,transparent);}
+.view-count{display:inline-block;min-width:22px;padding:1px 7px;margin-right:4px;border-radius:20px;font-size:.74rem;background:rgba(255,255,255,.28);}
+.view-tab:not(.active) .view-count{background:color-mix(in srgb,var(--purple) 18%,var(--card-bg));color:var(--purple);}
+.vid-group-title{grid-column:1/-1;font-weight:900;font-size:.95rem;color:var(--text-dark);padding:6px 4px 0;border-bottom:2px solid color-mix(in srgb,var(--purple) 25%,transparent);}
+
+/* ================= 🎬 إدارة: تبويب الفيديوهات ================= */
+.va-cat{border-radius:18px;border:2px solid color-mix(in srgb,var(--purple) 40%,transparent);background:var(--card-bg);overflow:hidden;}
+.va-cat-head{width:100%;display:flex;align-items:center;gap:10px;padding:14px;border:none;cursor:pointer;font-family:inherit;text-align:right;
+  background:color-mix(in srgb,var(--purple) 12%,var(--card-bg));color:var(--text-dark);}
+.va-cat.open .lv-chev{transform:rotate(180deg);}
+.va-cat .lv-chev{color:var(--purple);transition:.25s;}
+.va-lessons{display:flex;flex-direction:column;gap:8px;padding:10px;}
+.va-lesson{border-radius:14px;border:1.5px solid color-mix(in srgb,var(--text-light) 22%,transparent);overflow:hidden;}
+.va-lesson-head{width:100%;display:flex;align-items:center;gap:10px;padding:11px 12px;border:none;cursor:pointer;font-family:inherit;text-align:right;font-weight:800;font-size:.9rem;
+  background:var(--card-bg);color:var(--text-dark);}
+.va-lesson-head > span:first-child{flex:1;}
+.va-lesson-head.open{background:color-mix(in srgb,var(--purple) 8%,var(--card-bg));}
+.va-lesson-head.open .lv-chev{transform:rotate(180deg);}
+.va-lesson-head .lv-chev{color:var(--purple);transition:.25s;}
+.va-panel{display:flex;flex-direction:column;gap:10px;padding:10px 12px 12px;}
+.va-vlist{display:flex;flex-direction:column;gap:8px;}
 </style>
 
 </head>
@@ -1024,6 +1082,7 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
 </div>
 
 <nav class="units-nav" id="unitsNav"></nav>
+<nav class="view-nav" id="viewNav"></nav>
 <nav class="lessons-nav" id="lessonsNav"></nav>
 
 <main class="words-container" id="wordsContainer">
@@ -1040,17 +1099,24 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
     </div>
 
     <div class="admin-tabs">
-      <button class="admin-tab-btn active" id="tabBtnWords" onclick="switchAdminSubTab('words')">📝 الكلمات</button>
-      <button class="admin-tab-btn" id="tabBtnCats" onclick="switchAdminSubTab('cats')">📚 الكورسات</button>
-      <button class="admin-tab-btn" id="tabBtnLessons" onclick="switchAdminSubTab('lessons')">📖 الدروس</button>
-      <button type="button" class="admin-tab-btn" id="tabBtnLevels" onclick="switchAdminSubTab('levels')">🎚️ المستويات</button>
-      <button type="button" class="admin-tab-btn" id="tabBtnExamsQ" onclick="switchAdminSubTab('examsQ')">📝 بنك الأسئلة</button>
-      <button type="button" class="admin-tab-btn" id="tabBtnExamsR" onclick="switchAdminSubTab('examsR')">🏆 نتائج الاختبارات</button>
-      <button type="button" class="admin-tab-btn" id="tabBtnExamCtrl" onclick="switchAdminSubTab('examCtrl')">🎯 التحكم في الامتحان</button>
-      <button class="admin-tab-btn" id="tabBtnStudents" onclick="switchAdminSubTab('students')">👥 الطلاب</button>
-      <button class="admin-tab-btn" id="tabBtnPending" onclick="switchAdminSubTab('pending')">⏳ قائمة الانتظار <span class="pending-tab-badge" id="pendingTabBadge"></span></button>
-      <button class="admin-tab-btn" id="tabBtnStats" onclick="switchAdminSubTab('stats')">📊 الإحصائيات</button>
-      <button class="admin-tab-btn" id="tabBtnSettings" onclick="switchAdminSubTab('settings')">⚙️ الإعدادات</button>
+      <div class="admin-tab-group"><div class="admin-tab-group-title">📚 المحتوى</div><div class="admin-tab-row">
+        <button class="admin-tab-btn active" id="tabBtnWords" onclick="switchAdminSubTab('words')">📝 الكلمات</button>
+        <button type="button" class="admin-tab-btn" id="tabBtnVideos" onclick="switchAdminSubTab('videos')">🎬 الفيديوهات</button>
+        <button class="admin-tab-btn" id="tabBtnCats" onclick="switchAdminSubTab('cats')">📚 الكورسات</button>
+        <button class="admin-tab-btn" id="tabBtnLessons" onclick="switchAdminSubTab('lessons')">📖 الدروس</button>
+        <button type="button" class="admin-tab-btn" id="tabBtnLevels" onclick="switchAdminSubTab('levels')">🎚️ المستويات</button>
+      </div></div>
+      <div class="admin-tab-group"><div class="admin-tab-group-title">📝 الامتحانات</div><div class="admin-tab-row">
+        <button type="button" class="admin-tab-btn" id="tabBtnExamsQ" onclick="switchAdminSubTab('examsQ')">📝 بنك الأسئلة</button>
+        <button type="button" class="admin-tab-btn" id="tabBtnExamsR" onclick="switchAdminSubTab('examsR')">🏆 نتائج الاختبارات</button>
+        <button type="button" class="admin-tab-btn" id="tabBtnExamCtrl" onclick="switchAdminSubTab('examCtrl')">🎯 التحكم في الامتحان</button>
+      </div></div>
+      <div class="admin-tab-group"><div class="admin-tab-group-title">👥 الطلاب والإعدادات</div><div class="admin-tab-row">
+        <button class="admin-tab-btn" id="tabBtnStudents" onclick="switchAdminSubTab('students')">👥 الطلاب</button>
+        <button class="admin-tab-btn" id="tabBtnPending" onclick="switchAdminSubTab('pending')">⏳ قائمة الانتظار <span class="pending-tab-badge" id="pendingTabBadge"></span></button>
+        <button class="admin-tab-btn" id="tabBtnStats" onclick="switchAdminSubTab('stats')">📊 الإحصائيات</button>
+        <button class="admin-tab-btn" id="tabBtnSettings" onclick="switchAdminSubTab('settings')">⚙️ الإعدادات</button>
+      </div></div>
     </div>
 
     <!-- Words tab -->
@@ -1062,35 +1128,14 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
       <select id="adminLessonSelect"></select>
 
       <div class="instructions">
-        <strong>✨ طريقة الإدخال:</strong><br>
-        كل كلمة في سطر منفصل. اكتب: الكلمة <code>-</code> ترجمتها <code>=</code> الجملة المثال <code>-</code> ترجمة الجملة.<br>
-        الترجمة العربية اختيارية، بس علامة <code>=</code> هي اللي بتفصل بين الكلمة والمثال.<br>
-        <strong>مثال:</strong><br>
-        Angry - غضبان = The small girl is angry. - البنت الصغيرة غاضبة.<br>
-        Beautiful = The tree is very beautiful.<br><br>
-        <strong>🆕 تقسيم المستويات:</strong> اكتب سطر لوحده فيه <code>#level 1</code> وكل اللي هيتكتب تحته هيظهر بس للطلاب اللي مختارين "المستوى الأول"، وبعدين اكتب <code>#level 2</code> وكمّل تحته كلمات المستوى الثاني، وهكذا <code>#level 3</code>. أي كلمات مكتوبة قبل أول علامة <code>#level</code> هتتحسب تلقائيًا على المستوى الأول.<br>
-        <strong>مثال:</strong><br>
-        #level 1<br>
-        Book = I read a book.<br>
-        #level 2<br>
-        Although he was tired, he finished the work. = رغم أنه كان متعبًا، أنهى الشغل.
+        <strong>✨ إزاي تشتغل هنا:</strong><br>
+        كل مستوى ليه قسم لوحده تحت. دوس على المستوى علشان يفتح، واكتب كلماته. وبعد ما تخلص من كل المستويات دوس <b>حفظ</b> مرة واحدة في الآخر. <br>🎬 الفيديوهات ليها تبويب لوحده فوق.
       </div>
 
-      <label class="control-label">قائمة الكلمات (اتركها فارغة لحذف كل الكلمات):</label>
-      <textarea id="adminWordsTextarea" placeholder="أدخل الكلمات هنا..."></textarea>
+      <textarea id="adminWordsTextarea" style="display:none" tabindex="-1" aria-hidden="true"></textarea>
+      <div id="lvEditor" style="display:flex;flex-direction:column;gap:12px;"></div>
 
-      <div class="vid-helper">
-        <div class="vid-helper-title">🎬 ضيف فيديو في أي مكان في الدرس</div>
-        <input type="text" id="vidHelperUrl" placeholder="الصق لينك الفيديو (يوتيوب / تيك توك / فيميو / درايف / فيسبوك)">
-        <input type="text" id="vidHelperTitle" placeholder="عنوان الفيديو (اختياري)">
-        <button type="button" class="btn-save" onclick="insertVideoLine()">➕ حط الفيديو في القائمة</button>
-        <div class="vid-hint">
-          📍 الفيديو بيتحط <b>بعد السطر اللي واقف عليه</b> في قائمة الكلمات فوق (دوس على السطر الأول). وبيظهر للطالب في نفس المكان ده بالظبط، وفي <b>المستوى اللي واقف تحته</b> (#level 2 أو #level 3). بعدها دوس "حفظ وبث فوري".<br>
-          ✍️ أو اكتبه بإيدك في سطر لوحده: <code>#video https://youtu.be/XXXX | عنوان الفيديو</code>
-        </div>
-      </div>
-
-      <button class="btn-save" id="btnSaveData" onclick="saveDataToSupabase()">🚀 حفظ وبث فوري لجميع الطلاب</button>
+      <button class="btn-save" id="btnSaveData" onclick="saveAllLevels()">🚀 حفظ وبث فوري لجميع الطلاب</button>
 
       <label class="control-label" style="margin-top:14px;">🖼️ صور القواعد/الكلمات (اختياري):</label>
       <div class="instructions">
@@ -1100,6 +1145,16 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
     </div>
 
     <!-- Categories tab -->
+    <!-- Videos tab -->
+    <div class="admin-panel-section" id="adminSecVideos">
+      <div class="instructions">
+        <strong>🎬 إزاي تضيف فيديو:</strong><br>
+        ١) دوس على الكورس. ٢) دوس على الدرس. ٣) الصق اللينك واكتب العنوان واختار المستوى وضيفه.<br>
+        الفيديوهات بتظهر للطلاب في تبويب "🎬 الفيديوهات" جوه الكورس، وبتشتغل جوه البرنامج.
+      </div>
+      <div id="vaRoot" style="display:flex;flex-direction:column;gap:12px;"></div>
+    </div>
+
     <div class="admin-panel-section" id="adminSecCats">
       <label class="control-label">📚 الكورسات (اضغط ✏️ للتعديل أو 🔒 للإغلاق/الفتح):</label>
       <div class="cat-list" id="catList"></div>
@@ -3169,6 +3224,7 @@ async function loadCategories(){
     categories = [];
   }
   const visibleCats = getVisibleCategories();
+  hideViewNav();
   if(visibleCats.length > 0){
     const firstActive = visibleCats.find(c => c.is_active !== false);
     currentCategoryId = (firstActive || visibleCats[0]).id;
@@ -3207,6 +3263,7 @@ function renderCategoryNav(){
       document.querySelectorAll('.unit-tab').forEach(el => el.classList.remove('active'));
       btn.classList.add('active');
       pauseSpeaking();
+      hideViewNav();
       if(isLevelLocked(selectedLevel || 1)){
         document.getElementById('lessonsNav').innerHTML = '';
         renderLockedView(document.getElementById('wordsContainer'), 'level', getLevelLockMessage(selectedLevel || 1));
@@ -3286,6 +3343,7 @@ function populateCategorySelects(){
 async function loadLessonsForCategory(categoryId){
   let allLessons = [];
   let hadLessons = false;
+  let courseHasWords = false;
   try{
     const { data, error } = await _supabase
       .from('lessons')
@@ -3314,7 +3372,10 @@ async function loadLessonsForCategory(categoryId){
       const lessonsWithLevelContent = new Set();
       (wordsData || []).forEach(w => {
         const wLvl = w.level || 1;
-        if(wLvl === lvl) lessonsWithLevelContent.add(w.lesson_id);
+        if(wLvl === lvl){
+          lessonsWithLevelContent.add(w.lesson_id);
+          courseHasWords = true;
+        }
       });
       lessons = allLessons.filter(l => lessonsWithLevelContent.has(l.id));
     }catch(e){
@@ -3325,6 +3386,34 @@ async function loadLessonsForCategory(categoryId){
   } else {
     lessons = [];
   }
+
+  // 🎬 تبويب الفيديوهات على مستوى الكورس كله (من جدول lesson_videos)
+  let courseVideoRows = [];
+  if(allLessons.length > 0){
+    try{
+      const { data: vdata, error: vErr } = await _supabase
+        .from('lesson_videos')
+        .select('*')
+        .in('lesson_id', allLessons.map(l => l.id))
+        .order('order_index', { ascending: true });
+      if(vErr) throw vErr;
+      courseVideoRows = (vdata || []).filter(v => !v.level || v.level === lvl);
+    }catch(e){ console.error(e); }
+  }
+  courseVideos = buildCourseVideos(allLessons, courseVideoRows);
+  if(categoryId !== courseViewCat){ courseViewCat = categoryId; courseView = 'content'; }
+  if(!courseVideos.length) courseView = 'content';
+  else if(!courseHasWords) courseView = 'videos';
+  renderViewNav();
+  if(courseView === 'videos'){
+    const fa = lessons.find(l => l.is_active !== false);
+    currentLessonId = lessons.length ? (fa || lessons[0]).id : null;
+    document.getElementById('lessonsNav').style.display = 'none';
+    pauseSpeaking();
+    renderCourseVideos();
+    return;
+  }
+  document.getElementById('lessonsNav').style.display = '';
 
   if(lessons.length > 0){
     const firstActive = lessons.find(l => l.is_active !== false);
@@ -3403,11 +3492,6 @@ function getVisibleWords(){
   return currentWordsList.filter(w => (w.level || 1) === lvl && !w.video_url);
 }
 
-// كل عناصر الدرس للمستوى الحالي (كلمات + فيديوهات) بنفس الترتيب اللي كتبه المستر
-function getVisibleItems(){
-  const lvl = selectedLevel || 1;
-  return currentWordsList.filter(w => (w.level || 1) === lvl);
-}
 
 function renderWordsGrid(){
   const container = document.getElementById('wordsContainer');
@@ -3418,17 +3502,14 @@ function renderWordsGrid(){
     return;
   }
 
-  const visibleItems = getVisibleItems();
-  if(visibleItems.length === 0){
+  const visibleWords = getVisibleWords();
+  if(visibleWords.length === 0){
     const names = {1:'الأول', 2:'الثاني', 3:'الثالث'};
     container.innerHTML = `<div class="status-message">لسه معندناش كلمات في المستوى ${names[selectedLevel || 1] || ''} لهذا الدرس. 🎯<br>جرّب تختار مستوى تاني من لوحة التحكم فوق!</div>`;
     return;
   }
 
-  let index = -1; // ترقيم الكلمات بس (الفيديوهات مش بتتحسب) عشان التسميع يفضل شغال زي ما هو
-  visibleItems.forEach((w) => {
-    if(w.video_url){ container.appendChild(buildVideoChip(w)); return; }
-    index++;
+  visibleWords.forEach((w, index) => {
     if(!w.word_en) return;
     
     const card = document.createElement('div');
@@ -3639,6 +3720,10 @@ function switchAdminSubTab(target){
   if(target === 'words'){
     document.getElementById('adminSecWords').classList.add('active');
     document.getElementById('tabBtnWords').classList.add('active');
+  } else if(target === 'videos'){
+    document.getElementById('adminSecVideos').classList.add('active');
+    document.getElementById('tabBtnVideos').classList.add('active');
+    renderVideosAdmin(true);
   } else if(target === 'cats'){
     document.getElementById('adminSecCats').classList.add('active');
     document.getElementById('tabBtnCats').classList.add('active');
@@ -3721,6 +3806,7 @@ async function loadLessonsForWordsTab(categoryId){
       loadLessonWordsToTextarea(data[0].id);
     } else {
       document.getElementById('adminWordsTextarea').value = '';
+      lvReady = false; try{ lvLoadFromText(); }catch(e){}
       lessonSelect.innerHTML = '<option value="">-- لا يوجد دروس، أضف درس من تبويب "الدروس" أولاً --</option>';
     }
   }catch(e){
@@ -3731,8 +3817,9 @@ async function loadLessonsForWordsTab(categoryId){
 
 async function loadLessonWordsToTextarea(lessonId){
   const textarea = document.getElementById('adminWordsTextarea');
-  if(!lessonId){ textarea.value = ''; document.getElementById('imgManagerList').innerHTML = ''; return; }
-  textarea.value = '⏳ جاري سحب الكلمات الحالية...';
+  if(!lessonId){ textarea.value = ''; lvReady = false; try{ lvLoadFromText(); }catch(e){} document.getElementById('imgManagerList').innerHTML = ''; return; }
+  textarea.value = '';
+  lvReady = false; // مش هنسمح بالحفظ غير لما الكلمات الحالية تتحمّل بنجاح (علشان ماتتمسحش بالغلط)
   textarea.disabled = true;
   try{
     const { data, error } = await _supabase
@@ -3741,6 +3828,7 @@ async function loadLessonWordsToTextarea(lessonId){
       .eq('lesson_id', lessonId)
       .order('order_index', { ascending: true });
     if(error) throw error;
+    lvReady = true;
 
     if(data && data.length > 0){
       let lastLevel = 1; // نفس الافتراضي المستخدم وقت الحفظ
@@ -3751,10 +3839,7 @@ async function loadLessonWordsToTextarea(lessonId){
           lines.push(`#level ${itemLevel}`);
           lastLevel = itemLevel;
         }
-        if(item.video_url){
-          lines.push(`#video ${item.video_url}` + (item.video_title ? ` | ${item.video_title}` : ''));
-          return;
-        }
+        if(item.video_url) return;
         let left = item.word_en;
         if(item.word_ar) left += ` - ${item.word_ar}`;
         let right = item.example_en || '';
@@ -3766,10 +3851,12 @@ async function loadLessonWordsToTextarea(lessonId){
       textarea.value = '';
     }
   }catch(e){
-    textarea.value = 'فشل سحب البيانات، يمكنك إدخال كلمات جديدة مباشرة.';
+    textarea.value = ''; lvReady = false;
+    showToast('⚠️ فشل سحب كلمات الدرس. تأكد من النت واختار الدرس تاني قبل ما تحفظ');
   }finally{
     textarea.disabled = false;
   }
+  try{ lvLoadFromText(); }catch(e){ console.error(e); }
   renderWordImagesManager(lessonId);
 }
 
@@ -3916,14 +4003,6 @@ async function saveDataToSupabase(){
       });
     }catch(e){ console.error(e); }
 
-    // 🎬 نتأكد إن كل لينكات الفيديو مدعومة قبل ما نمسح أي حاجة
-    const badVideoLines = textData.split('\n').map(l => l.trim()).filter(l => /^#\s*video\b/i.test(l))
-      .filter(l => { const m = l.match(/^#\s*video\s+(\S+)/i); return !m || !parseVideoUrl(m[1]); });
-    if(badVideoLines.length){
-      alert('⚠️ في لينك فيديو مش مدعوم أو مش مكتوب صح:\n\n' + badVideoLines.join('\n') + '\n\nالمدعوم: يوتيوب، تيك توك (لينك كامل)، فيميو، جوجل درايف، فيسبوك، أو ملف mp4 مباشر.');
-      return;
-    }
-
     const { error: deleteError } = await _supabase.from('course').delete().eq('lesson_id', lessonId);
     if(deleteError) throw deleteError;
 
@@ -3932,16 +4011,9 @@ async function saveDataToSupabase(){
       let currentLevel = 1; // افتراضيًا كل الكلمات قبل أول #level تتحسب مستوى أول
       let idx = 0;
       const records = [];
-      let hasVideo = false;
 
       rawLines.forEach(line => {
         const trimmed = line.trim();
-        const vidMatch = trimmed.match(/^#\s*video\s+(\S+)(?:\s*\|\s*(.*))?$/i);
-        if(vidMatch){
-          records.push({ lesson_id: lessonId, word_en: '', word_ar: '', example_en: '', example_ar: '', order_index: idx, level: currentLevel, image_url: null, video_url: vidMatch[1], video_title: (vidMatch[2] || '').trim() });
-          idx++; hasVideo = true;
-          return;
-        }
         const levelMatch = trimmed.match(/^#\s*level\s*(\d+)\s*$/i);
         if(levelMatch){
           currentLevel = parseInt(levelMatch[1], 10) || 1;
@@ -3974,7 +4046,6 @@ async function saveDataToSupabase(){
         idx++;
       });
 
-      if(hasVideo){ records.forEach(r => { if(!('video_url' in r)){ r.video_url = null; r.video_title = null; } }); }
       if(records.length > 0){
         const { error: insertError } = await _supabase.from('course').insert(records);
         if(insertError) throw insertError;
@@ -3987,7 +4058,7 @@ async function saveDataToSupabase(){
     closeAdminModal();
   }catch(err){
     console.error(err);
-    alert("حدث خطأ تقني أثناء التحديث السحابي. تأكد إن أعمدة \"level\" و \"image_url\" و \"video_url\" و \"video_title\" مضافة في جدول course في Supabase.");
+    alert("حدث خطأ تقني أثناء التحديث السحابي. تأكد إن أعمدة \"level\" و \"image_url\" مضافة في جدول course في Supabase.");
   }finally{
     saveBtn.innerText = "🚀 حفظ وبث فوري لجميع الطلاب";
     saveBtn.disabled = false;
@@ -5342,6 +5413,76 @@ function showToast(msg){
 // ---------------------------------------------------------
 // 9. التشغيل المبدئي
 // ---------------------------------------------------------
+
+// ---------------------------------------------------------
+// 🎬 تبويب "الفيديوهات" على مستوى الكورس (بيظهر بس في الكورس اللي فيه فيديوهات)
+// ---------------------------------------------------------
+let courseVideos = [];
+let courseView = 'content'; // 'content' | 'videos'
+let courseViewCat = null;
+
+function buildCourseVideos(allLessons, rows){
+  const byId = {}, order = {};
+  (allLessons || []).forEach((l, i) => { byId[l.id] = l; order[l.id] = i; });
+  return (rows || [])
+    .filter(r => byId[r.lesson_id] && byId[r.lesson_id].is_active !== false)
+    .sort((a, b) => (order[a.lesson_id] - order[b.lesson_id]) || ((a.order_index || 0) - (b.order_index || 0)))
+    .map(r => Object.assign({}, r, { video_url: r.url, video_title: r.title, lesson_name: byId[r.lesson_id].name }));
+}
+
+function hideViewNav(){
+  const nav = document.getElementById('viewNav');
+  if(nav){ nav.style.display = 'none'; nav.innerHTML = ''; }
+  const ln = document.getElementById('lessonsNav');
+  if(ln) ln.style.display = '';
+}
+
+function renderViewNav(){
+  const nav = document.getElementById('viewNav');
+  if(!nav) return;
+  if(!courseVideos.length){ nav.style.display = 'none'; nav.innerHTML = ''; return; }
+  const videosOnly = (courseView === 'videos' && lessons && lessons.length === 0);
+  nav.style.display = 'flex';
+  nav.innerHTML =
+    `<button type="button" class="view-tab ${courseView === 'content' ? 'active' : ''}" onclick="showCourseView('content')">📖 المحتوى</button>` +
+    `<button type="button" class="view-tab view-tab-vid ${courseView === 'videos' ? 'active' : ''}" onclick="showCourseView('videos')">🎬 الفيديوهات <span class="view-count">${courseVideos.length}</span></button>`;
+}
+
+function showCourseView(view){
+  if(view === courseView) return;
+  courseView = view;
+  renderViewNav();
+  try{ pauseSpeaking(); }catch(e){}
+  const ln = document.getElementById('lessonsNav');
+  const wc = document.getElementById('wordsContainer');
+  if(view === 'videos'){
+    ln.style.display = 'none';
+    renderCourseVideos();
+    return;
+  }
+  ln.style.display = '';
+  renderLessonsNav();
+  const cur = lessons.find(l => l.id === currentLessonId);
+  if(cur && cur.is_active === false){ renderLockedView(wc, 'lesson', cur.name); }
+  else { fetchWordsFromSupabase(); }
+}
+
+function renderCourseVideos(){
+  const container = document.getElementById('wordsContainer');
+  container.innerHTML = '';
+  let lastLesson = null;
+  courseVideos.forEach(v => {
+    if(v.lesson_id !== lastLesson){
+      lastLesson = v.lesson_id;
+      const h = document.createElement('div');
+      h.className = 'vid-group-title';
+      h.textContent = '📖 ' + (v.lesson_name || '');
+      container.appendChild(h);
+    }
+    container.appendChild(buildVideoChip(v));
+  });
+}
+
 // ---------------------------------------------------------
 // 🎬 فيديوهات الدرس (بتشتغل جوه البرنامج ومفيش خروج)
 // ---------------------------------------------------------
@@ -5458,28 +5599,240 @@ window.addEventListener('message', (e) => {
   if(ended){ const end = document.getElementById('vidEnd'); if(end) end.classList.add('show'); }
 });
 
-// أداة المستر: تحط سطر #video بعد السطر اللي واقف عليه في قائمة الكلمات
-function insertVideoLine(){
-  const urlEl = document.getElementById('vidHelperUrl');
-  const titleEl = document.getElementById('vidHelperTitle');
-  const url = urlEl.value.trim();
+// ---------------------------------------------------------
+// 🗂️ محرر الكلمات حسب المستوى (المستوى الأول / الثاني / الثالث كل واحد لوحده)
+// ---------------------------------------------------------
+let lvReady = false;
+const LV_META = {
+  1:{ name:'المستوى الأول',  icon:'🌱' },
+  2:{ name:'المستوى الثاني', icon:'📘' },
+  3:{ name:'المستوى الثالث', icon:'👑' }
+};
+
+function lvWordLines(lv){
+  const ta = document.getElementById('lvWords' + lv);
+  return ta ? ta.value.split('\n').map(l => l.trim()).filter(Boolean) : [];
+}
+
+function lvBuildEditor(){
+  const host = document.getElementById('lvEditor');
+  if(!host || host.dataset.built) return;
+  host.dataset.built = '1';
+  host.innerHTML = [1,2,3].map(lv => {
+    const m = LV_META[lv];
+    return `
+    <div class="lv-card lv-${lv}" id="lvCard${lv}">
+      <button type="button" class="lv-head" onclick="lvToggle(${lv})">
+        <span class="lv-icon">${m.icon}</span>
+        <span class="lv-name">${m.name}</span>
+        <span class="lv-count" id="lvCount${lv}">0 كلمة</span>
+        <i class="fa-solid fa-chevron-down lv-chev"></i>
+      </button>
+      <div class="lv-body">
+        <label class="control-label">📝 كلمات ${m.name} (كل كلمة في سطر)</label>
+        <div class="lv-hint">مثال: <code>Angry - غضبان = The girl is angry. - البنت غاضبة.</code></div>
+        <textarea id="lvWords${lv}" placeholder="اكتب كلمات ${m.name} هنا..." oninput="lvRefresh(${lv})"></textarea>
+      </div>
+    </div>`;
+  }).join('');
+  [1,2,3].forEach(lvRefresh);
+}
+
+function lvToggle(lv){
+  const card = document.getElementById('lvCard' + lv);
+  if(card) card.classList.toggle('open');
+}
+
+function lvRefresh(lv){
+  const countEl = document.getElementById('lvCount' + lv);
+  if(countEl) countEl.innerText = `${lvWordLines(lv).length} كلمة`;
+}
+
+// بياخد النص المجمّع (#level) ويوزّعه على أقسام المستويات
+function lvLoadFromText(){
+  lvBuildEditor();
+  const ta = document.getElementById('adminWordsTextarea');
+  const words = { 1:[], 2:[], 3:[] };
+  let cur = 1;
+  ((ta && ta.value) || '').split('\n').forEach(raw => {
+    const line = raw.trim();
+    if(!line) return;
+    const m = line.match(/^#\s*level\s*(\d+)\s*$/i);
+    if(m){ const n = parseInt(m[1], 10); cur = (n >= 1 && n <= 3) ? n : 1; return; }
+    words[cur].push(line);
+  });
+  [1,2,3].forEach(l => {
+    const el = document.getElementById('lvWords' + l);
+    if(el) el.value = words[l].join('\n');
+    lvRefresh(l);
+  });
+}
+
+// بيرجّع النص المجمّع اللي دالة الحفظ الأصلية فاهماه
+function lvSerialize(){
+  const out = [];
+  [1,2,3].forEach(lv => {
+    const w = lvWordLines(lv);
+    if(!w.length) return;
+    out.push('#level ' + lv);
+    w.forEach(line => out.push(line));
+  });
+  return out.join('\n');
+}
+
+function saveAllLevels(){
+  if(!document.getElementById('adminLessonSelect').value){ showToast('⚠️ اختار الكورس والدرس الأول'); return; }
+  if(!lvReady){ showToast('⏳ استنى لحد ما كلمات الدرس تتحمّل، وبعدها احفظ'); return; }
+  const text = lvSerialize();
+  if(!text && !confirm('كل المستويات فاضية. ده هيمسح كل كلمات الدرس. متأكد؟')) return;
+  document.getElementById('adminWordsTextarea').value = text;
+  saveDataToSupabase();
+}
+
+lvBuildEditor();
+
+// ---------------------------------------------------------
+// 🎬 تبويب الفيديوهات في الإدارة: كورس ← درس ← لينكات الفيديو
+// ---------------------------------------------------------
+let vaData = null;
+let vaOpenCat = null;
+let vaOpenLesson = null;
+let vaLastLevel = '0';
+
+async function renderVideosAdmin(forceReload){
+  const root = document.getElementById('vaRoot');
+  if(!root) return;
+  if(!vaData || forceReload){
+    root.innerHTML = '<div class="status-message" style="padding:20px;font-size:.85rem;">⏳ جاري تحميل الكورسات والدروس...</div>';
+    try{
+      const [c, l, v] = await Promise.all([
+        _supabase.from('course_categories').select('*').order('order_index', { ascending: true }),
+        _supabase.from('lessons').select('*').order('order_index', { ascending: true }),
+        _supabase.from('lesson_videos').select('*').order('order_index', { ascending: true })
+      ]);
+      if(c.error) throw c.error;
+      if(l.error) throw l.error;
+      if(v.error) throw v.error;
+      vaData = { cats: c.data || [], lessons: l.data || [], videos: v.data || [] };
+    }catch(e){
+      console.error(e);
+      root.innerHTML = '<div class="status-message" style="color:#FF6B6B;font-size:.85rem;">حصل خطأ في تحميل الفيديوهات. تأكد إن جدول lesson_videos موجود في Supabase.</div>';
+      return;
+    }
+  }
+  vaRender();
+}
+
+function vaLevelLabel(n){
+  if(n === 1 || n === 2 || n === 3) return LV_META[n].icon + ' ' + LV_META[n].name;
+  return '🌍 كل المستويات';
+}
+
+function vaRender(){
+  const root = document.getElementById('vaRoot');
+  if(!root || !vaData) return;
+  if(vaData.cats.length === 0){
+    root.innerHTML = '<div class="status-message" style="font-size:.85rem;">لسه مفيش كورسات. ضيف كورس من تبويب "الكورسات" الأول.</div>';
+    return;
+  }
+  root.innerHTML = vaData.cats.map(cat => {
+    const lessonsOfCat = vaData.lessons.filter(l => String(l.category_id) === String(cat.id));
+    const catVideos = vaData.videos.filter(v => lessonsOfCat.some(l => String(l.id) === String(v.lesson_id)));
+    const openCat = String(vaOpenCat) === String(cat.id);
+    const lessonsHtml = !openCat ? '' : `<div class="va-lessons">` + (lessonsOfCat.length ? lessonsOfCat.map(les => {
+      const lv = vaData.videos.filter(v => String(v.lesson_id) === String(les.id));
+      const openL = String(vaOpenLesson) === String(les.id);
+      let panel = '';
+      if(openL){
+        panel = `<div class="va-panel">
+          <div class="va-vlist">` + (lv.length ? lv.map(v => `
+            <div class="lv-vid-row">
+              <div class="lv-vid-info">
+                <b>🎬 ${escapeHtml(v.title || 'بدون عنوان')}</b>
+                <small>${vaLevelLabel(v.level)}</small>
+                <small dir="ltr" style="text-align:left;">${escapeHtml(v.url)}</small>
+              </div>
+              <button type="button" class="lv-vid-del" onclick="vaDeleteVideo(${v.id})" title="مسح الفيديو"><i class="fa-solid fa-trash"></i></button>
+            </div>`).join('') : '<div class="lv-empty">مفيش فيديوهات في الدرس ده لسه.</div>') + `</div>
+          <div class="lv-vid-add">
+            <input type="text" id="vaUrl" dir="ltr" placeholder="الصق لينك الفيديو (يوتيوب / تيك توك / فيميو / درايف / فيسبوك)">
+            <input type="text" id="vaTitle" placeholder="عنوان الفيديو (اختياري)">
+            <label class="control-label" style="font-size:.8rem;">يظهر لطلاب:</label>
+            <select id="vaLevel">
+              <option value="0">🌍 كل المستويات</option>
+              <option value="1">🌱 المستوى الأول</option>
+              <option value="2">📘 المستوى الثاني</option>
+              <option value="3">👑 المستوى الثالث</option>
+            </select>
+            <button type="button" class="btn-save" onclick="vaAddVideo(${les.id})">➕ ضيف الفيديو</button>
+          </div>
+        </div>`;
+      }
+      return `<div class="va-lesson">
+        <button type="button" class="va-lesson-head ${openL ? 'open' : ''}" onclick="vaToggleLesson(${les.id})">
+          <span>📖 ${escapeHtml(les.name)}</span>
+          <span class="lv-count">${lv.length} فيديو</span>
+          <i class="fa-solid fa-chevron-down lv-chev"></i>
+        </button>${panel}</div>`;
+    }).join('') : '<div class="lv-empty">مفيش دروس في الكورس ده. ضيف درس من تبويب "الدروس".</div>') + `</div>`;
+    return `<div class="va-cat ${openCat ? 'open' : ''}">
+      <button type="button" class="va-cat-head" onclick="vaToggleCat(${cat.id})">
+        <span class="lv-icon">📚</span>
+        <span class="lv-name">${escapeHtml(cat.name)}</span>
+        <span class="lv-count">${catVideos.length} فيديو</span>
+        <i class="fa-solid fa-chevron-down lv-chev"></i>
+      </button>${lessonsHtml}</div>`;
+  }).join('');
+  const sel = document.getElementById('vaLevel');
+  if(sel) sel.value = vaLastLevel;
+}
+
+function vaToggleCat(id){
+  vaOpenCat = (String(vaOpenCat) === String(id)) ? null : id;
+  vaOpenLesson = null;
+  vaRender();
+}
+function vaToggleLesson(id){
+  vaOpenLesson = (String(vaOpenLesson) === String(id)) ? null : id;
+  vaRender();
+}
+
+async function vaAddVideo(lessonId){
+  const url = (document.getElementById('vaUrl').value || '').trim();
+  const title = (document.getElementById('vaTitle').value || '').trim().replace(/[\r\n]+/g, ' ');
+  const level = parseInt(document.getElementById('vaLevel').value, 10) || 0;
+  vaLastLevel = String(level);
   if(!parseVideoUrl(url)){
     showToast('⚠️ اللينك مش مظبوط أو المنصة مش مدعومة (تيك توك: استخدم اللينك الكامل مش المختصر)');
     return;
   }
-  const ta = document.getElementById('adminWordsTextarea');
-  const title = titleEl.value.trim().replace(/[\r\n|]+/g, ' ');
-  const line = `#video ${url}` + (title ? ` | ${title}` : '');
-  const val = ta.value;
-  let pos = Math.min(ta.selectionStart == null ? val.length : ta.selectionStart, val.length);
-  let lineEnd = val.indexOf('\n', pos);
-  if(lineEnd === -1) lineEnd = val.length;
-  const insert = (val.length ? '\n' : '') + line;
-  ta.value = val.slice(0, lineEnd) + insert + val.slice(lineEnd);
-  const newPos = lineEnd + insert.length;
-  ta.selectionStart = ta.selectionEnd = newPos;
-  urlEl.value = ''; titleEl.value = '';
-  showToast('✅ الفيديو اتحط في القائمة. دوس "حفظ وبث فوري" علشان يظهر للطلاب');
+  const existing = vaData.videos.filter(v => String(v.lesson_id) === String(lessonId));
+  const order_index = existing.length ? Math.max.apply(null, existing.map(v => v.order_index || 0)) + 1 : 0;
+  try{
+    const { data, error } = await _supabase.from('lesson_videos')
+      .insert({ lesson_id: lessonId, level, title, url, order_index }).select().single();
+    if(error) throw error;
+    vaData.videos.push(data);
+    vaRender();
+    showToast('✅ الفيديو اتضاف وبقى ظاهر للطلاب');
+  }catch(e){
+    console.error(e);
+    showToast('❌ مقدرتش أحفظ الفيديو. جرّب تاني');
+  }
+}
+
+async function vaDeleteVideo(id){
+  if(!confirm('تمسح الفيديو ده؟')) return;
+  try{
+    const { error } = await _supabase.from('lesson_videos').delete().eq('id', id);
+    if(error) throw error;
+    vaData.videos = vaData.videos.filter(v => String(v.id) !== String(id));
+    vaRender();
+    showToast('🗑️ الفيديو اتمسح');
+  }catch(e){
+    console.error(e);
+    showToast('❌ مقدرتش أمسح الفيديو. جرّب تاني');
+  }
 }
 
 window.onload = async () => {
