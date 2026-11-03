@@ -805,7 +805,7 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
   width:min(100%,calc((100dvh - 200px) * 16 / 9));
   box-shadow:0 30px 90px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08);
 }
-.vid-stage.vertical{aspect-ratio:9/16;width:auto;height:calc(100vh - 190px);height:calc(100dvh - 190px);max-width:min(100%,460px);}
+.vid-stage.vertical{aspect-ratio:9/16;height:auto;width:min(calc(100vw - 24px),calc((100vh - 200px) * 9 / 16));width:min(calc(100vw - 24px),calc((100dvh - 200px) * 9 / 16));}
 .vid-stage iframe,.vid-stage video{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;}
 .vid-toolbar{display:flex;justify-content:center;}
 .vid-fs-btn{
@@ -5676,6 +5676,26 @@ function mountVideo(info){
 
 function vidIsNativeFs(){ return !!(document.fullscreenElement || document.webkitFullscreenElement); }
 
+// بيحسب مقاس المشغل بالبيكسل بالظبط: 16:9 للعرضي و9:16 للطولي، وأكبر ما تسمح بيه الشاشة
+function vidLayoutStage(){
+  const modal = document.getElementById('vidModal');
+  const stage = document.getElementById('vidStage');
+  if(!modal || !stage) return;
+  if(vidFull){ stage.style.width = ''; stage.style.height = ''; return; }
+  const cs = getComputedStyle(modal);
+  const padX = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+  const padY = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+  const head = modal.querySelector('.vid-modal-head');
+  const bar = modal.querySelector('.vid-toolbar');
+  const used = (head ? head.offsetHeight : 0) + (bar ? bar.offsetHeight : 0) + 24; // 24 = فراغات بين العناصر
+  const availW = Math.min(window.innerWidth - padX, 1100);
+  const availH = window.innerHeight - padY - used;
+  const ratio = (vidCurrent && vidCurrent.vertical) ? 9 / 16 : 16 / 9;
+  const w = Math.max(160, Math.floor(Math.min(availW, availH * ratio)));
+  stage.style.width = w + 'px';
+  stage.style.height = Math.round(w / ratio) + 'px';
+}
+
 // يظبط شكل المشغل حسب الحالة: ملء الشاشة + لو الموبايل واقف بنلفّ الفيديو عشان يملى العرض
 function vidSyncUi(){
   const modal = document.getElementById('vidModal');
@@ -5684,6 +5704,7 @@ function vidSyncUi(){
   const vertical = !!(vidCurrent && vidCurrent.vertical);
   modal.classList.toggle('is-full', vidFull);
   modal.classList.toggle('force-landscape', vidFull && portrait && !vertical);
+  vidLayoutStage();
   const txt = document.getElementById('vidExitFullTxt');
   if(txt) txt.innerText = vidAuto ? 'رجوع للدرس' : 'خروج من ملء الشاشة';
 }
@@ -5703,7 +5724,10 @@ async function enterVidFull(auto){
     }catch(e){ vidNative = false; }
   }
   if(vidNative){
-    try{ if(screen.orientation && screen.orientation.lock) await screen.orientation.lock('landscape'); }catch(e){}
+    try{
+      const wantOrientation = (vidCurrent && vidCurrent.vertical) ? 'portrait' : 'landscape';
+      if(screen.orientation && screen.orientation.lock) await screen.orientation.lock(wantOrientation);
+    }catch(e){}
   }
   vidSyncUi();
 }
@@ -5941,7 +5965,8 @@ function vaRender(){
               <button type="button" class="lv-vid-del" onclick="vaDeleteVideo(${v.id})" title="مسح الفيديو"><i class="fa-solid fa-trash"></i></button>
             </div>`).join('') : '<div class="lv-empty">مفيش فيديوهات في الدرس ده لسه.</div>') + `</div>
           <div class="lv-vid-add">
-            <input type="text" id="vaUrl" dir="ltr" placeholder="الصق لينك الفيديو (يوتيوب / تيك توك / فيميو / درايف / فيسبوك)">
+            <input type="text" id="vaUrl" dir="ltr" placeholder="الصق لينك الفيديو (يوتيوب / تيك توك / فيميو / درايف)">
+            <div class="lv-hint">✅ الأضمن: يوتيوب (Unlisted) أو Shorts للطولي. ⚠️ فيسبوك مش مضمون يشتغل.</div>
             <input type="text" id="vaTitle" placeholder="عنوان الفيديو (اختياري)">
             <label class="control-label" style="font-size:.8rem;">يظهر لطلاب:</label>
             <select id="vaLevel">
@@ -5993,6 +6018,11 @@ async function vaAddVideo(lessonId){
   if(!parseVideoUrl(url)){
     showToast('⚠️ اللينك مش مظبوط أو المنصة مش مدعومة (تيك توك: استخدم اللينك الكامل مش المختصر)');
     return;
+  }
+  const parsedInfo = parseVideoUrl(url);
+  if(parsedInfo && parsedInfo.type === 'facebook'){
+    const okFb = confirm('⚠️ تنبيه: فيسبوك مش مضمون يشتغل جوه البرنامج.\n\nفيسبوك بيمنع كتير من الفيديوهات والريلز من العرض خارج موقعه، وساعتها الطالب هيشوف شاشة "Video Unavailable" أو شاشة سودا. وإحنا مش بنقدر نكتشف ده من عندنا.\n\nالأضمن: ارفع الفيديو على يوتيوب (غير مدرج Unlisted) وحط لينكه هنا. وللطولي استخدم YouTube Shorts.\n\nتضيف لينك فيسبوك برضو على مسؤوليتك؟');
+    if(!okFb) return;
   }
   const existing = vaData.videos.filter(v => String(v.lesson_id) === String(lessonId));
   const order_index = existing.length ? Math.max.apply(null, existing.map(v => v.order_index || 0)) + 1 : 0;
