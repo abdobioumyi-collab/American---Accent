@@ -1046,7 +1046,7 @@ body.is-king .honor-card .hp:active,body.is-king .honor-card .honor-row:active{t
 body.is-king #sqAdmin{display:flex!important}
 </style>
 
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="manifest.json?v=3">
 <meta name="theme-color" content="#E1654B">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -6412,6 +6412,11 @@ body.is-king #sqAdmin{display:flex!important}
 })();
 </script>
 
+<script>
+// أمان: أي قفل للاتجاه قديم يتفك أول ما الصفحة تفتح ولما ترجع للتطبيق، فالبرنامج يلف يمين وشمال دايماً
+(function(){function u(){try{if(screen.orientation&&screen.orientation.unlock&&!(document.fullscreenElement||document.webkitFullscreenElement))screen.orientation.unlock()}catch(e){}}
+u();document.addEventListener('visibilitychange',function(){if(!document.hidden)u()});})();
+</script>
 <script id="secret-admin-js">
 (function(){
   try{ if(typeof adminVerifiedNow==="function" && adminVerifiedNow()) document.body.classList.add("is-king"); }catch(e){}
