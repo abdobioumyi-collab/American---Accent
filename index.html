@@ -162,6 +162,59 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
   border-color:transparent;cursor:pointer;opacity:0.8;
 }
 
+/* ===== 🎯 اختبر نفسك (قفل الدروس بالاختبار) ===== */
+.qz-btn-wrap{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:10px;margin:8px 0 28px;text-align:center;}
+.qz-hint{font-size:.86rem;font-weight:700;color:var(--text-light);max-width:420px;line-height:1.8;}
+.qz-start-btn,.qz-go,.qz-next,.qz-main{font-family:inherit;border:none;cursor:pointer;color:#fff;font-weight:900;border-radius:16px;padding:13px 30px;font-size:1rem;
+  background:linear-gradient(135deg,var(--primary),var(--purple));box-shadow:0 10px 26px color-mix(in srgb,var(--primary) 38%,transparent);transition:.2s;}
+.qz-start-btn:hover,.qz-go:hover,.qz-next:hover,.qz-main:hover{transform:translateY(-2px);}
+.qz-go{margin-top:16px;padding:11px 22px;font-size:.9rem;}
+.qz-overlay{position:fixed;inset:0;z-index:10050;background:rgba(10,12,30,.62);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:14px;}
+.qz-box{width:100%;max-width:520px;max-height:94vh;overflow:auto;background:var(--card-bg);color:var(--text-dark);border-radius:26px;padding:20px 18px 22px;box-shadow:0 24px 60px rgba(0,0,0,.35);direction:rtl;text-align:center;}
+.qz-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.qz-x{border:none;background:color-mix(in srgb,var(--text-light) 14%,transparent);color:var(--text-dark);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.95rem;flex-shrink:0;}
+.qz-bar{flex:1;height:10px;border-radius:10px;background:color-mix(in srgb,var(--text-light) 18%,transparent);overflow:hidden;}
+.qz-bar i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--primary),var(--purple));transition:width .35s;}
+.qz-count{font-size:.78rem;font-weight:900;color:var(--text-light);min-width:36px;}
+.qz-kind{font-size:.8rem;font-weight:900;color:var(--primary);margin-bottom:8px;}
+.qz-prompt{font-size:1.3rem;font-weight:900;line-height:1.7;margin:6px 0 4px;word-break:break-word;}
+.qz-sub{font-size:.92rem;font-weight:700;color:var(--text-light);margin-bottom:10px;line-height:1.7;}
+.qz-opts{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.qz-opt{font-family:inherit;font-size:1rem;font-weight:800;padding:13px 14px;border-radius:16px;cursor:pointer;text-align:center;color:var(--text-dark);
+  background:var(--card-bg);border:2px solid color-mix(in srgb,var(--text-light) 28%,transparent);transition:.15s;line-height:1.6;}
+.qz-opt:hover:not(:disabled){border-color:var(--primary);transform:translateY(-1px);}
+.qz-opt.right{background:#2ecc71;border-color:#2ecc71;color:#fff;}
+.qz-opt.wrong{background:#e74c3c;border-color:#e74c3c;color:#fff;}
+.qz-listen,.qz-skip{font-family:inherit;border:none;cursor:pointer;font-weight:800;border-radius:14px;padding:9px 18px;margin:4px;font-size:.88rem;
+  background:color-mix(in srgb,var(--secondary) 14%,transparent);color:var(--text-dark);}
+.qz-skip{background:transparent;color:var(--text-light);text-decoration:underline;font-size:.8rem;}
+.qz-mic{display:block;margin:14px auto 6px;font-family:inherit;border:none;cursor:pointer;color:#fff;font-weight:900;font-size:1.05rem;border-radius:50px;padding:15px 30px;
+  background:linear-gradient(135deg,#e74c3c,#c0392b);box-shadow:0 10px 26px rgba(231,76,60,.4);}
+.qz-mic.rec{animation:qzPulse 1s infinite;}
+@keyframes qzPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+.qz-heard{min-height:22px;font-size:.85rem;font-weight:700;color:var(--text-light);margin-top:8px;line-height:1.8;}
+.qz-fb{margin-top:14px;border-radius:16px;padding:12px;font-weight:900;font-size:.95rem;line-height:1.8;}
+.qz-fb:empty{display:none;}
+.qz-fb.ok{background:color-mix(in srgb,#2ecc71 16%,transparent);color:var(--text-dark);}
+.qz-fb.bad{background:color-mix(in srgb,#e74c3c 14%,transparent);color:var(--text-dark);}
+.qz-fb .qz-next{display:block;margin:12px auto 0;padding:11px 28px;font-size:.92rem;}
+.qz-res-emoji{font-size:3.4rem;margin:6px 0;}
+.qz-res-score{font-size:2rem;font-weight:900;color:var(--primary);margin:4px 0 8px;}
+.qz-res-btns{display:flex;flex-direction:column;gap:10px;margin-top:16px;align-items:center;}
+.qz-adm-row{display:flex;align-items:center;gap:8px;padding:9px 4px;border-bottom:1px dashed color-mix(in srgb,var(--text-light) 25%,transparent);text-align:right;font-size:.86rem;font-weight:700;}
+.qz-adm-row span:first-child{flex:1;}
+.qz-adm-row small{color:var(--text-light);display:block;font-weight:700;}
+.qz-adm-btn{font-family:inherit;border:none;cursor:pointer;border-radius:10px;padding:7px 12px;font-weight:800;font-size:.78rem;background:#2ecc71;color:#fff;}
+.qz-adm-btn.off{background:#95a5a6;}
+.adm-sp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
+.adm-sp-grid div{background:color-mix(in srgb,var(--primary) 10%,transparent);border-radius:14px;padding:8px 4px;font-size:.72rem;font-weight:800;color:var(--text-light);}
+.adm-sp-grid b{display:block;font-size:1.15rem;color:var(--primary);}
+.adm-sp-course{text-align:right;border-bottom:1px dashed color-mix(in srgb,var(--text-light) 25%,transparent);padding:6px 0;}
+.adm-sp-course summary{cursor:pointer;font-size:.88rem;font-weight:800;list-style:none;}
+.adm-sp-course summary span{color:var(--text-light);font-size:.78rem;margin-right:6px;}
+.qz-why{font-size:.84rem;font-weight:700;margin-top:6px;line-height:1.8;font-weight:800;}
+.qz-adm-cat{font-weight:900;color:var(--primary);margin:14px 0 4px;text-align:right;font-size:.92rem;}
+
 /* Word Grid */
 .words-container{max-width:1200px;margin:0 auto;padding:0 15px;display:grid;
   grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
@@ -1249,7 +1302,7 @@ body.is-king #sqAdmin{display:flex!important}
   <button type="button" class="honor-toggle" id="honorToggle" onclick="toggleHonorMore()" style="display:none"><span id="honorToggleTxt">عرض أفضل ١٠</span> <i class="fa-solid fa-chevron-down"></i></button>
   <div class="honor-more" id="honorMore"><div><div class="honor-more-in">
     <div id="honorMoreList"></div>
-    <div class="honor-key">النقاط = 5 لكل دخول + 1 لكل كلمة + 2 لكل جملة + 1 لكل دقيقة مذاكرة</div>
+    <div class="honor-key" id="honorKey">النقاط = 5 لكل دخول + 1 لكل كلمة + 2 لكل جملة + 1 لكل دقيقة مذاكرة</div>
   </div></div></div>
 </div></section>
 
@@ -1624,6 +1677,28 @@ body.is-king #sqAdmin{display:flex!important}
 
       <label class="control-label" style="margin-top:8px;">🆕 عدد محاولات المستوى الأول اللي تتفتح تلقائيًا لأي طالب جديد يتسجل (0 = محدش يمتحن غير لو انت سمحتله بنفسك):</label>
       <input type="number" id="setExamDefaultAttempts" min="0" max="10" placeholder="0">
+
+      <div class="instructions" style="margin-top:14px;font-weight:900;">🏅 نقاط لوحة الشرف والاختبارات (كلها تقدر تعدّلها):</div>
+      <label class="control-label">نقاط كل دخول للموقع:</label>
+      <input type="number" id="setPtsOpen" min="0" max="1000" step="any" placeholder="1">
+      <label class="control-label">نقاط كل كلمة بتتسمع (بسيطة، مثلًا 0.2):</label>
+      <input type="number" id="setPtsWord" min="0" max="1000" step="any" placeholder="0.2">
+      <label class="control-label">نقاط كل جملة بتتسمع (بسيطة، مثلًا 0.5):</label>
+      <input type="number" id="setPtsSentence" min="0" max="1000" step="any" placeholder="0.5">
+      <label class="control-label">نقاط كل دقيقة مذاكرة:</label>
+      <input type="number" id="setPtsMinute" min="0" max="1000" step="any" placeholder="0">
+      <label class="control-label">نقاط إنهاء كل درس (مرة واحدة لكل درس):</label>
+      <input type="number" id="setPtsLesson" min="0" max="1000" step="any" placeholder="5">
+      <label class="control-label">نقاط النجاح في اختبار الدرس (مرة واحدة لكل درس):</label>
+      <input type="number" id="setPtsQuiz" min="0" max="1000" step="any" placeholder="10">
+      <label class="control-label">نقاط النجاح في الاختبار الشامل للمستوى (مرة واحدة لكل مستوى):</label>
+      <input type="number" id="setPtsLevelExam" min="0" max="10000" step="any" placeholder="100">
+      <label class="control-label">عدد أسئلة النطق (قولها بالإنجليزي) في الامتحان الشامل (من إجمالي 50):</label>
+      <input type="number" id="setExamSpeakCount" min="0" max="25" placeholder="10">
+      <label class="control-label">عدد أسئلة اختبار الدرس:</label>
+      <input type="number" id="setQuizCount" min="2" max="30" placeholder="10">
+      <label class="control-label">درجة النجاح في اختبار الدرس (من عدد الأسئلة):</label>
+      <input type="number" id="setQuizPass" min="1" max="30" placeholder="6">
 
       <label class="control-label">💬 رابط واتساب:</label>
       <input type="text" id="setWhatsapp" placeholder="https://wa.me/20xxxxxxxxxx">
@@ -2007,8 +2082,19 @@ async function startExamActual(level, certName){
       alert('لسه معندناش أسئلة لهذا المستوى. استنى مستر عبد الرحمن يضيفها قريبًا! 📝');
       return;
     }
-    const picked = shuffleArray(data).slice(0, Math.min(50, data.length));
-    currentExam = { level, questions: picked, index: 0, score: 0, answers: [], pendingAnswer: undefined, certName, violations: 0, disqualified: false, awayFlag: false, timerInterval: null };
+    let picked = shuffleArray(data).slice(0, Math.min(50, data.length));
+    // 🎤 أسئلة النطق: جملة بالعربي والطالب يقولها بالإنجليزي (بتحل محل جزء من الأسئلة، والإجمالي زي ما هو)
+    let speakPool = [];
+    try{
+      const wantSpeak = ptsCfg().examSpeak;
+      if(wantSpeak > 0){
+        const sp = await examBuildSpeakQs(level);
+        speakPool = sp.pool;
+        const n = Math.min(sp.qs.length, wantSpeak, Math.floor(picked.length * 0.4));
+        if(n > 0) picked = picked.slice(0, picked.length - n).concat(sp.qs.slice(0, n));
+      }
+    }catch(e){ console.error('exam speak build failed', e); }
+    currentExam = { speakPool, level, questions: picked, index: 0, score: 0, answers: [], pendingAnswer: undefined, certName, violations: 0, disqualified: false, awayFlag: false, timerInterval: null };
     renderExamQuestion();
     startExamProctoring();
     const durationMinutes = (appSettings && appSettings['exam_duration_' + level]) || 20;
@@ -2040,6 +2126,88 @@ function exitExamFullscreenIfActive(){
 
 function blockExamCopyEvent(e){ e.preventDefault(); }
 
+// ---- 🎤 أسئلة النطق في الامتحان الشامل ----
+let examMicGrace = false;
+async function examBuildSpeakQs(level){
+  const { data, error } = await _supabase.from('course').select('example_en,example_ar,level,video_url').limit(3000);
+  if(error) throw error;
+  const seen = new Set(), pool = [];
+  (data || []).forEach(w => {
+    const en = String(w.example_en || '').trim(), ar = String(w.example_ar || '').trim();
+    if((w.level || 1) !== level || w.video_url || !en || !ar) return;
+    if(/->|\s\/\s/.test(en) || en.split(/\s+/).length < 2 || en.length > 90 || seen.has(en.toLowerCase())) return;
+    seen.add(en.toLowerCase()); pool.push({ en, ar });
+  });
+  const sh = shuffleArray(pool);
+  const speak = qgSpeechSupported();
+  const qs = sh.slice(0, 25).map((it, i) => {
+    if(speak) return { id:null, type:'speak', text: it.en, ar: it.ar, question_text: it.ar };
+    const wrong = shuffleArray(pool.filter(x => x.en !== it.en)).slice(0, 3).map(x => x.en);
+    return examMcqFromSentence(it, wrong);
+  });
+  return { qs, pool };
+}
+function examMcqFromSentence(it, wrong){
+  const opts = shuffleArray([it.en].concat(wrong)), keys = ['a','b','c','d'];
+  const q = { id:null, question_text: 'اختار الترجمة الصح: ' + it.ar, correct_option: keys[opts.indexOf(it.en)] };
+  keys.forEach((k, i) => { q['option_' + k] = opts[i] || '—'; });
+  return q;
+}
+function examRenderSpeak(q){
+  document.getElementById('examQuestionText').innerText = '🎤 ترجم الجملة دي بصوتك بالإنجليزي:\n' + q.ar;
+  const wrap = document.getElementById('examOptionsWrap');
+  wrap.innerHTML = `<button type="button" class="exam-option-btn" id="examMicBtn" onclick="examRecord()">🎤 دوس وقولها بالإنجليزي</button>
+    <div id="examHeard" style="min-height:24px;margin:8px 0;font-weight:800;font-size:.9rem;line-height:1.8;text-align:center;"></div>
+    <button type="button" class="exam-option-btn" style="font-size:.8rem;opacity:.8;" onclick="examSpeakToMcq()">الميكروفون مش شغال؟ حوّلها لاختيار من متعدد</button>`;
+  currentExam.speakTries = 0;
+}
+function examSpeakToMcq(){
+  if(!currentExam || currentExam.pendingAnswer !== undefined) return;
+  const q = currentExam.questions[currentExam.index]; if(q.type !== 'speak') return;
+  const wrong = shuffleArray((currentExam.speakPool || []).filter(x => x.en !== q.text)).slice(0, 3).map(x => x.en);
+  if(wrong.length < 2){ examSpeakDone(false); return; }
+  const m = examMcqFromSentence({ en: q.text, ar: q.ar }, wrong);
+  delete q.type; Object.assign(q, m);
+  renderExamQuestion();
+}
+function examRecord(){
+  if(!currentExam || currentExam.pendingAnswer !== undefined) return;
+  const q = currentExam.questions[currentExam.index];
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const heard = document.getElementById('examHeard'), btn = document.getElementById('examMicBtn');
+  let rec; try{ rec = new SR(); }catch(e){ examSpeakToMcq(); return; }
+  rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 3; rec.continuous = false;
+  let got = false, err = null;
+  examMicGrace = true; setTimeout(() => { examMicGrace = false; }, 15000);
+  rec.onstart = () => { if(btn) btn.innerText = '🔴 بسمعك...'; if(heard) heard.innerText = ''; };
+  rec.onresult = (ev) => {
+    got = true;
+    const res = ev.results[0]; let best = 0, txt = '';
+    for(let k = 0; k < res.length; k++){ const sim = qgSim(res[k].transcript, q.text); if(sim >= best){ best = sim; txt = res[k].transcript; } }
+    if(!currentExam || currentExam.questions[currentExam.index] !== q) return;
+    if(best >= 0.8) examSpeakDone(true, txt);
+    else { currentExam.speakTries++; if(currentExam.speakTries >= 2) examSpeakDone(false, txt); else if(heard) heard.innerText = 'سمعتك: ' + txt + ' — قريب، جرّب تاني 💪'; }
+  };
+  rec.onerror = (ev) => { err = ev.error; };
+  rec.onend = () => {
+    if(btn && currentExam && currentExam.pendingAnswer === undefined) btn.innerText = '🎤 دوس وقولها بالإنجليزي';
+    setTimeout(() => { examMicGrace = false; try{ if(examMonitorActive) requestExamFullscreen(); }catch(e){} }, 1200);
+    if(got || !currentExam || currentExam.pendingAnswer !== undefined) return;
+    if(['not-allowed','service-not-allowed','audio-capture','network','language-not-supported'].indexOf(err) !== -1) examSpeakToMcq();
+    else if(heard) heard.innerText = 'ما سمعتش حاجة... جرّب تاني بصوت أوضح 🎤';
+  };
+  try{ rec.start(); }catch(e){ examMicGrace = false; examSpeakToMcq(); }
+}
+function examSpeakDone(ok, txt){
+  if(!currentExam) return;
+  const q = currentExam.questions[currentExam.index];
+  currentExam.pendingAnswer = ok ? 'speak_ok' : 'speak_bad';
+  const heard = document.getElementById('examHeard');
+  if(heard) heard.innerHTML = (ok ? '✅ ' : '❌ ') + 'الجملة بالإنجليزي: <b dir="ltr">' + q.text.replace(/</g, '&lt;') + '</b>';
+  const btn = document.getElementById('examMicBtn'); if(btn){ btn.disabled = true; btn.classList.add(ok ? 'correct-answer' : 'wrong-answer'); }
+  document.getElementById('examNextBtn').disabled = false;
+}
+
 function startExamProctoring(){
   examMonitorActive = true;
   requestExamFullscreen();
@@ -2070,7 +2238,7 @@ function stopExamProctoring(){
 
 // بيتنادى لما الطالب يسرّح لتطبيق تاني أو يخرج من وضع ملء الشاشة، وبيرصد رجوعه تاني
 function checkExamAway(){
-  if(!examMonitorActive || !currentExam || currentExam.disqualified) return;
+  if(!examMonitorActive || !currentExam || currentExam.disqualified || examMicGrace) return;
   const isAway = document.hidden || (!document.fullscreenElement && !document.webkitFullscreenElement);
   if(isAway){
     currentExam.awayFlag = true;
@@ -2174,6 +2342,13 @@ function renderExamQuestion(){
   const total = currentExam.questions.length;
   document.getElementById('examProgressText').innerText = `سؤال ${currentExam.index + 1} من ${total}`;
   document.getElementById('examProgressFill').style.width = `${(currentExam.index / total) * 100}%`;
+  if(q.type === 'speak'){
+    examRenderSpeak(q);
+    currentExam.pendingAnswer = undefined;
+    const nb = document.getElementById('examNextBtn'); nb.disabled = true;
+    nb.innerText = (currentExam.index === total - 1) ? 'إنهاء الاختبار 🏁' : 'التالي ⬅️';
+    return;
+  }
   document.getElementById('examQuestionText').innerText = q.question_text;
 
   const opts = [
@@ -2219,7 +2394,7 @@ function selectExamAnswer(key, btnEl){
 function nextExamQuestion(){
   if(!currentExam || currentExam.pendingAnswer === undefined) return;
   const q = currentExam.questions[currentExam.index];
-  const correct = (q.correct_option || '').toLowerCase().trim();
+  const correct = q.type === 'speak' ? 'speak_ok' : (q.correct_option || '').toLowerCase().trim();
   const chosen = currentExam.pendingAnswer;
   if(chosen === correct) currentExam.score++;
   currentExam.answers.push({ question_id: q.id, chosen, correct });
@@ -2243,6 +2418,15 @@ async function finishExam(){
   const level = currentExam.level;
   const names = {1:'الأول', 2:'الثاني', 3:'الثالث'};
 
+  const passPercent = (appSettings && appSettings.exam_pass_percent) || 60;
+  const passed = percentage >= passPercent;
+  let firstPass = passed;
+  if(passed){
+    try{
+      const { data: old } = await _supabase.from('exam_results').select('percentage,disqualified').eq('student_code', studentCode).eq('level', level);
+      firstPass = !(old || []).some(x => x.percentage >= passPercent && !x.disqualified);
+    }catch(e){ firstPass = false; }
+  }
   try{
     await _supabase.from('exam_results').insert({
       student_code: studentCode,
@@ -2251,9 +2435,7 @@ async function finishExam(){
       level, score, total, percentage
     });
   }catch(e){ console.error(e); }
-
-  const passPercent = (appSettings && appSettings.exam_pass_percent) || 60;
-  const passed = percentage >= passPercent;
+  const examPts = (passed && firstPass) ? ptsCfg().levelExam : 0;
   const tier = examGradeTier(score, total);
   const tierLabels = { excellent: '🌟 ممتاز (Excellent)', verygood: '👍 جيد جدًا (Very Good)' };
   const tierLine = tier ? tierLabels[tier] : '📞 تواصل مع المستر لإعادة الامتحان';
@@ -2266,7 +2448,8 @@ async function finishExam(){
     <div class="exam-report-row"><span>المستوى:</span><b>${names[level] || level}</b></div>
     <div class="exam-report-row"><span>النتيجة:</span><b>${score} من ${total}</b></div>
     <div class="exam-report-row"><span>النسبة:</span><b>${percentage}%</b></div>
-    <div class="exam-report-row"><span>التقدير:</span><b>${tierLine}</b></div>`;
+    <div class="exam-report-row"><span>التقدير:</span><b>${tierLine}</b></div>
+    ${examPts ? `<div class="exam-report-row"><span>نقاط لوحة الشرف:</span><b>🏅 +${examPts} نقطة</b></div>` : ''}`;
   currentExam.lastResult = { score, total, percentage, level, passed, tier, certName: currentExam.certName };
   document.getElementById('examCertBtn').style.display = tier ? 'block' : 'none';
   document.getElementById('examResultOverlay').classList.add('show');
@@ -2314,13 +2497,20 @@ function examGradeTier(score, total){
 }
 
 // تحميل صورة من رابط/داتا URL كـ Image جاهزة للرسم على الكانفس
+// بنجرب بـ CORS الأول (عشان الكانفس ما يتحجبش عند التحميل)، ولو فشل بنجرب تاني عادي قبل ما نستسلم
 function loadImageAsync(src){
-  return new Promise((resolve) => {
-    if(!src){ resolve(null); return; }
+  const tryLoad = (useCors) => new Promise((resolve) => {
     const img = new Image();
+    if(useCors && !/^data:|^blob:/i.test(src)) img.crossOrigin = 'anonymous';
     img.onload = () => resolve(img);
     img.onerror = () => resolve(null);
     img.src = src;
+  });
+  return new Promise(async (resolve) => {
+    if(!src){ resolve(null); return; }
+    let img = await tryLoad(true);
+    if(!img) img = await tryLoad(false);
+    resolve(img);
   });
 }
 
@@ -2458,7 +2648,7 @@ function drawCoverImage(ctx, img, cx, cy, r){
 function drawBadgeRow(ctx, text, cy, textColor, lineColor){
   ctx.font = '800 19px Poppins, sans-serif';
   ctx.fillStyle = textColor;
-  const cx = ctx.canvas.width/2;
+  const cx = ctx.canvas.width / (ctx.getTransform().a || 1) / 2;   // منتصف العرض المنطقي (بعد تكبير الطباعة)
   drawSpacedText(ctx, text, cx, cy, 3);
   const halfTextW = (ctx.measureText(text).width + 3*text.length)/2 + 18;
   ctx.save();
@@ -2498,6 +2688,49 @@ function drawSocialCircle(ctx, cx, cy, r, bg, glyph, glyphColor){
   ctx.restore();
 }
 
+// 🖼️ صورة المستر بالأسلوب بتاع الواجهة الرئيسية: كبيرة، من غير أي إطار، ملزوقة في أسفل منطقة الصورة،
+// بتندمج مع الخلفية البيضاء بـ multiply وبتتلاشى تدريجيًا من تحت (نفس hero-photo في الموقع بالظبط)
+function drawHeroPhoto(ctx, img, W, top, height){
+  const K = ctx.getTransform().a || 1;                  // معامل تكبير الكانفس (دقة الطباعة)
+  const sw = img.naturalWidth || img.width, sh = img.naturalHeight || img.height;
+  const FADE_START = 0.64, FADE_END = 0.80;   // التلاشي يبدأ قبل نهاية الكرافتة ويخلص بعدها بشوية
+  // الصورة بتبدأ من فوق (الراس كاملة وفيها مساحة) وبتتحجّم بحيث نهاية التلاشي تقع عند أسفل منطقة الصورة
+  let scale = (height / FADE_END) / sh;
+  if(sw * scale > W - 100) scale = (W - 100) / sw;   // ما تعدّيش عرض الشهادة
+  const dw = sw * scale, dh = sh * scale;
+  const dx = (W - dw) / 2, dy = top;
+
+  const offW = Math.ceil(W * K), offH = Math.ceil((top + dh) * K);
+  const off = document.createElement('canvas');
+  off.width = offW; off.height = offH;
+  const octx = off.getContext('2d');
+  octx.imageSmoothingQuality = 'high';
+  octx.scale(K, K);
+  octx.drawImage(img, dx, dy, dw, dh);
+
+  // تنقية بسيطة: خلفية الصورة (254) تبقى أبيض نقي (255) عشان ما يظهرش أي مستطيل باهت حواليها
+  try{
+    octx.setTransform(1, 0, 0, 1, 0, 0);
+    const id = octx.getImageData(0, 0, offW, offH), d = id.data;
+    for(let i = 0; i < d.length; i += 4){ d[i] *= 1.025; d[i+1] *= 1.025; d[i+2] *= 1.025; }
+    octx.putImageData(id, 0, 0);
+    octx.scale(K, K);
+  }catch(e){ octx.setTransform(K, 0, 0, K, 0, 0); }
+
+  // قناع التلاشي: الصورة كاملة لحد نهاية الجاكيت تقريبًا وبعدين بتسيح في الخلفية
+  octx.globalCompositeOperation = 'destination-in';
+  const mask = octx.createLinearGradient(0, dy + dh * FADE_START, 0, dy + dh * FADE_END);
+  mask.addColorStop(0, '#000');
+  mask.addColorStop(1, 'rgba(0,0,0,0)');
+  octx.fillStyle = mask;   // التدرج بيمتد تلقائيًا: فوق البداية ظاهر بالكامل، وتحت النهاية مخفي
+  octx.fillRect(0, 0, W, offH / K);
+
+  ctx.save();
+  ctx.globalCompositeOperation = 'multiply';
+  ctx.drawImage(off, 0, 0, offW / K, offH / K);
+  ctx.restore();
+}
+
 // الرسم الفعلي للشهادة — تصميم "واقف" (بورتريه) فاخر مستوحى من هوية موقعنا وألوان برنامجنا بالكامل
 // (نفس روح شهادات الموقع الأصلية: صورة دائرية، شارة، اسم بالمستر، بادج ملون للطالب، توقيع وتذييل، أيقونات تواصل)
 // تصميم إنجليزي بالكامل على وجه الشهادة نفسه، من غير أي نص عربي
@@ -2522,12 +2755,25 @@ async function renderCertificateCanvas({ name, code, level, score, total }){
   const info = tier ? tierInfo[tier] : tierInfo.excellent;
 
   await document.fonts.ready;
-  const photoImg = await loadImageAsync(appSettings && appSettings.logo_url);
+  let photoImg = await loadImageAsync(appSettings && appSettings.logo_url);
+  // احتياطي: لو الصورة ما اتحمّلتش من الرابط، نستخدم نفس الصورة الظاهرة فعلًا في الواجهة الرئيسية
+  if(!photoImg){
+    const domImg = document.querySelector('#brandLogo img');
+    if(domImg && domImg.complete && domImg.naturalWidth) photoImg = domImg;
+  }
 
-  const W = 1200, H = 1700;
+  // الشهادة بقت أطول شوية عشان صورة المستر تاخد مساحة كبيرة زي الواجهة الرئيسية (باقي المحتوى بينزل بمقدار DY)
+  // 🖨️ مقاس A4 بالظبط (210×297 مم) بدقة طباعة 300 DPI = 2480×3508 بكسل. بنرسم بإحداثيات منطقية عرضها 1200 وبنكبّرها بـ K
+  const PX_W = 2480, PX_H = 3508;
+  const K = PX_W / 1200;
+  const W = 1200, H = PX_H / K;
+  const PHOTO_TOP = 112, PHOTO_H = 600;
+  const BLOCK_SCALE = 0.9, BLOCK_SRC_Y = 478, BLOCK_DST_Y = 722;   // نضغط بلوك النص شوية عشان يكمّل في A4 بعد الصورة الكبيرة
+
   const canvas = document.createElement('canvas');
-  canvas.width = W; canvas.height = H;
+  canvas.width = PX_W; canvas.height = PX_H;
   const ctx = canvas.getContext('2d');
+  ctx.scale(K, K);
 
   // خلفية متدرجة بنفس تدرج خلفية الموقع (كريمي → نعناعي → وردي فاتح)
   const bgGrad = ctx.createLinearGradient(0, 0, W, H);
@@ -2545,6 +2791,31 @@ async function renderCertificateCanvas({ name, code, level, score, total }){
     ctx.fillRect(0,0,W,H);
   });
 
+  // ⬜ منطقة بيضاء في الأعلى (نفس بياض قلب الصورة) وبتتدرج للخلفية الكريمية — زي .hero في الموقع
+  const heroEnd = PHOTO_TOP + PHOTO_H + 200;
+  const whiteGrad = ctx.createLinearGradient(0, 0, 0, heroEnd);
+  whiteGrad.addColorStop(0, '#FFFFFF');
+  whiteGrad.addColorStop(0.82, '#FFFFFF');
+  whiteGrad.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = whiteGrad;
+  ctx.fillRect(0, 0, W, heroEnd);
+
+  // صورة المستر: كبيرة، من غير إطار، وسايحة في الخلفية البيضاء
+  if(photoImg){
+    drawHeroPhoto(ctx, photoImg, W, PHOTO_TOP, PHOTO_H);
+  } else {
+    const photoCx = W/2, photoCy = PHOTO_TOP + PHOTO_H/2 - 60, photoR = 140;
+    const g = ctx.createLinearGradient(photoCx-photoR, photoCy-photoR, photoCx+photoR, photoCy+photoR);
+    g.addColorStop(0, ACCENT); g.addColorStop(1, PRIMARY);
+    ctx.beginPath(); ctx.arc(photoCx, photoCy, photoR, 0, Math.PI*2);
+    ctx.fillStyle = g; ctx.fill();
+    ctx.fillStyle = '#fff';
+    ctx.font = '128px "Font Awesome 6 Free", Poppins, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('🎓', photoCx, photoCy + 8);
+    ctx.textBaseline = 'alphabetic';
+  }
+
   // زخارف الزوايا القطرية (بلون التقدير: دهبي/كورال للممتاز، فيروزي/بنفسجي لجيد جدًا)
   drawCornerRibbon(ctx, 0, 0, 1, info.colorA, info.colorB);
   drawCornerRibbon(ctx, W, H, -1, info.colorA, info.colorB);
@@ -2557,30 +2828,14 @@ async function renderCertificateCanvas({ name, code, level, score, total }){
 
   ctx.textAlign = 'center';
 
-  // صورة المستر الدائرية أعلى الشهادة، ببرواز أبيض وهالة بلون العلامة
-  const photoCx = W/2, photoCy = 250, photoR = 140;
-  ctx.beginPath(); ctx.arc(photoCx, photoCy, photoR+16, 0, Math.PI*2);
-  ctx.fillStyle = CARD_BG; ctx.shadowColor = 'rgba(51,43,36,0.18)'; ctx.shadowBlur = 30; ctx.shadowOffsetY = 10;
-  ctx.fill();
-  ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
-  ctx.beginPath(); ctx.arc(photoCx, photoCy, photoR+8, 0, Math.PI*2);
-  ctx.strokeStyle = ACCENT; ctx.lineWidth = 4; ctx.stroke();
-  if(photoImg){
-    drawCoverImage(ctx, photoImg, photoCx, photoCy, photoR);
-  } else {
-    const g = ctx.createLinearGradient(photoCx-photoR, photoCy-photoR, photoCx+photoR, photoCy+photoR);
-    g.addColorStop(0, ACCENT); g.addColorStop(1, PRIMARY);
-    ctx.beginPath(); ctx.arc(photoCx, photoCy, photoR, 0, Math.PI*2);
-    ctx.fillStyle = g; ctx.fill();
-    ctx.fillStyle = '#fff';
-    ctx.font = '128px "Font Awesome 6 Free", Poppins, sans-serif';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText('🎓', photoCx, photoCy + 8);
-    ctx.textBaseline = 'alphabetic';
-  }
+  // شارة صغيرة فوق الصورة (زي .header-badge / .hero-eyebrow بالظبط)
+  drawBadgeRow(ctx, badgeText, 80, TEXT_LIGHT, ACCENT);
 
-  // شارة صغيرة (زي .header-badge بالظبط)
-  drawBadgeRow(ctx, badgeText, 450, TEXT_LIGHT, ACCENT);
+  // باقي محتوى الشهادة بينزل تحت الصورة الكبيرة
+  ctx.save();
+  ctx.translate(W/2, BLOCK_DST_Y);
+  ctx.scale(BLOCK_SCALE, BLOCK_SCALE);
+  ctx.translate(-W/2, -BLOCK_SRC_Y);
 
   // اسم المستر
   ctx.fillStyle = TEXT_DARK;
@@ -2625,7 +2880,7 @@ async function renderCertificateCanvas({ name, code, level, score, total }){
   nameGrad.addColorStop(0, PRIMARY); nameGrad.addColorStop(1, info.colorB === PRIMARY ? ACCENT : info.colorB);
   roundRectPath(ctx, W/2-nameW/2, 812, nameW, 88, 18);
   ctx.save();
-  ctx.shadowColor = 'rgba(51,43,36,0.2)'; ctx.shadowBlur = 22; ctx.shadowOffsetY = 8;
+  ctx.shadowColor = 'rgba(51,43,36,0.2)'; ctx.shadowBlur = 22 * K; ctx.shadowOffsetY = 8 * K;
   ctx.fillStyle = nameGrad; ctx.fill();
   ctx.restore();
   roundRectPath(ctx, W/2-nameW/2, 812, nameW, 88, 18);
@@ -2665,6 +2920,7 @@ async function renderCertificateCanvas({ name, code, level, score, total }){
   drawSocialCircle(ctx, W/2, iconY, iconR, '#1877F2', 'f', '#1877F2');
   drawSocialCircle(ctx, W/2 + gap, iconY, iconR, '#25D366', '☎', '#25D366');
 
+  ctx.restore();
   return canvas;
 }
 
@@ -3166,6 +3422,7 @@ function completeGateLogin(raw, result){
   startStatsTracking();
   showWatermark();
   loadHonorBoard();
+  qgAfterLogin();
 }
 
 function savePendingLocal(){} function clearPendingLocal(){} function stopPendingWatch(){} async function resumePendingIfAny(){}
@@ -3242,6 +3499,7 @@ async function initGateOnLoad(){
     startGateRevalidationLoop();
     startStatsTracking();
     showWatermark();
+    qgAfterLogin();
   }catch(e){
     console.error(e);
     openGateModal();
@@ -3287,9 +3545,25 @@ async function loadHonorBoard(){
   const more = document.getElementById('honorMoreList');
   try{
     // بنطلب أكتر من 10 عشان لو المستر اتشال من اللوحة يفضل 10 طلاب بالظبط
-    const { data, error } = await _supabase.rpc('get_honor_board', { p_limit: 15 });
+    const { data, error } = await _supabase.rpc('get_honor_board', { p_limit: 500 });
     if(error) throw error;
-    const rows = (data || []).filter(r => !isHonorExcluded(r.full_name)).slice(0, 10).map((r, i) => Object.assign({}, r, { pos: i + 1 }));
+    // النقاط بتتحسب هنا بأوزان المستر (من الإدارة) + نقاط الدروس والاختبارات
+    const cfg = ptsCfg();
+    let extra = null;
+    try{
+      const q = await _supabase.rpc('get_quiz_counts', { p_pass: (appSettings && appSettings.exam_pass_percent) || 60 });
+      if(!q.error && Array.isArray(q.data)) { extra = {}; q.data.forEach(x => { extra[String(x.full_name || '').trim()] = x; }); }
+    }catch(e){ extra = null; }
+    const calc = r => {
+      if(!extra) return Number(r.points) || 0; // لو الإعداد الجديد لسه متركّبش: النقاط القديمة زي ما هي
+      const x = extra[String(r.full_name || '').trim()] || {};
+      return Math.round((r.opens || 0) * cfg.open + (r.words || 0) * cfg.word + (r.sentences || 0) * cfg.sentence + (r.minutes || 0) * cfg.minute
+        + (x.lessons_done || 0) * cfg.lesson + (x.quizzes_passed || 0) * cfg.quiz + (x.levels_passed || 0) * cfg.levelExam);
+    };
+    const keyEl = document.getElementById('honorKey');
+    if(keyEl && extra) keyEl.textContent = `النقاط = ${cfg.open} لكل دخول` + (cfg.word ? ` + ${cfg.word} لكل كلمة` : '') + (cfg.sentence ? ` + ${cfg.sentence} لكل جملة` : '') + (cfg.minute ? ` + ${cfg.minute} لكل دقيقة مذاكرة` : '') + ` + ${cfg.lesson} لكل درس + ${cfg.quiz} للنجاح في اختبار الدرس + ${cfg.levelExam} للنجاح في الاختبار الشامل للمستوى`;
+    const rows = (data || []).filter(r => !isHonorExcluded(r.full_name)).map(r => Object.assign({}, r, { points: calc(r) }))
+      .sort((a, b) => b.points - a.points).slice(0, 10).map((r, i) => Object.assign({}, r, { pos: i + 1 }));
     if(!rows.length){
       box.innerHTML = '<div class="honor-empty">لسه مفيش حد ذاكر... كن أول واحد في لوحة الشرف! 🌱</div>';
       if(toggle) toggle.style.display = 'none';
@@ -3517,7 +3791,603 @@ function renderCategoryNav(){
 }
 
 // عرض شكل "مقفول" أنيق: كروت شبحية مموّهة + رسالة فوقها بدل ما المحتوى يكون ممنوع تمامًا
-function renderLockedView(container, type, name){
+// =====================================================================
+// 🎯 اختبر نفسك: قفل الدروس بالاختبار (الأسئلة بتتولّد من كلمات وجمل الدرس نفسه)
+// =====================================================================
+function ptsCfg(){
+  const a = appSettings || {};
+  const n = (v, d) => (v === null || v === undefined || v === '' || isNaN(Number(v))) ? d : Number(v);
+  const hasNew = ('pts_quiz' in a);
+  const count = Math.max(2, n(a.quiz_question_count, 10));
+  return {
+    examSpeak: Math.max(0, Math.min(25, n(a.exam_speak_count, 10))),
+    open: n(a.pts_open, hasNew ? 1 : 5), word: n(a.pts_word, hasNew ? 0.2 : 1), sentence: n(a.pts_sentence, hasNew ? 0.5 : 2), minute: n(a.pts_minute, hasNew ? 0 : 1),
+    lesson: n(a.pts_lesson, 5), quiz: n(a.pts_quiz, 10), levelExam: n(a.pts_level_exam, 100),
+    count, pass: Math.min(count, Math.max(1, n(a.quiz_pass_score, 6)))
+  };
+}
+const QG = { progress:{}, ok:false, loadedFor:null, words:{}, locked:new Set(), run:null };
+function qgIsKing(){ return document.body.classList.contains('is-king'); }
+function qgCat(){ return categories.find(c => c.id === currentCategoryId) || null; }
+function qgOn(){ const c = qgCat(); return !!(c && c.quiz_gate === true && studentCode); }
+function qgEnforce(){ return qgOn() && QG.ok && !qgIsKing(); }
+function qgCount(){ return ptsCfg().count; }
+function qgNeed(total){ const c = ptsCfg(); return Math.max(1, Math.min(total, Math.ceil(total * c.pass / c.count))); }
+function qgShuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+async function qgLoadProgress(force){
+  if(!studentCode) return;
+  if(!force && QG.ok && QG.loadedFor === studentCode) return;
+  try{
+    const { data, error } = await _supabase.from('lesson_progress').select('*').eq('student_code', studentCode);
+    if(error) throw error;
+    QG.progress = {};
+    (data || []).forEach(r => { QG.progress[r.lesson_id] = r; });
+    QG.loadedFor = studentCode; QG.ok = true;
+  }catch(e){ console.error('quiz progress load failed', e); QG.ok = false; }
+}
+
+// كلمات الدروس (من الكاش أو من قاعدة البيانات) عشان نعرف كل درس فيه أسئلة ولا لأ
+async function qgWords(ids){
+  const need = ids.filter(id => !QG.words[id]);
+  if(!need.length) return;
+  if(DC.ready){ need.forEach(id => { QG.words[id] = DC.wordsFor(id); }); return; }
+  try{
+    const { data, error } = await _supabase.from('course').select('lesson_id,word_en,word_ar,example_en,example_ar,level,video_url').in('lesson_id', need);
+    if(error) throw error;
+    need.forEach(id => { QG.words[id] = []; });
+    (data || []).forEach(w => QG.words[w.lesson_id].push(w));
+  }catch(e){ console.error(e); need.forEach(id => { QG.words[id] = null; }); }
+}
+
+function qgItems(words){
+  const lvl = selectedLevel || 1;
+  return (words || []).filter(w => (w.level || 1) === lvl && !w.video_url && w.word_en && (w.word_ar || (w.example_en && w.example_ar)));
+}
+function qgPassed(l){ const p = QG.progress[l.id]; return !!(p && p.passed); }
+// الدرس "اتخطّى" لو: مفتوح من المستر لكل الطلاب، أو الطالب نجح فيه، أو مفيهوش أسئلة كفاية (نصوص طويلة / كلمات قليلة)
+function qgCleared(l){
+  if(l.quiz_skip === true || qgPassed(l)) return true;
+  const w = QG.words[l.id];
+  if(w === null) return true;
+  return qgItems(w).length < 2;
+}
+function qgChain(){ return lessons.filter(l => l.is_active !== false); }
+
+async function qgPrepare(){
+  QG.locked = new Set();
+  if(!qgOn()) return;
+  await qgLoadProgress();
+  if(!qgEnforce()) return;
+  const chain = qgChain();
+  await qgWords(chain.map(l => l.id));
+  for(let i = 1; i < chain.length; i++){
+    const opened = chain[i].quiz_skip === true || qgPassed(chain[i]);
+    if(!qgCleared(chain[i - 1]) && !opened) QG.locked.add(chain[i].id);
+  }
+}
+// الطالب يكمّل من أول درس لسه معداهوش
+function qgStartLessonId(){
+  if(!qgEnforce()) return null;
+  const pick = qgChain().find(l => !QG.locked.has(l.id) && !qgCleared(l));
+  return pick ? pick.id : null;
+}
+
+async function qgLockedClick(lesson){
+  const container = document.getElementById('wordsContainer');
+  await qgLoadProgress(true);
+  try{
+    const { data } = await _supabase.from('lessons').select('id,quiz_skip').eq('category_id', currentCategoryId);
+    (data || []).forEach(r => { const l = lessons.find(x => x.id === r.id); if(l) l.quiz_skip = r.quiz_skip; });
+  }catch(e){}
+  await qgPrepare();
+  if(!QG.locked.has(lesson.id)){
+    renderLessonsNav(); fetchWordsFromSupabase(); showToast('🔓 الدرس اتفتحلك!'); return;
+  }
+  const chain = qgChain(), i = chain.findIndex(l => l.id === lesson.id), prev = chain[i - 1];
+  renderLessonsNav();
+  renderLockedView(container, 'quiz', lesson.name, prev ? `<button class="qz-go" onclick="qgGoLesson(${prev.id})">🎯 روح لاختبار «${escapeHtml(prev.name)}»</button><br><button class="qz-skip" onclick="qgSkipFor(${prev.id}, ${lesson.id})">أو تخطّى الاختبار وافتح الدرس ⏭️</button>` : '', prev ? prev.name : '');
+}
+function qgGoLesson(id){
+  qgClose(true);
+  currentLessonId = id;
+  renderLessonsNav(); pauseSpeaking(); fetchWordsFromSupabase();
+  try{ window.scrollTo({ top:0, behavior:'smooth' }); }catch(e){}
+}
+
+// زرار الاختبار في آخر الدرس
+function qgAppendStart(container){
+  if(!qgOn() || !currentLessonId) return;
+  if(qgItems(currentWordsList).length < 2) return;
+  const passed = QG.progress[currentLessonId] && QG.progress[currentLessonId].passed;
+  const wrap = document.createElement('div');
+  wrap.className = 'qz-btn-wrap';
+  const cfgP = ptsCfg();
+  wrap.innerHTML = `<div class="qz-hint">${passed ? '✅ انت عدّيت الدرس ده... تقدر تعيد الاختبار للمراجعة (من غير نقاط جديدة).' : 'اختبر نفسك (' + qgNeed(qgCount()) + ' من ' + qgCount() + ' للنجاح) واكسب ' + cfgP.quiz + ' نقطة 🏅 — الاختبار اختياري وتقدر تتخطاه.'}</div>
+    <button class="qz-start-btn" onclick="qgStart()"><i class="fa-solid fa-bullseye"></i> اختبر نفسك</button>
+    ${passed ? '' : '<button class="qz-skip" onclick="qgSkipFor(' + currentLessonId + ')">تخطّي الاختبار ⏭️</button>'}`;
+  container.appendChild(wrap);
+}
+
+// ---------- توليد الأسئلة ----------
+function qgNorm(s){ return String(s || '').toLowerCase().replace(/['’]/g, '').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim(); }
+function qgLev(a, b){
+  const m = a.length, n = b.length; if(!m) return n; if(!n) return m;
+  let prev = []; for(let j = 0; j <= n; j++) prev[j] = j;
+  for(let i = 1; i <= m; i++){
+    const cur = [i];
+    for(let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[n];
+}
+function qgSim(a, b){ a = qgNorm(a); b = qgNorm(b); if(!a || !b) return 0; return 1 - qgLev(a, b) / Math.max(a.length, b.length); }
+function qgSpeechSupported(){
+  if(!(window.SpeechRecognition || window.webkitSpeechRecognition)) return false;
+  const ua = navigator.userAgent || '';
+  const ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  return !ios; // على الآيفون التعرف على الصوت ضعيف: بنحوّل السؤال لاختيار من متعدد
+}
+function qgCanFill(it){
+  if(!it.example_en || !it.word_en) return false;
+  try{ return new RegExp('\\b' + it.word_en.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i').test(it.example_en); }catch(e){ return false; }
+}
+function qgMcq(item, kind, own, others){
+  const eq = (a, b) => String(a).trim().toLowerCase() === String(b).trim().toLowerCase();
+  const hasEx = !!(item.example_en && item.example_ar);
+  let prompt, hint = '', answer, field;
+  if(kind === 'fill' && qgCanFill(item)){
+    const re = new RegExp('\\b' + item.word_en.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+    prompt = item.example_en.replace(re, '_____'); hint = item.example_ar || ''; answer = item.word_en.trim(); field = 'word_en';
+  } else if(hasEx && (!item.word_ar || Math.random() < 0.5)){
+    prompt = item.example_ar; answer = item.example_en.trim(); field = 'example_en';
+  } else {
+    prompt = item.word_ar; answer = item.word_en.trim(); field = 'word_en';
+  }
+  if(!prompt) return null;
+  const seen = [answer.toLowerCase()];
+  const take = [];
+  qgShuffle(own).concat(qgShuffle(others)).forEach(w => {
+    const v = (w[field] || '').trim();
+    if(v && take.length < 2 && !seen.some(s => eq(s, v)) && !eq(v, answer)){ seen.push(v.toLowerCase()); take.push(v); }
+  });
+  if(take.length < 1) return null;
+  return { type:'mcq', kind: field === 'word_en' && kind === 'fill' ? 'fill' : 'tr', prompt, hint, choices: qgShuffle([answer].concat(take)), answer, item, field };
+}
+function qgBuildQuestions(){
+  const own = qgItems(currentWordsList);
+  const others = [];
+  QG.itemLesson = new Map();
+  const curL = lessons.find(l => l.id === currentLessonId);
+  own.forEach(w => QG.itemLesson.set(w, curL ? curL.name : 'الدرس ده'));
+  lessons.forEach(l => { if(l.id !== currentLessonId) qgItems(QG.words[l.id]).forEach(w => { others.push(w); if(!QG.itemLesson.has(w)) QG.itemLesson.set(w, l.name); }); });
+  QG.runCtx = { own, others };
+  const speechOK = qgSpeechSupported();
+  const canSpeak = it => !!((it.example_en && it.example_ar) || it.word_ar);
+  // كل سؤال = (كلمة/جملة + نوع السؤال) ومبيتكررش نفس الاتنين
+  const combos = [];
+  own.forEach(it => {
+    combos.push({ it, kind:'tr' });
+    if(qgCanFill(it)) combos.push({ it, kind:'fill' });
+    if(speechOK && canSpeak(it)) combos.push({ it, kind:'speak' });
+  });
+  const want = Math.min(qgCount(), combos.length);
+  const speakWant = speechOK ? Math.round(want * 0.3) : 0;
+  const speakPool = qgShuffle(combos.filter(c => c.kind === 'speak'));
+  const mcqPool = qgShuffle(combos.filter(c => c.kind !== 'speak'));
+  const used = new Set(); // عشان نفس الكلمة متتكررش في نفس الاختبار قدر الإمكان
+  const takeFrom = (pool, n) => {
+    const out = [];
+    pool.forEach(c => { if(out.length < n && !used.has(c.it)){ out.push(c); used.add(c.it); } });
+    pool.forEach(c => { if(out.length < n && out.indexOf(c) === -1){ out.push(c); } });
+    return out;
+  };
+  const spk = takeFrom(speakPool, speakWant);
+  const mcqN = want - spk.length;
+  const mcq = takeFrom(mcqPool.filter(c => spk.indexOf(c) === -1), mcqN);
+  const qs = [];
+  mcq.forEach(c => { const m = qgMcq(c.it, c.kind, own, others); if(m) qs.push(m); });
+  const mcqOut = qs.slice();
+  spk.forEach(c => {
+    const ex = c.it.example_en && c.it.example_ar;
+    qs.push({ type:'speak', item:c.it, text: ex ? c.it.example_en : c.it.word_en, ar: ex ? c.it.example_ar : c.it.word_ar });
+  });
+  return mcqOut.concat(qs.filter(q => q.type === 'speak')); // الاختيار الأول وبعدين النطق
+}
+
+// ---------- واجهة الاختبار ----------
+function qgOverlay(){
+  let ov = document.getElementById('qzOverlay');
+  if(!ov){ ov = document.createElement('div'); ov.id = 'qzOverlay'; ov.className = 'qz-overlay'; document.body.appendChild(ov); }
+  ov.style.display = 'flex';
+  return ov;
+}
+function qgStopRec(){ const r = QG.run; if(r && r.rec){ try{ r.rec.abort(); }catch(e){} r.rec = null; } }
+function qgClose(silent){
+  const r = QG.run;
+  if(!silent && r && !r.finished && !confirm('تخرج من الاختبار؟ مش هيتحسب.')) return;
+  qgStopRec();
+  const ov = document.getElementById('qzOverlay'); if(ov) ov.style.display = 'none';
+  QG.run = null;
+}
+function qgStart(){
+  pauseSpeaking();
+  const qs = qgBuildQuestions();
+  if(qs.length < 2){
+    showToast('الدرس ده مفيهوش أسئلة كفاية... كمّل عادي 👍');
+    if(qgEnforce()){ qgSave(currentLessonId, 0, 0, 'auto').then(() => qgPrepare().then(renderLessonsNav)); }
+    return;
+  }
+  QG.run = { qs, i:0, score:0, lessonId: currentLessonId, rec:null, locked:false, tries:0, noMic:false, finished:false, own: QG.runCtx.own, others: QG.runCtx.others };
+  qgRenderQ();
+}
+function qgRenderQ(){
+  const r = QG.run; if(!r) return;
+  let q = r.qs[r.i];
+  if(q.type === 'speak' && (r.noMic || !qgSpeechSupported())){
+    const m = qgMcq(q.item, 'tr', r.own, r.others);
+    if(m){ r.qs[r.i] = m; q = m; }
+  }
+  const ov = qgOverlay();
+  const pct = Math.round(r.i / r.qs.length * 100);
+  let body;
+  if(q.type === 'mcq'){
+    body = `<div class="qz-kind">${q.kind === 'fill' ? '✍️ كمّل الجملة' : '🔤 اختار الترجمة الصح'}</div>
+      <div class="qz-prompt" dir="auto">${escapeHtml(q.prompt)}</div>
+      ${q.hint ? `<div class="qz-sub" dir="auto">${escapeHtml(q.hint)}</div>` : ''}
+      <div class="qz-opts">${q.choices.map((c, i) => `<button class="qz-opt" dir="ltr" onclick="qgPick(${i})">${escapeHtml(c)}</button>`).join('')}</div>`;
+  } else {
+    body = `<div class="qz-kind">🎤 ترجمها بصوتك بالإنجليزي</div>
+      <div class="qz-prompt" dir="auto">${escapeHtml(q.ar)}</div>
+      <div class="qz-sub">دوس على الميكروفون وقول الجملة دي بالإنجليزي 👇</div>
+      <button class="qz-mic" id="qzMic" onclick="qgRecord()"><i class="fa-solid fa-microphone"></i> دوس وقولها</button>
+      <div class="qz-heard" id="qzHeard"></div>
+      <button class="qz-skip" onclick="qgSpeakToMcq('')">الميكروفون مش شغال؟ حوّلها لاختيار</button>`;
+  }
+  ov.innerHTML = `<div class="qz-box">
+    <div class="qz-head"><button class="qz-x" onclick="qgClose()"><i class="fa-solid fa-xmark"></i></button>
+      <div class="qz-bar"><i style="width:${pct}%"></i></div><span class="qz-count">${r.i + 1}/${r.qs.length}</span></div>
+    ${body}<div class="qz-fb" id="qzFb"></div>
+    <button class="qz-skip" onclick="qgSkipQuiz()">تخطّي الاختبار ⏭️</button></div>`;
+  r.locked = false; r.tries = 0;
+}
+function qgLessonOf(item){ return (QG.itemLesson && QG.itemLesson.get(item)) || 'الدرس ده'; }
+// شرح الغلط: الإجابة الصح + في أنهي درس + اللي الطالب اختاره معناه إيه
+function qgWrongInfo(q, chosen){
+  const r = QG.run; let html = '';
+  if(q.item) html += `<div class="qz-why">📖 ده كان في درس <b>«${escapeHtml(qgLessonOf(q.item))}»</b></div>`;
+  if(q.type === 'mcq' && q.item){
+    const AR = { word_en:'word_ar', example_en:'example_ar' };
+    html += `<div class="qz-why" dir="auto">✅ <b dir="ltr">${escapeHtml(q.answer)}</b> = ${escapeHtml(q.field === 'word_en' ? (q.item.word_ar || '') : (q.item.example_ar || ''))}</div>`;
+    const pool = (r ? (r.own || []).concat(r.others || []) : []);
+    const w = chosen ? pool.find(x => String(x[q.field] || '').trim() === chosen) : null;
+    if(w && w !== q.item) html += `<div class="qz-why" dir="auto">❌ اللي اخترته <b dir="ltr">${escapeHtml(chosen)}</b> معناها «${escapeHtml(w[AR[q.field]] || '')}» وكانت في درس «${escapeHtml(qgLessonOf(w))}»</div>`;
+  }
+  if(q.type === 'speak' && q.ar) html += `<div class="qz-why" dir="auto">«${escapeHtml(q.ar)}» بالإنجليزي:</div>`;
+  const say = q.type === 'speak' ? q.text : q.answer;
+  html += `<button class="qz-listen" onclick="qgSayRight()">🔊 اسمع النطق الصح</button>`;
+  return html;
+}
+function qgSayRight(){
+  const r = QG.run; if(!r) return; qgStopRec();
+  const q = r.qs[r.i]; speakText(q.type === 'speak' ? q.text : q.answer, null);
+}
+function qgNoteWrong(q){
+  const r = QG.run; if(!r) return; r.wrong = r.wrong || [];
+  r.wrong.push({ prompt: q.type === 'speak' ? q.ar : q.prompt, answer: q.type === 'speak' ? q.text : q.answer, lesson: q.item ? qgLessonOf(q.item) : '' });
+}
+function qgShowNext(ok, msg, extra){
+  const r = QG.run, fb = document.getElementById('qzFb'); if(!fb) return;
+  const last = r.i >= r.qs.length - 1;
+  fb.className = 'qz-fb ' + (ok ? 'ok' : 'bad');
+  fb.innerHTML = (ok ? '✅ تمام!' : '❌ مش دي') + (msg ? `<br><span dir="ltr">${escapeHtml(msg)}</span>` : '') + (extra || '') +
+    `<button class="qz-next" onclick="qgNext()">${last ? 'شوف النتيجة 🏁' : 'التالي ⬅️'}</button>`;
+}
+function qgPick(i){
+  const r = QG.run; if(!r || r.locked) return; r.locked = true;
+  const q = r.qs[r.i], ok = q.choices[i] === q.answer;
+  if(ok) r.score++;
+  document.querySelectorAll('#qzOverlay .qz-opt').forEach((b, j) => {
+    b.disabled = true;
+    if(q.choices[j] === q.answer) b.classList.add('right'); else if(j === i) b.classList.add('wrong');
+  });
+  if(!ok) qgNoteWrong(q);
+  qgShowNext(ok, ok ? '' : 'الإجابة الصح: ' + q.answer, ok ? '' : qgWrongInfo(q, q.choices[i]));
+}
+function qgNext(){
+  const r = QG.run; if(!r) return;
+  qgStopRec();
+  r.i++;
+  if(r.i >= r.qs.length) qgFinish(); else qgRenderQ();
+}
+function qgListen(){
+  const r = QG.run; if(!r) return;
+  qgStopRec();
+  speakText(r.qs[r.i].text, null);
+}
+function qgSpeakToMcq(msg){
+  const r = QG.run; if(!r || r.locked) return;
+  const q = r.qs[r.i]; if(!q || q.type !== 'speak') return;
+  qgStopRec(); r.noMic = true;
+  const m = qgMcq(q.item, 'tr', r.own, r.others);
+  if(!m){ r.locked = true; qgNoteWrong(q); qgShowNext(false, q.text, qgWrongInfo(q, '')); return; }
+  r.qs[r.i] = m; qgRenderQ();
+  if(msg) showToast(msg);
+}
+function qgRecord(){
+  const r = QG.run; if(!r || r.locked) return;
+  if(r.rec){ try{ r.rec.stop(); }catch(e){} return; }
+  const q = r.qs[r.i];
+  pauseSpeaking();
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let rec;
+  try{ rec = new SR(); }catch(e){ qgSpeakToMcq('التسجيل مش مدعوم هنا، حوّلناها لاختيار 👍'); return; }
+  rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 3; rec.continuous = false;
+  const mic = document.getElementById('qzMic'), heard = document.getElementById('qzHeard');
+  let got = false, err = null;
+  rec.onstart = () => { if(mic){ mic.classList.add('rec'); mic.innerHTML = '<i class="fa-solid fa-circle"></i> بسمعك... (دوس تاني للإيقاف)'; } if(heard) heard.textContent = ''; };
+  rec.onresult = (ev) => {
+    got = true;
+    const res = ev.results[0]; let best = 0, txt = '';
+    for(let k = 0; k < res.length; k++){ const s = qgSim(res[k].transcript, q.text); if(s >= best){ best = s; txt = res[k].transcript; } }
+    qgSpeakResult(best, txt);
+  };
+  rec.onerror = (ev) => { err = ev.error; };
+  rec.onend = () => {
+    if(QG.run === r) r.rec = null;
+    if(mic){ mic.classList.remove('rec'); mic.innerHTML = '<i class="fa-solid fa-microphone"></i> دوس وقولها'; }
+    if(got || !QG.run || QG.run !== r || r.locked) return;
+    if(['not-allowed', 'service-not-allowed', 'audio-capture', 'network', 'language-not-supported'].indexOf(err) !== -1) qgSpeakToMcq('الميكروفون مش شغال هنا، حوّلناها لاختيار من متعدد 👍');
+    else if(heard) heard.textContent = 'ما سمعتش حاجة... جرّب تاني بصوت أوضح 🎤';
+  };
+  r.rec = rec;
+  try{ rec.start(); }catch(e){ r.rec = null; qgSpeakToMcq('التسجيل مش مدعوم هنا، حوّلناها لاختيار 👍'); }
+}
+function qgSpeakResult(sim, txt){
+  const r = QG.run; if(!r) return;
+  const q = r.qs[r.i], heard = document.getElementById('qzHeard');
+  if(heard) heard.innerHTML = `سمعتك بتقول: <b dir="ltr">${escapeHtml(txt)}</b> (${Math.round(sim * 100)}%)`;
+  if(sim >= 0.8){ r.locked = true; r.score++; qgShowNext(true, q.text); }
+  else {
+    r.tries++;
+    if(r.tries >= 2){ r.locked = true; qgNoteWrong(q); qgShowNext(false, q.text, qgWrongInfo(q, '')); }
+    else if(heard) heard.innerHTML += '<br>قريب... جرّب تاني 💪';
+  }
+}
+
+// mode: 'quiz' (نتيجة اختبار) | 'skip' (الطالب تخطّى) | 'auto' (درس مفيهوش أسئلة)
+async function qgSave(lessonId, score, total, mode){
+  const prev = QG.progress[lessonId] || null;
+  const cfg = ptsCfg();
+  const passedNow = mode === 'quiz' && total > 0 && score >= qgNeed(total);
+  const wasDone = !!(prev && !prev.unlocked_by_admin && (prev.quiz_passed || prev.skipped));
+  const now = new Date().toISOString();
+  const row = {
+    student_code: studentCode, lesson_id: lessonId,
+    passed: !!(prev && prev.passed) || passedNow || mode === 'skip' || mode === 'auto',
+    quiz_passed: !!(prev && prev.quiz_passed) || passedNow,
+    skipped: !!(prev && prev.skipped) || mode === 'skip',
+    best_score: Math.max(prev ? (prev.best_score || 0) : 0, mode === 'quiz' ? score : 0),
+    attempts: (prev ? (prev.attempts || 0) : 0) + (mode === 'quiz' && total > 0 ? 1 : 0),
+    updated_at: now
+  };
+  if(row.passed) row.passed_at = (prev && prev.passed_at) || now;
+  let earned = 0;
+  if(passedNow && !(prev && prev.quiz_passed)) earned += cfg.quiz;
+  if((passedNow || mode === 'skip') && !wasDone) earned += cfg.lesson;
+  QG.progress[lessonId] = Object.assign({}, prev || {}, row);
+  try{
+    let { error } = await _supabase.from('lesson_progress').upsert(row, { onConflict: 'student_code,lesson_id' });
+    if(error && /quiz_passed|skipped|column/i.test(String(error.message || ''))){
+      // قاعدة البيانات لسه ما اتحدّثتش بالأعمدة الجديدة: نحفظ التقدم من غيرها
+      const slim = Object.assign({}, row); delete slim.quiz_passed; delete slim.skipped;
+      ({ error } = await _supabase.from('lesson_progress').upsert(slim, { onConflict: 'student_code,lesson_id' }));
+    }
+    if(error) throw error;
+    return { ok:true, earned };
+  }catch(e){ console.error(e); showToast('⚠️ تعذّر حفظ تقدمك، اتأكد من النت وجرّب تاني'); return { ok:false, earned:0 }; }
+}
+async function qgSkipFor(lessonId, thenOpenId){
+  if(!confirm('تتخطى الاختبار؟ هيتفتحلك الدرس اللي بعده من غير نقاط الاختبار.')) return;
+  qgStopRec();
+  await qgLoadProgress();
+  const res = await qgSave(lessonId, 0, 0, 'skip');
+  if(!res.ok) return;
+  const ov = document.getElementById('qzOverlay'); if(ov) ov.style.display = 'none';
+  QG.run = null;
+  await qgPrepare();
+  renderLessonsNav();
+  const chain = qgChain(), i = chain.findIndex(l => l.id === lessonId), next = chain[i + 1];
+  const target = thenOpenId || (next && next.id) || null;
+  if(target){ qgGoLesson(target); showToast(res.earned ? '⏭️ اتخطيت الاختبار (+' + res.earned + ' نقطة)' : '⏭️ اتخطيت الاختبار'); }
+  else { fetchWordsFromSupabase(); showToast('⏭️ تمام'); }
+}
+function qgSkipQuiz(){
+  const r = QG.run; if(!r) return;
+  qgSkipFor(r.lessonId);
+}
+async function qgFinish(){
+  const r = QG.run; if(!r) return;
+  r.finished = true;
+  const total = r.qs.length, need = qgNeed(total), passed = r.score >= need;
+  const ov = qgOverlay();
+  ov.innerHTML = '<div class="qz-box"><div class="spinner"></div><div class="qz-sub">بنحسب نتيجتك... ⏳</div></div>';
+  const res = await qgSave(r.lessonId, r.score, total, 'quiz');
+  await qgPrepare();
+  renderLessonsNav();
+  const chain = qgChain(), idx = chain.findIndex(l => l.id === r.lessonId), next = chain[idx + 1];
+  let html;
+  if(passed){
+    const pts = res.earned > 0 ? `<div class="qz-prompt" style="color:#d4a017;">🏅 +${res.earned} نقطة</div>` : '<div class="qz-sub">(إعادة للمراجعة: من غير نقاط جديدة)</div>';
+    html = `<div class="qz-res-emoji">🎉</div><div class="qz-res-score">${r.score} / ${total}</div>
+      <div class="qz-prompt">عدّيت الاختبار! 💪</div>${pts}
+      <div class="qz-sub">${next ? 'الدرس اللي بعده مفتوح.' : 'خلّصت كل دروس الكورس... برافو عليك!'}</div>
+      <div class="qz-res-btns">${next ? `<button class="qz-main" onclick="qgGoLesson(${next.id})">الدرس اللي بعده 🔓</button>` : ''}
+      <button class="qz-skip" onclick="qgClose(true)">رجوع للدرس</button></div>`;
+  } else {
+    html = `<div class="qz-res-emoji">💪</div><div class="qz-res-score">${r.score} / ${total}</div>
+      <div class="qz-prompt">قربت جدًا!</div>
+      <div class="qz-sub">محتاج ${need} من ${total} عشان تنجح وتاخد النقاط. راجع الكلمات وجرّب تاني بأسئلة مختلفة.</div>
+      <div class="qz-res-btns"><button class="qz-main" onclick="qgStart()">جرّب تاني 🔁</button>
+      <button class="qz-skip" onclick="qgClose(true)">أراجع الدرس الأول</button>
+      <button class="qz-skip" onclick="qgSkipFor(${r.lessonId})">تخطّي الاختبار ⏭️</button></div>`;
+  }
+  if(r.wrong && r.wrong.length){
+    html += `<details class="adm-sp-course" style="margin-top:14px;"><summary>📝 راجع غلطاتك (${r.wrong.length})</summary>` +
+      r.wrong.map(w => `<div class="qz-adm-row"><span dir="auto">${escapeHtml(w.prompt)}<small dir="auto">✅ ${escapeHtml(w.answer)}${w.lesson ? ' · 📖 درس «' + escapeHtml(w.lesson) + '»' : ''}</small></span></div>`).join('') + '</details>';
+  }
+  ov.innerHTML = `<div class="qz-box">${html}</div>`;
+}
+
+function qgAfterLogin(){ try{ if(qgOn() && currentCategoryId) loadLessonsForCategory(currentCategoryId); }catch(e){ console.error(e); } }
+
+// ---------- لوحة الإدارة ----------
+async function toggleCategoryQuizGate(id, on){
+  try{
+    const { error } = await _supabase.from('course_categories').update({ quiz_gate: on }).eq('id', id);
+    if(error) throw error;
+    DC.dirty();
+    await loadCategories();
+    renderCategoriesList();
+    showToast(on ? '🎯 اتفعّل قفل الدروس بالاختبار على الكورس' : '🔓 اتلغى قفل الاختبار، كل الدروس مفتوحة');
+  }catch(e){ console.error(e); alert('حدث خطأ أثناء تحديث قفل الاختبار.'); }
+}
+async function toggleLessonQuizSkip(id, val, categoryId){
+  try{
+    const { error } = await _supabase.from('lessons').update({ quiz_skip: val }).eq('id', id);
+    if(error) throw error;
+    DC.dirty();
+    renderLessonsListForCategory(categoryId);
+    showToast(val ? '🔑 الدرس اتفتح لكل الطلاب من غير اختبار' : '🎯 الدرس رجع يتفتح بالاختبار');
+  }catch(e){ console.error(e); alert('حدث خطأ أثناء التحديث.'); }
+}
+async function qgAdminOpenStudent(code){
+  const s = studentsCache.find(x => x.student_code === code);
+  const ov = qgOverlay();
+  ov.innerHTML = '<div class="qz-box"><div class="spinner"></div></div>';
+  try{
+    const [c, l, p] = await Promise.all([
+      _supabase.from('course_categories').select('id,name,order_index').eq('quiz_gate', true).order('order_index', { ascending: true }),
+      _supabase.from('lessons').select('id,name,category_id,order_index,is_active,quiz_skip').order('order_index', { ascending: true }),
+      _supabase.from('lesson_progress').select('*').eq('student_code', code)
+    ]);
+    if(c.error || l.error || p.error) throw (c.error || l.error || p.error);
+    const prog = {}; (p.data || []).forEach(r => { prog[r.lesson_id] = r; });
+    let rows = '';
+    (c.data || []).forEach(cat => {
+      const ls = (l.data || []).filter(x => x.category_id === cat.id && x.is_active !== false);
+      if(!ls.length) return;
+      rows += `<div class="qz-adm-cat">${escapeHtml(cat.name)}</div>`;
+      ls.forEach(x => {
+        const pr = prog[x.id];
+        const open = pr && pr.passed;
+        let st = pr ? `${pr.attempts || 0} محاولة، أعلى نتيجة ${pr.best_score || 0}` : 'لسه ما جرّبش';
+        if(open) st = (pr.unlocked_by_admin ? '🔓 مفتوح منك' : (pr.quiz_passed ? '✅ ناجح' : (pr.skipped ? '⏭️ تخطّى' : '✅ معدّي'))) + ' · ' + st;
+        rows += `<div class="qz-adm-row"><span>${escapeHtml(x.name)}<small>${st}${x.quiz_skip ? ' · مفتوح للكل' : ''}</small></span>
+          <button class="qz-adm-btn ${open ? 'off' : ''}" onclick="qgAdminSet('${code}', ${x.id}, ${open ? 'false' : 'true'})">${open ? 'إعادة قفل' : 'فتح'}</button></div>`;
+      });
+    });
+    if(!rows) rows = '<div class="qz-sub">مفيش كورسات متفعّل عليها قفل الاختبار لسه.</div>';
+    ov.innerHTML = `<div class="qz-box"><div class="qz-head"><button class="qz-x" onclick="qgClose(true)"><i class="fa-solid fa-xmark"></i></button>
+      <div style="flex:1;font-weight:900;text-align:right;">دروس ${escapeHtml((s && s.full_name) || code)}</div></div>
+      <button class="qz-main" style="padding:10px 20px;font-size:.88rem;" onclick="qgAdminOpenAll('${code}')">🔓 افتح كل الدروس للطالب</button>${rows}</div>`;
+  }catch(e){ console.error(e); ov.innerHTML = '<div class="qz-box"><div class="qz-sub">تعذّر التحميل.</div><button class="qz-main" onclick="qgClose(true)">إغلاق</button></div>'; }
+}
+// 📊 تقدّم الطالب بالكامل (للإدارة): الكورسات والدروس والاختبارات والنقاط
+async function admStudentProgress(code){
+  const s = studentsCache.find(x => x.student_code === code) || {};
+  const ov = qgOverlay();
+  ov.innerHTML = '<div class="qz-box"><div class="spinner"></div></div>';
+  try{
+    const [c, l, p, e] = await Promise.all([
+      _supabase.from('course_categories').select('id,name,level,order_index,quiz_gate').order('order_index', { ascending: true }),
+      _supabase.from('lessons').select('id,name,category_id,order_index,is_active').order('order_index', { ascending: true }),
+      _supabase.from('lesson_progress').select('*').eq('student_code', code),
+      _supabase.from('exam_results').select('*').eq('student_code', code).order('created_at', { ascending: true })
+    ]);
+    const err = c.error || l.error || p.error || e.error; if(err) throw err;
+    const prog = {}; (p.data || []).forEach(r => { prog[r.lesson_id] = r; });
+    const cfg = ptsCfg(), passPct = (appSettings && appSettings.exam_pass_percent) || 60;
+    const lvlName = { 1:'المستوى الأول', 2:'المستوى الثاني', 3:'المستوى الثالث', 0:'عام (كل المستويات)' };
+    const lvlOf = cat => (cat.level === 0 ? 0 : (cat.level || 1));
+    let lessonsDone = 0, quizzes = 0;
+    (p.data || []).forEach(r => {
+      if(r.quiz_passed) quizzes++;
+      if(r.passed && !r.unlocked_by_admin && (r.quiz_passed || r.skipped)) lessonsDone++;
+    });
+    const examRows = e.data || [];
+    const levelsPassed = new Set(examRows.filter(r => !r.disqualified && r.percentage >= passPct).map(r => r.level)).size;
+    const pts = Math.round((s.total_opens || 0) * cfg.open + (s.total_words_heard || 0) * cfg.word + (s.total_sentences_heard || 0) * cfg.sentence
+      + ((s.total_seconds_active || 0) / 60) * cfg.minute + lessonsDone * cfg.lesson + quizzes * cfg.quiz + levelsPassed * cfg.levelExam);
+    const stat = r => !r ? '⬜' : (r.unlocked_by_admin && r.passed ? '🔓' : (r.quiz_passed ? '✅' : (r.skipped ? '⏭️' : (r.passed ? '✔️' : '⬜'))));
+    let body = '';
+    [1, 2, 3, 0].forEach(lv => {
+      const cats = (c.data || []).filter(x => lvOfSafe(x) === lv);
+      function lvOfSafe(x){ return lvlOf(x); }
+      const exams = lv ? examRows.filter(r => r.level === lv) : [];
+      const allowed = lv ? (s['exam_allowed_' + lv] || 0) : 0;
+      let inner = '';
+      cats.forEach(cat => {
+        const ls = (l.data || []).filter(x => x.category_id === cat.id && x.is_active !== false);
+        if(!ls.length) return;
+        const touched = ls.some(x => prog[x.id]);
+        if(!touched && !cat.quiz_gate) return;
+        const done = ls.filter(x => prog[x.id] && prog[x.id].passed).length;
+        const pct = Math.round(done / ls.length * 100);
+        inner += `<details class="adm-sp-course"><summary><b>${escapeHtml(cat.name)}</b> <span>${done}/${ls.length} درس</span>
+          <div class="qz-bar" style="margin:6px 0 0;"><i style="width:${pct}%"></i></div></summary>
+          ${ls.map(x => { const r = prog[x.id]; return `<div class="qz-adm-row"><span>${stat(r)} ${escapeHtml(x.name)}<small>${r ? ((r.attempts || 0) + ' محاولة · أعلى نتيجة ' + (r.best_score || 0)) : 'لسه ما بدأش'}</small></span></div>`; }).join('')}
+        </details>`;
+      });
+      if(lv && (exams.length || allowed)){
+        const best = exams.reduce((m, r) => Math.max(m, r.percentage || 0), 0);
+        inner += `<div class="qz-adm-cat">📝 الاختبار الشامل: ${exams.length} محاولة من ${allowed} مسموحة${exams.length ? ' · أعلى نسبة ' + best + '%' : ''}</div>` +
+          exams.map(r => `<div class="qz-adm-row"><span>${r.disqualified ? '🚫 اتلغى' : (r.percentage >= passPct ? '✅ ناجح' : '❌ لم ينجح')} · ${r.score}/${r.total} (${r.percentage}%)<small>${new Date(r.created_at).toLocaleDateString('ar-EG', { day:'numeric', month:'short', year:'numeric' })}</small></span></div>`).join('');
+      }
+      if(inner) body += `<div class="qz-adm-cat" style="font-size:1rem;border-top:2px solid color-mix(in srgb,var(--primary) 30%,transparent);padding-top:10px;">${lvlName[lv]}</div>` + inner;
+    });
+    if(!body) body = '<div class="qz-sub">لسه مفيش تقدّم متسجّل في الدروس أو الاختبارات.</div>';
+    const examLevels = [...new Set(examRows.map(r => r.level))].sort();
+    ov.innerHTML = `<div class="qz-box"><div class="qz-head"><button class="qz-x" onclick="qgClose(true)"><i class="fa-solid fa-xmark"></i></button>
+      <div style="flex:1;font-weight:900;text-align:right;">📊 ${escapeHtml(s.full_name || code)}</div></div>
+      <div class="adm-sp-grid">
+        <div><b>${pts}</b>نقطة</div><div><b>${lessonsDone}</b>درس خلّصه</div><div><b>${quizzes}</b>اختبار نجح فيه</div>
+        <div><b>${examRows.length}</b>امتحان شامل</div><div><b>${s.total_opens || 0}</b>مرة دخول</div><div><b>${formatDuration(s.total_seconds_active)}</b>وقت مذاكرة</div></div>
+      <div class="qz-sub" style="text-align:right;">🕒 آخر ظهور: ${s.last_seen_at ? formatRelativeTime(s.last_seen_at) : 'لسه ما دخلش'}${examLevels.length ? ' · امتحن في: ' + examLevels.map(x => lvlName[x]).join('، ') : ''}</div>
+      ${body}
+      <div class="qz-sub" style="margin-top:14px;font-size:.75rem;">المستوى اللي الطالب مختاره بيتحفظ على جهازه بس، فالمستوى هنا من كورساته وامتحاناته. وتتبّع الدروس بيتسجّل في الكورسات اللي عليها اختبار بس.</div>
+    </div>`;
+  }catch(err){ console.error(err); ov.innerHTML = '<div class="qz-box"><div class="qz-sub">تعذّر تحميل التقدّم.</div><button class="qz-main" onclick="qgClose(true)">إغلاق</button></div>'; }
+}
+async function qgAdminSet(code, lessonId, open){
+  try{
+    const now = new Date().toISOString();
+    const row = open ? { student_code: code, lesson_id: lessonId, passed: true, unlocked_by_admin: true, passed_at: now, updated_at: now }
+                     : { student_code: code, lesson_id: lessonId, passed: false, unlocked_by_admin: false, updated_at: now };
+    const { error } = await _supabase.from('lesson_progress').upsert(row, { onConflict: 'student_code,lesson_id' });
+    if(error) throw error;
+    showToast(open ? '🔓 اتفتح الدرس للطالب' : '🔒 اتقفل الدرس تاني');
+    qgAdminOpenStudent(code);
+  }catch(e){ console.error(e); alert('حدث خطأ أثناء الحفظ.'); }
+}
+async function qgAdminOpenAll(code){
+  if(!confirm('تفتح كل دروس الكورسات المقفولة بالاختبار للطالب ده؟')) return;
+  try{
+    const { data: cats, error: e1 } = await _supabase.from('course_categories').select('id').eq('quiz_gate', true);
+    if(e1) throw e1;
+    const ids = (cats || []).map(x => x.id);
+    if(!ids.length){ showToast('مفيش كورس متفعّل عليه قفل الاختبار'); return; }
+    const { data: ls, error: e2 } = await _supabase.from('lessons').select('id').in('category_id', ids);
+    if(e2) throw e2;
+    const now = new Date().toISOString();
+    const rows = (ls || []).map(x => ({ student_code: code, lesson_id: x.id, passed: true, unlocked_by_admin: true, passed_at: now, updated_at: now }));
+    if(rows.length){ const { error } = await _supabase.from('lesson_progress').upsert(rows, { onConflict: 'student_code,lesson_id' }); if(error) throw error; }
+    showToast('🔓 اتفتحت كل الدروس للطالب');
+    qgAdminOpenStudent(code);
+  }catch(e){ console.error(e); alert('حدث خطأ أثناء الحفظ.'); }
+}
+
+function renderLockedView(container, type, name, extra, prevName){
   let title, desc;
   if(type === 'level'){
     title = 'المستوى ده لسه مقفول عندك 🔒';
@@ -3525,6 +4395,9 @@ function renderLockedView(container, type, name){
   } else if(type === 'course'){
     title = 'الكورس ده لسه مقفول عندك 🔒';
     desc = `مستر عبد الرحمن بيومي هو اللي هيفتحلك <b>"${name}"</b> في وقته المناسب... كمّل دلوقتي في الكورسات المتاحة، وهيجيلك دورك قريب جدًا! 💪✨`;
+  } else if(type === 'quiz'){
+    title = 'الدرس ده بيتفتح بعد اختبار اللي قبله 🔒';
+    desc = `اختبر نفسك في <b>"${prevName || 'الدرس اللي قبله'}"</b> (${qgNeed(qgCount())} من ${qgCount()}) وهيتفتحلك <b>"${name}"</b> على طول، أو تخطّى الاختبار وكمّل. 💪`;
   } else {
     title = 'الدرس ده لسه مقفول عندك 🔒';
     desc = `مستر عبد الرحمن هيفتحلك <b>"${name}"</b> تباعًا مع تقدمك في المنهج... كمّل باقي الدروس المتاحة وهتوصله بسرعة! 🚀`;
@@ -3542,6 +4415,7 @@ function renderLockedView(container, type, name){
         <div class="locked-icon"><i class="fa-solid fa-lock"></i></div>
         <h3>${title}</h3>
         <p>${desc}</p>
+        ${extra || ''}
       </div>
     </div>`;
 }
@@ -3653,8 +4527,10 @@ async function loadLessonsForCategory(categoryId){
   document.getElementById('lessonsNav').style.display = '';
 
   if(lessons.length > 0){
+    await qgPrepare();
     const firstActive = lessons.find(l => l.is_active !== false);
     currentLessonId = (firstActive || lessons[0]).id;
+    { const sid = qgStartLessonId(); if(sid) currentLessonId = sid; }
     renderLessonsNav();
     const current = lessons.find(l => l.id === currentLessonId);
     if(current && current.is_active === false){
@@ -3679,9 +4555,13 @@ function renderLessonsNav(){
   nav.innerHTML = '';
   lessons.forEach(lesson => {
     const isLocked = lesson.is_active === false;
+    const quizLocked = !isLocked && QG.locked.has(lesson.id);
+    const passedMark = !isLocked && !quizLocked && qgOn() && qgPassed(lesson);
     const btn = document.createElement('div');
-    btn.className = `unit-tab lesson-tab ${lesson.id === currentLessonId ? 'active' : ''} ${isLocked ? 'locked' : ''}`;
-    btn.innerHTML = isLocked ? `<span>${lesson.name}</span> <i class="fa-solid fa-lock" style="margin-right:5px;"></i>` : lesson.name;
+    btn.className = `unit-tab lesson-tab ${lesson.id === currentLessonId ? 'active' : ''} ${(isLocked || quizLocked) ? 'locked' : ''}`;
+    btn.innerHTML = (isLocked || quizLocked)
+      ? `<span>${lesson.name}</span> <i class="fa-solid fa-lock" style="margin-right:5px;"></i>`
+      : lesson.name + (passedMark ? ' <i class="fa-solid fa-circle-check" style="margin-right:5px;color:#2ecc71;"></i>' : '');
     btn.onclick = () => {
       currentLessonId = lesson.id;
       document.querySelectorAll('.lesson-tab').forEach(el => el.classList.remove('active'));
@@ -3689,6 +4569,8 @@ function renderLessonsNav(){
       pauseSpeaking();
       if(isLocked){
         renderLockedView(document.getElementById('wordsContainer'), 'lesson', lesson.name);
+      } else if(quizLocked){
+        qgLockedClick(lesson);
       } else {
         fetchWordsFromSupabase();
       }
@@ -3828,6 +4710,7 @@ function renderWordsGrid(){
     
     container.appendChild(card);
   });
+  qgAppendStart(container);
 }
 
 // --- Lightbox لعرض صورة القاعدة/الكلمة مكبّرة ---
@@ -4384,6 +5267,17 @@ function renderCategoriesList(){
     levelBtn.innerHTML = '<i class="fa-solid fa-layer-group"></i>';
     levelBtn.onclick = () => editCategoryLevel(cat.id, cat.level || 0);
     actionsDiv.appendChild(levelBtn);
+
+    const qzBtn = document.createElement('button');
+    qzBtn.className = 'level-set-btn';
+    qzBtn.title = cat.quiz_gate ? 'قفل الاختبار شغّال: دوس لإيقافه' : 'تشغيل قفل الدروس بالاختبار';
+    qzBtn.style.background = cat.quiz_gate ? 'linear-gradient(135deg,#27ae60,#1e8449)' : 'linear-gradient(135deg,#95a5a6,#7f8c8d)';
+    qzBtn.innerHTML = '<i class="fa-solid fa-bullseye"></i>';
+    qzBtn.onclick = () => {
+      const msg = cat.quiz_gate ? 'توقف قفل الاختبار على الكورس ده وتفتح كل دروسه؟' : 'تفعّل قفل الاختبار على الكورس ده؟\nكل درس بعد الأول هيتقفل لحد ما الطالب ينجح في اختبار اللي قبله.';
+      if(confirm(msg)) toggleCategoryQuizGate(cat.id, !cat.quiz_gate);
+    };
+    actionsDiv.appendChild(qzBtn);
     
     const switchLabel = document.createElement('label');
     switchLabel.className = 'switch';
@@ -4884,6 +5778,8 @@ function renderStudentsList(){
       <div class="student-exam-perms">${perms}</div>
       <div class="stu-btns">
         <button class="b-kick" onclick="kickStudent('${c}')">🚪 طرد</button>
+        <button class="b-unban" onclick="admStudentProgress('${c}')">📊 تقدّمه</button>
+        <button class="b-unban" onclick="qgAdminOpenStudent('${c}')">🔓 دروسه</button>
         ${s.status === 'banned' ? `<button class="b-unban" onclick="unbanStudent('${c}')">✅ فك الحظر</button>` : `<button class="b-ban" onclick="banStudent('${c}')">🚫 حظر</button>`}
         <button class="b-del" onclick="deleteStudent('${c}')">🗑️ حذف</button></div>`;
     list.appendChild(row);
@@ -5368,6 +6264,16 @@ async function renderLessonsListForCategory(categoryId){
       switchLabel.appendChild(switchSpan);
       actionsDiv.appendChild(switchLabel);
       
+      { const _c = categories.find(c => String(c.id) === String(categoryId));
+        if(!_c || _c.quiz_gate){
+          const skipBtn = document.createElement('button');
+          skipBtn.className = 'level-set-btn';
+          skipBtn.title = lesson.quiz_skip ? 'الدرس مفتوح لكل الطلاب بدون اختبار (دوس لإرجاع الاختبار)' : 'فتح الدرس لكل الطلاب بدون اختبار';
+          skipBtn.style.background = lesson.quiz_skip ? 'linear-gradient(135deg,#27ae60,#1e8449)' : 'linear-gradient(135deg,#95a5a6,#7f8c8d)';
+          skipBtn.innerHTML = '<i class="fa-solid fa-key"></i>';
+          skipBtn.onclick = () => toggleLessonQuizSkip(lesson.id, !lesson.quiz_skip, categoryId);
+          actionsDiv.appendChild(skipBtn);
+        } }
       const delBtn = document.createElement('button');
       delBtn.className = 'delete-btn';
       delBtn.title = 'حذف';
@@ -5487,6 +6393,9 @@ function populateSettingsForm(){
   document.getElementById('setExamPassPercent').value = appSettings.exam_pass_percent || 60;
   document.getElementById('setShowExamButton').checked = appSettings.show_exam_button !== false;
   document.getElementById('setExamDefaultAttempts').value = appSettings.exam_default_attempts || 0;
+  { const c = ptsCfg();
+    [['setExamSpeakCount','examSpeak'],['setPtsOpen','open'],['setPtsWord','word'],['setPtsSentence','sentence'],['setPtsMinute','minute'],['setPtsLesson','lesson'],['setPtsQuiz','quiz'],['setPtsLevelExam','levelExam'],['setQuizCount','count'],['setQuizPass','pass']]
+      .forEach(([id, k]) => { const el = document.getElementById(id); if(el) el.value = c[k]; }); }
   document.getElementById('setWhatsapp').value = appSettings.whatsapp_url || '';
   document.getElementById('setFacebook').value = appSettings.facebook_url || '';
   document.getElementById('setInstagram').value = appSettings.instagram_url || '';
@@ -5593,6 +6502,19 @@ async function saveSettings(){
     instagram_url: document.getElementById('setInstagram').value.trim(),
     youtube_url: document.getElementById('setYoutube').value.trim(),
   };
+  if(appSettings && ('pts_quiz' in appSettings)){
+    const num = (id, d, mn, mx) => { const v = parseFloat(String(document.getElementById(id).value).replace(',', '.')); return isNaN(v) ? d : Math.min(mx, Math.max(mn, Math.round(v * 100) / 100)); };
+    updated.pts_open = num('setPtsOpen', 1, 0, 1000);
+    updated.pts_word = num('setPtsWord', 0.2, 0, 1000);
+    updated.pts_sentence = num('setPtsSentence', 0.5, 0, 1000);
+    updated.pts_minute = num('setPtsMinute', 0, 0, 1000);
+    updated.pts_lesson = num('setPtsLesson', 5, 0, 1000);
+    updated.pts_quiz = num('setPtsQuiz', 10, 0, 1000);
+    updated.pts_level_exam = num('setPtsLevelExam', 100, 0, 10000);
+    updated.quiz_question_count = Math.round(num('setQuizCount', 10, 2, 30));
+    if('exam_speak_count' in appSettings) updated.exam_speak_count = Math.round(num('setExamSpeakCount', 10, 0, 25));
+    updated.quiz_pass_score = Math.min(updated.quiz_question_count, Math.round(num('setQuizPass', 6, 1, 30)));
+  }
   if(pendingLogoDataUrl !== null){
     updated.logo_url = pendingLogoDataUrl === '' ? null : pendingLogoDataUrl;
   }
