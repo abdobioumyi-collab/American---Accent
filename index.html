@@ -3809,16 +3809,20 @@ function ptsCfg(){
 const QG = { progress:{}, ok:false, loadedFor:null, words:{}, locked:new Set(), run:null };
 function qgIsKing(){ return document.body.classList.contains('is-king'); }
 function qgCat(){ return categories.find(c => c.id === currentCategoryId) || null; }
-function qgOn(){ const c = qgCat(); return !!(c && c.quiz_gate === true && studentCode); }
+// وضع الأدمن (الافتراضي): كل الدروس مفتوحة ومفيش قفل ولا زرار اختبار. وضع «عرض كطالب»: الأدمن بيتعامل كطالب مشترك عادي بالظبط.
+function qgStudentView(){ return qgIsKing() && localStorage.getItem('bayomyiStudentView') === '1'; }
+function qgIsAdminView(){ return qgIsKing() && !qgStudentView(); }
+function qgWho(){ return studentCode || (qgIsKing() ? '__admin__' : null); }
+function qgOn(){ const c = qgCat(); return !!(c && c.quiz_gate === true && qgWho()); }
 // زرار «اختبر نفسك» في آخر كل درس: ظاهر في أي كورس مفعّل عليه الاختبار (حتى لو القفل مقفول)
-function qgShow(){ const c = qgCat(); return !!(c && c.quiz_enabled !== false && studentCode); }
-function qgEnforce(){ return qgOn() && QG.ok && !qgIsKing(); }
+function qgShow(){ const c = qgCat(); if(qgIsAdminView()) return false; return !!(c && c.quiz_enabled !== false && (studentCode || qgIsKing())); }
+function qgEnforce(){ return qgOn() && QG.ok && !qgIsAdminView(); } // الأدمن في وضعه العادي مفيش عليه قفل
 function qgCount(){ return ptsCfg().count; }
 function qgNeed(total){ const c = ptsCfg(); return Math.max(1, Math.min(total, Math.ceil(total * c.pass / c.count))); }
 function qgShuffle(a){ a = a.slice(); for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
 async function qgLoadProgress(force){
-  if(!studentCode) return;
+  if(!studentCode){ if(qgIsKing()){ if(QG.loadedFor !== '__admin__'){ QG.progress = {}; QG.loadedFor = '__admin__'; } QG.ok = true; } return; }
   if(!force && QG.ok && QG.loadedFor === studentCode) return;
   try{
     const { data, error } = await _supabase.from('lesson_progress').select('*').eq('student_code', studentCode);
@@ -3886,9 +3890,40 @@ async function qgLockedClick(lesson){
   if(!QG.locked.has(lesson.id)){
     renderLessonsNav(); fetchWordsFromSupabase(); showToast('🔓 الدرس اتفتحلك!'); return;
   }
-  const chain = qgChain(), i = chain.findIndex(l => l.id === lesson.id), prev = chain[i - 1];
+  const chain = qgChain(), i = chain.findIndex(l => l.id === lesson.id);
+  // أول درس قبله لسه الطالب ما عدّاهوش (ده دايمًا مفتوح، فينفع يدخل اختباره)
+  const need = chain.slice(0, Math.max(i, 0)).find(l => !qgCleared(l)) || chain[i - 1] || null;
   renderLessonsNav();
-  renderLockedView(container, 'quiz', lesson.name, prev ? `<button class="qz-go" onclick="qgGoLesson(${prev.id})">🎯 روح لاختبار «${escapeHtml(prev.name)}»</button><br><button class="qz-skip" onclick="qgSkipFor(${prev.id}, ${lesson.id})">أو تخطّى الاختبار وافتح الدرس ⏭️</button>` : '', prev ? prev.name : '');
+  const adminBtn = '';
+  const goBtn = need ? `<button class="qz-go" onclick="qgGoLesson(${need.id})">🎯 روح لاختبار «${escapeHtml(need.name)}»</button><br>` : '';
+  const forceBtn = `<button class="qz-skip" onclick="qgForceOpen(${lesson.id})">⏭️ تخطّي الاختبارات وفتح الدرس ده إجباري</button>`;
+  renderLockedView(container, 'quiz', lesson.name, adminBtn + goBtn + forceBtn, need ? need.name : '');
+}
+// فتح درس إجباري: كل الدروس اللي قبله بتتفتح (من غير نقاط)، والطالب يقدر يرجع يختبر نفسه في أي درس منها
+async function qgForceOpen(targetId){
+  if(!confirm('تفتح الدرس ده إجباري؟\nهتتفتح لك كل الدروس اللي قبله من غير اختبارات (من غير نقاط)، وتقدر ترجع تختبر نفسك في أي درس منهم وقت ما تحب.')) return;
+  await qgLoadProgress();
+  const chain = qgChain(), i = chain.findIndex(l => l.id === targetId);
+  if(i < 1) return;
+  const now = new Date().toISOString();
+  const rows = [];
+  chain.slice(0, i).forEach(l => {
+    const p = QG.progress[l.id];
+    if(p && p.passed) return;
+    rows.push({ student_code: studentCode, lesson_id: l.id, passed: true, skipped: true, passed_at: now, updated_at: now });
+  });
+  if(rows.length){
+    if(studentCode){
+      try{
+        const { error } = await _supabase.from('lesson_progress').upsert(rows, { onConflict: 'student_code,lesson_id' });
+        if(error) throw error;
+      }catch(e){ console.error(e); showToast('⚠️ تعذّر حفظ تقدمك، اتأكد من النت وجرّب تاني'); return; }
+    }
+    rows.forEach(r => { QG.progress[r.lesson_id] = Object.assign({}, QG.progress[r.lesson_id] || {}, r); });
+  }
+  await qgPrepare();
+  qgGoLesson(targetId);
+  showToast('⏭️ اتفتحت كل الدروس اللي قبله، وتقدر تختبر نفسك في أي درس');
 }
 function qgGoLesson(id){
   qgClose(true);
@@ -3901,11 +3936,13 @@ function qgGoLesson(id){
 function qgAppendStart(container){
   if(!qgShow() || !currentLessonId) return;
   if(qgItems(currentWordsList).length < 2) return;
-  const passed = QG.progress[currentLessonId] && QG.progress[currentLessonId].passed;
+  const pr = QG.progress[currentLessonId] || null;
+  const passed = !!(pr && pr.passed);
+  const quizPassed = !!(pr && pr.quiz_passed);
   const wrap = document.createElement('div');
   wrap.className = 'qz-btn-wrap';
   const cfgP = ptsCfg();
-  wrap.innerHTML = `<div class="qz-hint">${passed ? '✅ انت عدّيت الدرس ده... تقدر تعيد الاختبار للمراجعة (من غير نقاط جديدة).' : 'اختبر نفسك (' + qgNeed(qgCount()) + ' من ' + qgCount() + ' للنجاح) واكسب ' + cfgP.quiz + ' نقطة 🏅' + (qgOn() ? ' — الاختبار اختياري وتقدر تتخطاه.' : ' — اختياري.')}</div>
+  wrap.innerHTML = `<div class="qz-hint">${quizPassed ? '✅ انت عدّيت الدرس ده... تقدر تعيد الاختبار للمراجعة (من غير نقاط جديدة).' : (passed ? '⏭️ اتخطّيت اختبار الدرس ده... تقدر تختبر نفسك دلوقتي وتاخد نقاطه 🏅' : 'اختبر نفسك (' + qgNeed(qgCount()) + ' من ' + qgCount() + ' للنجاح) واكسب ' + cfgP.quiz + ' نقطة 🏅' + (qgOn() ? ' — الاختبار اختياري وتقدر تتخطاه.' : ' — اختياري.'))}</div>
     <button class="qz-start-btn" onclick="qgStart()"><i class="fa-solid fa-bullseye"></i> اختبر نفسك</button>
     ${(passed || !qgOn()) ? '' : '<button class="qz-skip" onclick="qgSkipFor(' + currentLessonId + ')">تخطّي الاختبار ⏭️</button>'}`;
   container.appendChild(wrap);
@@ -4180,6 +4217,7 @@ async function qgSave(lessonId, score, total, mode){
   if(passedNow && !(prev && prev.quiz_passed)) earned += cfg.quiz;
   if(passedNow && !wasDone) earned += cfg.lesson;
   QG.progress[lessonId] = Object.assign({}, prev || {}, row);
+  if(!studentCode) return { ok:true, earned:0 }; // أدمن من غير رقم طالب: بنحفظ في الجلسة بس
   try{
     let { error } = await _supabase.from('lesson_progress').upsert(row, { onConflict: 'student_code,lesson_id' });
     if(error && /quiz_passed|skipped|column/i.test(String(error.message || ''))){
@@ -4243,6 +4281,40 @@ async function qgFinish(){
   ov.innerHTML = `<div class="qz-box">${html}</div>`;
 }
 
+// شريط «عرض كطالب»: بيظهر للأدمن بس
+function qgRenderViewBar(){
+  let bar = document.getElementById('qgViewBar');
+  if(!qgIsKing()){ if(bar) bar.remove(); return; }
+  const nav = document.getElementById('lessonsNav');
+  if(!bar){
+    bar = document.createElement('div'); bar.id = 'qgViewBar';
+    bar.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:6px 0;padding:8px 12px;border-radius:12px;background:rgba(241,196,15,.15);border:1px dashed #f1c40f;font-size:13px;font-weight:800;';
+    nav.parentNode.insertBefore(bar, nav);
+  }
+  const st = qgStudentView();
+  bar.innerHTML = `<span>${st ? '🎓 عرض كطالب: بتتسجّل طالب مشترك عادي وبيظهر لك القفل والاختبارات زي الطلاب بالظبط' : '👑 وضع الأدمن: كل الدروس مفتوحة ومفيش اختبارات إجبارية'}</span>
+    <span style="display:flex;gap:6px;flex-wrap:wrap;">${st ? '<button type="button" class="qz-skip" style="margin:0;" onclick="qgResetStudentView()">🔄 ابدأ من الأول</button>' : ''}<button type="button" class="qz-skip" style="margin:0;white-space:nowrap;" onclick="qgToggleStudentView()">${st ? '👑 ارجع لوضع الأدمن' : '🎓 عرض كطالب'}</button></span>`;
+}
+async function qgToggleStudentView(){
+  localStorage.setItem('bayomyiStudentView', qgStudentView() ? '0' : '1');
+  QG.run = null;
+  const ov = document.getElementById('qzOverlay'); if(ov) ov.style.display = 'none';
+  if(currentCategoryId) await loadLessonsForCategory(currentCategoryId); else qgRenderViewBar();
+  showToast(qgStudentView() ? '🎓 دلوقتي بتشوف وبتتعامل زي الطالب بالظبط' : '👑 رجعت لوضع الأدمن');
+}
+// يمسح تقدم حسابك إنت بس (عشان تجرّب تجربة الطالب الجديد من الأول)
+async function qgResetStudentView(){
+  if(!confirm('تمسح تقدمك كطالب (الدروس اللي عدّيتها أو تخطّيتها) وتبدأ من الأول؟\nده بيمسح تقدم حسابك إنت بس.')) return;
+  try{
+    if(studentCode){
+      const { error } = await _supabase.from('lesson_progress').delete().eq('student_code', studentCode);
+      if(error) throw error;
+    }
+    QG.progress = {};
+    if(currentCategoryId) await loadLessonsForCategory(currentCategoryId);
+    showToast('🔄 بدأت من الأول كطالب جديد');
+  }catch(e){ console.error(e); alert('حدث خطأ أثناء المسح.'); }
+}
 function qgAfterLogin(){ try{ if(qgOn() && currentCategoryId) loadLessonsForCategory(currentCategoryId); }catch(e){ console.error(e); } }
 
 // ---------- لوحة الإدارة ----------
@@ -4411,7 +4483,7 @@ function renderLockedView(container, type, name, extra, prevName){
     desc = `مستر عبد الرحمن بيومي هو اللي هيفتحلك <b>"${name}"</b> في وقته المناسب... كمّل دلوقتي في الكورسات المتاحة، وهيجيلك دورك قريب جدًا! 💪✨`;
   } else if(type === 'quiz'){
     title = 'الدرس ده بيتفتح بعد اختبار اللي قبله 🔒';
-    desc = `اختبر نفسك في <b>"${prevName || 'الدرس اللي قبله'}"</b> (${qgNeed(qgCount())} من ${qgCount()}) وهيتفتحلك <b>"${name}"</b> على طول، أو تخطّى الاختبار وكمّل (من غير نقاط). 💪`;
+    desc = `اختبر نفسك في <b>"${prevName || 'الدرس اللي قبله'}"</b> (${qgNeed(qgCount())} من ${qgCount()}) وهيتفتحلك <b>"${name}"</b>، أو افتحه إجباري وهتتفتح كل الدروس اللي قبله ويفضل الاختبار متاح في أي درس. 💪`;
   } else {
     title = 'الدرس ده لسه مقفول عندك 🔒';
     desc = `مستر عبد الرحمن هيفتحلك <b>"${name}"</b> تباعًا مع تقدمك في المنهج... كمّل باقي الدروس المتاحة وهتوصله بسرعة! 🚀`;
@@ -4570,7 +4642,7 @@ function renderLessonsNav(){
   lessons.forEach(lesson => {
     const isLocked = lesson.is_active === false;
     const quizLocked = !isLocked && QG.locked.has(lesson.id);
-    const passedMark = !isLocked && !quizLocked && qgOn() && qgPassed(lesson);
+    const passedMark = !isLocked && !quizLocked && qgOn() && !qgIsAdminView() && qgPassed(lesson);
     const btn = document.createElement('div');
     btn.className = `unit-tab lesson-tab ${lesson.id === currentLessonId ? 'active' : ''} ${(isLocked || quizLocked) ? 'locked' : ''}`;
     btn.innerHTML = (isLocked || quizLocked)
@@ -4591,6 +4663,7 @@ function renderLessonsNav(){
     };
     nav.appendChild(btn);
   });
+  try{ qgRenderViewBar(); }catch(e){ console.error(e); }
 }
 
 // ---------------------------------------------------------
@@ -4821,6 +4894,7 @@ async function openAdminModal(){
     try{ localStorage.setItem('bayomyiAdminUntil', String(Date.now() + 30*864e5)); }catch(e){}
     document.body.classList.add('is-king');
     showToast('👑 أهلاً بالكينج مستر عبد الرحمن! المنصة منصتك');
+    try{ qgAfterLogin(); }catch(e){}
   }
   closeGateModal();
   document.getElementById('adminModal').style.display = 'block';
