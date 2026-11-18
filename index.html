@@ -3810,6 +3810,8 @@ const QG = { progress:{}, ok:false, loadedFor:null, words:{}, locked:new Set(), 
 function qgIsKing(){ return document.body.classList.contains('is-king'); }
 function qgCat(){ return categories.find(c => c.id === currentCategoryId) || null; }
 function qgOn(){ const c = qgCat(); return !!(c && c.quiz_gate === true && studentCode); }
+// زرار «اختبر نفسك» في آخر كل درس: ظاهر في أي كورس مفعّل عليه الاختبار (حتى لو القفل مقفول)
+function qgShow(){ const c = qgCat(); return !!(c && c.quiz_enabled !== false && studentCode); }
 function qgEnforce(){ return qgOn() && QG.ok && !qgIsKing(); }
 function qgCount(){ return ptsCfg().count; }
 function qgNeed(total){ const c = ptsCfg(); return Math.max(1, Math.min(total, Math.ceil(total * c.pass / c.count))); }
@@ -3897,15 +3899,15 @@ function qgGoLesson(id){
 
 // زرار الاختبار في آخر الدرس
 function qgAppendStart(container){
-  if(!qgOn() || !currentLessonId) return;
+  if(!qgShow() || !currentLessonId) return;
   if(qgItems(currentWordsList).length < 2) return;
   const passed = QG.progress[currentLessonId] && QG.progress[currentLessonId].passed;
   const wrap = document.createElement('div');
   wrap.className = 'qz-btn-wrap';
   const cfgP = ptsCfg();
-  wrap.innerHTML = `<div class="qz-hint">${passed ? '✅ انت عدّيت الدرس ده... تقدر تعيد الاختبار للمراجعة (من غير نقاط جديدة).' : 'اختبر نفسك (' + qgNeed(qgCount()) + ' من ' + qgCount() + ' للنجاح) واكسب ' + cfgP.quiz + ' نقطة 🏅 — الاختبار اختياري وتقدر تتخطاه.'}</div>
+  wrap.innerHTML = `<div class="qz-hint">${passed ? '✅ انت عدّيت الدرس ده... تقدر تعيد الاختبار للمراجعة (من غير نقاط جديدة).' : 'اختبر نفسك (' + qgNeed(qgCount()) + ' من ' + qgCount() + ' للنجاح) واكسب ' + cfgP.quiz + ' نقطة 🏅' + (qgOn() ? ' — الاختبار اختياري وتقدر تتخطاه.' : ' — اختياري.')}</div>
     <button class="qz-start-btn" onclick="qgStart()"><i class="fa-solid fa-bullseye"></i> اختبر نفسك</button>
-    ${passed ? '' : '<button class="qz-skip" onclick="qgSkipFor(' + currentLessonId + ')">تخطّي الاختبار ⏭️</button>'}`;
+    ${(passed || !qgOn()) ? '' : '<button class="qz-skip" onclick="qgSkipFor(' + currentLessonId + ')">تخطّي الاختبار ⏭️</button>'}`;
   container.appendChild(wrap);
 }
 
@@ -4010,8 +4012,10 @@ function qgClose(silent){
   const ov = document.getElementById('qzOverlay'); if(ov) ov.style.display = 'none';
   QG.run = null;
 }
-function qgStart(){
+async function qgStart(){
   pauseSpeaking();
+  await qgLoadProgress();
+  await qgWords(lessons.map(l => l.id));
   const qs = qgBuildQuestions();
   if(qs.length < 2){
     showToast('الدرس ده مفيهوش أسئلة كفاية... كمّل عادي 👍');
@@ -4048,7 +4052,7 @@ function qgRenderQ(){
     <div class="qz-head"><button class="qz-x" onclick="qgClose()"><i class="fa-solid fa-xmark"></i></button>
       <div class="qz-bar"><i style="width:${pct}%"></i></div><span class="qz-count">${r.i + 1}/${r.qs.length}</span></div>
     ${body}<div class="qz-fb" id="qzFb"></div>
-    <button class="qz-skip" onclick="qgSkipQuiz()">تخطّي الاختبار ⏭️</button></div>`;
+    ${qgOn() ? '<button class="qz-skip" onclick="qgSkipQuiz()">تخطّي الاختبار ⏭️</button>' : ''}</div>`;
   r.locked = false; r.tries = 0;
 }
 function qgLessonOf(item){ return (QG.itemLesson && QG.itemLesson.get(item)) || 'الدرس ده'; }
@@ -4160,7 +4164,7 @@ async function qgSave(lessonId, score, total, mode){
   const prev = QG.progress[lessonId] || null;
   const cfg = ptsCfg();
   const passedNow = mode === 'quiz' && total > 0 && score >= qgNeed(total);
-  const wasDone = !!(prev && !prev.unlocked_by_admin && (prev.quiz_passed || prev.skipped));
+  const wasDone = !!(prev && !prev.unlocked_by_admin && prev.quiz_passed);
   const now = new Date().toISOString();
   const row = {
     student_code: studentCode, lesson_id: lessonId,
@@ -4174,7 +4178,7 @@ async function qgSave(lessonId, score, total, mode){
   if(row.passed) row.passed_at = (prev && prev.passed_at) || now;
   let earned = 0;
   if(passedNow && !(prev && prev.quiz_passed)) earned += cfg.quiz;
-  if((passedNow || mode === 'skip') && !wasDone) earned += cfg.lesson;
+  if(passedNow && !wasDone) earned += cfg.lesson;
   QG.progress[lessonId] = Object.assign({}, prev || {}, row);
   try{
     let { error } = await _supabase.from('lesson_progress').upsert(row, { onConflict: 'student_code,lesson_id' });
@@ -4230,7 +4234,7 @@ async function qgFinish(){
       <div class="qz-sub">محتاج ${need} من ${total} عشان تنجح وتاخد النقاط. راجع الكلمات وجرّب تاني بأسئلة مختلفة.</div>
       <div class="qz-res-btns"><button class="qz-main" onclick="qgStart()">جرّب تاني 🔁</button>
       <button class="qz-skip" onclick="qgClose(true)">أراجع الدرس الأول</button>
-      <button class="qz-skip" onclick="qgSkipFor(${r.lessonId})">تخطّي الاختبار ⏭️</button></div>`;
+      ${qgOn() ? `<button class="qz-skip" onclick="qgSkipFor(${r.lessonId})">تخطّي الاختبار ⏭️</button>` : ''}</div>`;
   }
   if(r.wrong && r.wrong.length){
     html += `<details class="adm-sp-course" style="margin-top:14px;"><summary>📝 راجع غلطاتك (${r.wrong.length})</summary>` +
@@ -4251,6 +4255,16 @@ async function toggleCategoryQuizGate(id, on){
     renderCategoriesList();
     showToast(on ? '🎯 اتفعّل قفل الدروس بالاختبار على الكورس' : '🔓 اتلغى قفل الاختبار، كل الدروس مفتوحة');
   }catch(e){ console.error(e); alert('حدث خطأ أثناء تحديث قفل الاختبار.'); }
+}
+async function toggleCategoryQuizEnabled(id, on){
+  try{
+    const { error } = await _supabase.from('course_categories').update({ quiz_enabled: on }).eq('id', id);
+    if(error) throw error;
+    DC.dirty();
+    await loadCategories();
+    renderCategoriesList();
+    showToast(on ? '📝 زرار الاختبار ظهر في دروس الكورس' : '📝 زرار الاختبار اختفى من الكورس');
+  }catch(e){ console.error(e); alert('حدث خطأ أثناء التحديث.'); }
 }
 async function toggleLessonQuizSkip(id, val, categoryId){
   try{
@@ -4313,7 +4327,7 @@ async function admStudentProgress(code){
     let lessonsDone = 0, quizzes = 0;
     (p.data || []).forEach(r => {
       if(r.quiz_passed) quizzes++;
-      if(r.passed && !r.unlocked_by_admin && (r.quiz_passed || r.skipped)) lessonsDone++;
+      if(r.quiz_passed && !r.unlocked_by_admin) lessonsDone++;
     });
     const examRows = e.data || [];
     const levelsPassed = new Set(examRows.filter(r => !r.disqualified && r.percentage >= passPct).map(r => r.level)).size;
@@ -4397,7 +4411,7 @@ function renderLockedView(container, type, name, extra, prevName){
     desc = `مستر عبد الرحمن بيومي هو اللي هيفتحلك <b>"${name}"</b> في وقته المناسب... كمّل دلوقتي في الكورسات المتاحة، وهيجيلك دورك قريب جدًا! 💪✨`;
   } else if(type === 'quiz'){
     title = 'الدرس ده بيتفتح بعد اختبار اللي قبله 🔒';
-    desc = `اختبر نفسك في <b>"${prevName || 'الدرس اللي قبله'}"</b> (${qgNeed(qgCount())} من ${qgCount()}) وهيتفتحلك <b>"${name}"</b> على طول، أو تخطّى الاختبار وكمّل. 💪`;
+    desc = `اختبر نفسك في <b>"${prevName || 'الدرس اللي قبله'}"</b> (${qgNeed(qgCount())} من ${qgCount()}) وهيتفتحلك <b>"${name}"</b> على طول، أو تخطّى الاختبار وكمّل (من غير نقاط). 💪`;
   } else {
     title = 'الدرس ده لسه مقفول عندك 🔒';
     desc = `مستر عبد الرحمن هيفتحلك <b>"${name}"</b> تباعًا مع تقدمك في المنهج... كمّل باقي الدروس المتاحة وهتوصله بسرعة! 🚀`;
@@ -5278,6 +5292,15 @@ function renderCategoriesList(){
       if(confirm(msg)) toggleCategoryQuizGate(cat.id, !cat.quiz_gate);
     };
     actionsDiv.appendChild(qzBtn);
+
+    const qeBtn = document.createElement('button');
+    qeBtn.className = 'level-set-btn';
+    const qeOn = cat.quiz_enabled !== false;
+    qeBtn.title = qeOn ? 'زرار الاختبار ظاهر في دروس الكورس: دوس لإخفائه' : 'إظهار زرار «اختبر نفسك» في آخر كل درس';
+    qeBtn.style.background = qeOn ? 'linear-gradient(135deg,#2980b9,#1f618d)' : 'linear-gradient(135deg,#95a5a6,#7f8c8d)';
+    qeBtn.innerHTML = '<i class="fa-solid fa-clipboard-question"></i>';
+    qeBtn.onclick = () => { if(confirm(qeOn ? 'تخفي زرار الاختبار من دروس الكورس ده؟' : 'تظهر زرار «اختبر نفسك» في آخر كل درس في الكورس ده؟')) toggleCategoryQuizEnabled(cat.id, !qeOn); };
+    actionsDiv.appendChild(qeBtn);
     
     const switchLabel = document.createElement('label');
     switchLabel.className = 'switch';
