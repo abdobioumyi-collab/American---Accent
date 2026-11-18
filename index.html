@@ -1096,7 +1096,7 @@ body.is-king .honor-card .hp:active,body.is-king .honor-card .honor-row:active{t
 @media (prefers-reduced-motion:reduce){.level-chip.active::after,.level-chip.active .lc-ico{animation:none}}
 /* مداخل لوحة الإدارة مخفية: الدخول بـ ٥ ضغطات في مكان فاضي */
 #gateSettingsBtn,.btn-admin,#sqAdmin{display:none!important}
-body.is-king #sqAdmin{display:flex!important}
+body.is-king #sqAdmin,body.is-king #sqStudentView,body.is-king #sqStudentReset{display:flex!important}
 </style>
 
 <link rel="manifest" href="manifest.json?v=3">
@@ -3893,6 +3893,10 @@ async function qgLockedClick(lesson){
   const chain = qgChain(), i = chain.findIndex(l => l.id === lesson.id);
   // أول درس قبله لسه الطالب ما عدّاهوش (ده دايمًا مفتوح، فينفع يدخل اختباره)
   const need = chain.slice(0, Math.max(i, 0)).find(l => !qgCleared(l)) || chain[i - 1] || null;
+  // الطالب داس على درس متقدم: بنسأله سؤال واحد سريع. موافق = يتفتح الدرس وكل اللي قبله، إلغاء = تظهر له شاشة فيها زرار اختبار الدرس المطلوب
+  if(confirm('الدرس ده متقدم. تحب تتخطى الاختبارات وتفتحه دلوقتي؟\n\nموافق = يتفتح الدرس وكل اللي قبله\nإلغاء = تختبر نفسك الأول')){
+    await qgForceOpen(lesson.id, true); return;
+  }
   renderLessonsNav();
   const adminBtn = '';
   const goBtn = need ? `<button class="qz-go" onclick="qgGoLesson(${need.id})">🎯 روح لاختبار «${escapeHtml(need.name)}»</button><br>` : '';
@@ -3900,8 +3904,8 @@ async function qgLockedClick(lesson){
   renderLockedView(container, 'quiz', lesson.name, adminBtn + goBtn + forceBtn, need ? need.name : '');
 }
 // فتح درس إجباري: كل الدروس اللي قبله بتتفتح (من غير نقاط)، والطالب يقدر يرجع يختبر نفسه في أي درس منها
-async function qgForceOpen(targetId){
-  if(!confirm('تفتح الدرس ده إجباري؟\nهتتفتح لك كل الدروس اللي قبله من غير اختبارات (من غير نقاط)، وتقدر ترجع تختبر نفسك في أي درس منهم وقت ما تحب.')) return;
+async function qgForceOpen(targetId, noConfirm){
+  if(!noConfirm && !confirm('تفتح الدرس ده إجباري؟\nهتتفتح لك كل الدروس اللي قبله من غير اختبارات (من غير نقاط)، وتقدر ترجع تختبر نفسك في أي درس منهم وقت ما تحب.')) return;
   await qgLoadProgress();
   const chain = qgChain(), i = chain.findIndex(l => l.id === targetId);
   if(i < 1) return;
@@ -4281,26 +4285,21 @@ async function qgFinish(){
   ov.innerHTML = `<div class="qz-box">${html}</div>`;
 }
 
-// شريط «عرض كطالب»: بيظهر للأدمن بس
-function qgRenderViewBar(){
-  let bar = document.getElementById('qgViewBar');
-  if(!qgIsKing()){ if(bar) bar.remove(); return; }
-  const nav = document.getElementById('lessonsNav');
-  if(!bar){
-    bar = document.createElement('div'); bar.id = 'qgViewBar';
-    bar.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:6px 0;padding:8px 12px;border-radius:12px;background:rgba(241,196,15,.15);border:1px dashed #f1c40f;font-size:13px;font-weight:800;';
-    nav.parentNode.insertBefore(bar, nav);
-  }
-  const st = qgStudentView();
-  bar.innerHTML = `<span>${st ? '🎓 عرض كطالب: بتتسجّل طالب مشترك عادي وبيظهر لك القفل والاختبارات زي الطلاب بالظبط' : '👑 وضع الأدمن: كل الدروس مفتوحة ومفيش اختبارات إجبارية'}</span>
-    <span style="display:flex;gap:6px;flex-wrap:wrap;">${st ? '<button type="button" class="qz-skip" style="margin:0;" onclick="qgResetStudentView()">🔄 ابدأ من الأول</button>' : ''}<button type="button" class="qz-skip" style="margin:0;white-space:nowrap;" onclick="qgToggleStudentView()">${st ? '👑 ارجع لوضع الأدمن' : '🎓 عرض كطالب'}</button></span>`;
+// «عرض كطالب» بيتحكم فيه من القائمة السريعة (فوق على اليمين) وبيظهر للأدمن بس. هنا بنغيّر نص الشريط الذهبي فوق عشان يبان إنه شغّال.
+function qgSyncRibbon(){
+  const r = document.querySelector('#kingRibbon .king-ribbon-in');
+  if(!r) return;
+  if(!r.dataset.orig) r.dataset.orig = r.innerHTML;
+  r.innerHTML = (qgIsKing() && qgStudentView()) ? '<span class="k">🎓</span> عرض كطالب شغّال: بتتعامل كطالب مشترك عادي <span class="k">🎓</span>' : r.dataset.orig;
 }
-async function qgToggleStudentView(){
-  localStorage.setItem('bayomyiStudentView', qgStudentView() ? '0' : '1');
+async function qgSetStudentView(on){
+  localStorage.setItem('bayomyiStudentView', on ? '1' : '0');
   QG.run = null;
   const ov = document.getElementById('qzOverlay'); if(ov) ov.style.display = 'none';
-  if(currentCategoryId) await loadLessonsForCategory(currentCategoryId); else qgRenderViewBar();
-  showToast(qgStudentView() ? '🎓 دلوقتي بتشوف وبتتعامل زي الطالب بالظبط' : '👑 رجعت لوضع الأدمن');
+  try{ window.sqClose && window.sqClose(); }catch(e){}
+  qgSyncRibbon();
+  if(currentCategoryId) await loadLessonsForCategory(currentCategoryId);
+  showToast(on ? '🎓 عرض كطالب شغّال: بتتعامل كطالب مشترك عادي' : '👑 رجعت لوضع الأدمن');
 }
 // يمسح تقدم حسابك إنت بس (عشان تجرّب تجربة الطالب الجديد من الأول)
 async function qgResetStudentView(){
@@ -4663,7 +4662,7 @@ function renderLessonsNav(){
     };
     nav.appendChild(btn);
   });
-  try{ qgRenderViewBar(); }catch(e){ console.error(e); }
+  try{ qgSyncRibbon(); }catch(e){ console.error(e); }
 }
 
 // ---------------------------------------------------------
@@ -7264,7 +7263,7 @@ window.onload = async () => {
 #sqWelcome{position:fixed;top:70px;left:50%;z-index:160;width:min(92vw,380px);display:none;align-items:center;gap:12px;padding:14px 16px;border-radius:20px;background:var(--card-bg);color:var(--text-dark);box-shadow:0 14px 38px rgba(0,0,0,.3);border:1px solid color-mix(in srgb,var(--accent) 50%,transparent);transform:translateX(-50%)}#sqWelcome.show{display:flex}#sqWelcome em{font-size:1.8rem;font-style:normal}#sqWelcome div{flex:1;font-weight:800;font-size:.85rem;line-height:1.5}#sqWelcome button{border:none;background:none;color:var(--text-light);font-size:1rem;cursor:pointer}
 html.s-night{--bg-1:#241B27!important;--bg-2:#2A2030!important;--bg-3:#1E1720!important;--card-bg:#2E2534!important;--text-dark:#F2E9EF!important;--text-light:#B9A6B7!important}
 body.s-focus .honor-wrap,body.s-focus .king-ribbon,body.s-focus #sqWelcome{display:none!important}
-body.is-king #sqAdmin{display:flex!important}
+body.is-king #sqAdmin,body.is-king #sqStudentView,body.is-king #sqStudentReset{display:flex!important}
 </style>
 <button id="sqBtn" onclick="sqToggle()" title="القائمة السريعة"><i></i><i></i><i></i></button>
 <div id="sqPanel"></div>
@@ -7349,6 +7348,8 @@ body.is-king #sqAdmin{display:flex!important}
     +'<button class="sq-row" onclick="sqFavs()"><span class="sq-ic t"><i class="fa-solid fa-star"></i></span><span class="sq-lb">كلماتي المفضّلة<small>'+((typeof favoriteWords!=='undefined'?favoriteWords.length:0))+' كلمة</small></span></button>'
     +'<div class="sq-div"></div>'
     +'<div class="sq-row"><span class="sq-ic p"><i class="fa-solid fa-moon"></i></span><span class="sq-lb">الوضع الليلي<small>مريح للعين بالليل</small></span>'+sw('n',LS('sq_night')==='1','sqNight')+'</div>'
+    +'<div class="sq-row" id="sqStudentView" style="display:none"><span class="sq-ic k"><i class="fa-solid fa-user-graduate"></i></span><span class="sq-lb">عرض كطالب<small>القفل والاختبارات زي الطلاب بالظبط 👑</small></span>'+sw('s',(typeof qgStudentView==='function'&&qgStudentView()),'qgSetStudentView')+'</div>'
+    +((typeof qgStudentView==='function'&&qgStudentView())?'<button class="sq-row" id="sqStudentReset" style="display:none" onclick="sqClose();qgResetStudentView()"><span class="sq-ic g"><i class="fa-solid fa-rotate-left"></i></span><span class="sq-lb">ابدأ من الأول كطالب<small>بيمسح تقدم حسابك إنت بس</small></span></button>':'')
     +'<div class="sq-row"><span class="sq-ic t"><i class="fa-solid fa-bullseye"></i></span><span class="sq-lb">وضع التركيز<small>يوقف التنبيهات ولوحة الشرف</small></span>'+sw('f',LS('sq_focus')==='1','sqFocus')+'</div>'
     +'<div class="sq-row"><span class="sq-ic g"><i class="fa-solid fa-clock-rotate-left"></i></span><span class="sq-lb">تذكير المذاكرة<small>يفكّرك لو غبت يوم أو أكتر</small></span>'+sw('r',LS('sq_remind')==='1','sqRemind')+'</div>'
     +'<div class="sq-div"></div><div class="sq-h"><i class="fa-solid fa-palette"></i> الألوان (سيمز)</div><div class="sq-pal">'+dots+'</div>'
