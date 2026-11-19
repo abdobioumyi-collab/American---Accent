@@ -163,8 +163,63 @@ input:checked + .slider-toggle:before{transform:translateX(24px);}
 }
 
 /* ===== 🎯 اختبر نفسك (قفل الدروس بالاختبار) ===== */
+
+/* ===== 💬 نافذة التأكيد بتصميم البرنامج (بديل confirm() العادي) ===== */
+.ac-overlay{position:fixed;inset:0;z-index:10100;display:none;align-items:center;justify-content:center;padding:18px;
+  background:rgba(20,10,8,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.ac-overlay.show{display:flex;animation:ac-fade .2s ease;}
+.ac-box{position:relative;width:100%;max-width:400px;background:var(--card-bg);border-radius:28px;padding:34px 22px 22px;text-align:center;
+  box-shadow:0 24px 70px rgba(0,0,0,.4),0 0 0 1px color-mix(in srgb,var(--accent) 30%,transparent);overflow:hidden;animation:ac-pop .32s cubic-bezier(.175,.885,.32,1.2);}
+.ac-box::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--secondary),var(--purple));}
+.ac-box::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 85% 0%,color-mix(in srgb,var(--accent) 14%,transparent) 0,transparent 55%),radial-gradient(circle at 10% 100%,color-mix(in srgb,var(--secondary) 12%,transparent) 0,transparent 50%);}
+.ac-box>*{position:relative;z-index:1;}
+.ac-icon{width:72px;height:72px;margin:0 auto 14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.2rem;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 24%,var(--card-bg)),color-mix(in srgb,var(--primary) 16%,var(--card-bg)));
+  box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 22%,transparent),0 10px 24px color-mix(in srgb,var(--primary) 24%,transparent);}
+.ac-title{font-weight:900;font-size:1.2rem;color:var(--text-dark);margin-bottom:8px;line-height:1.5;}
+.ac-text{font-size:.93rem;font-weight:700;color:var(--text-light);line-height:1.9;margin-bottom:14px;white-space:pre-line;}
+.ac-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;text-align:right;}
+.ac-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;font-size:.84rem;font-weight:800;color:var(--text-dark);line-height:1.6;
+  background:color-mix(in srgb,var(--c,var(--secondary)) 11%,transparent);border:1.5px solid color-mix(in srgb,var(--c,var(--secondary)) 32%,transparent);}
+.ac-row b{flex-shrink:0;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;background:var(--c,var(--secondary));}
+.ac-btns{display:flex;flex-direction:column;gap:9px;}
+.ac-btn{font-family:inherit;border:none;cursor:pointer;font-weight:900;font-size:.98rem;padding:14px 18px;border-radius:16px;transition:var(--transition);width:100%;}
+.ac-btn:active{transform:scale(.97);}
+.ac-ok{color:#fff;background:linear-gradient(135deg,var(--secondary),color-mix(in srgb,var(--secondary) 78%,black));box-shadow:0 8px 20px color-mix(in srgb,var(--secondary) 34%,transparent);}
+.ac-ok.danger{background:linear-gradient(135deg,var(--primary),color-mix(in srgb,var(--primary) 78%,black));box-shadow:0 8px 20px color-mix(in srgb,var(--primary) 34%,transparent);}
+.ac-cancel{background:transparent;color:var(--text-dark);border:2px solid color-mix(in srgb,var(--accent) 55%,transparent);}
+@keyframes ac-pop{from{opacity:0;transform:translateY(18px) scale(.92);}to{opacity:1;transform:none;}}
+@keyframes ac-fade{from{opacity:0;}to{opacity:1;}}
+
+/* ===== 👁️ عين الترجمة: الترجمة بتظهر طول ما الطالب ضاغط بس ===== */
+.blk-head{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:9px;}
+.blk-head .speak-icon{margin-bottom:0;}
+.eye-hold{position:absolute;bottom:-17px;right:20px;z-index:3;width:42px;height:42px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
+  font-size:1rem;color:var(--card-accent,var(--secondary));background:var(--card-bg);
+  border:2px solid color-mix(in srgb,var(--card-accent,var(--secondary)) 55%,transparent);
+  box-shadow:0 6px 16px color-mix(in srgb,var(--card-accent,var(--secondary)) 22%,transparent);
+  user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;transition:.22s cubic-bezier(.175,.885,.32,1.3);}
+.eye-hold.held{color:#fff;background:linear-gradient(135deg,var(--card-accent,var(--secondary)),color-mix(in srgb,var(--card-accent,var(--secondary)) 70%,black));
+  border-color:transparent;transform:scale(1.22);
+  box-shadow:0 0 0 7px color-mix(in srgb,var(--card-accent,var(--secondary)) 22%,transparent),0 10px 22px color-mix(in srgb,var(--card-accent,var(--secondary)) 40%,transparent);}
+.word-card.has-eye{margin-bottom:12px;-webkit-touch-callout:none;}
+.word-card.has-eye::after{display:none;}
+.word-card.revealing{box-shadow:0 0 0 2px color-mix(in srgb,var(--card-accent) 55%,transparent),0 16px 36px color-mix(in srgb,var(--card-accent) 22%,transparent);}
+.tr-slot{display:block;opacity:0;visibility:hidden;transform:translateY(-6px) scale(.96);filter:blur(4px);user-select:none;-webkit-user-select:none;
+  transition:opacity .25s ease,transform .3s cubic-bezier(.175,.885,.32,1.2),filter .25s ease,visibility 0s linear .3s;}
+.tr-slot>div{display:block;}
+.tr-slot.show{opacity:1;visibility:visible;transform:none;filter:none;transition:opacity .25s ease,transform .3s cubic-bezier(.175,.885,.32,1.2),filter .25s ease,visibility 0s;}
+.tr-slot .word-ar,.tr-slot .example-ar{color:var(--card-accent);}
+.eo-hint{grid-column:1/-1;text-align:center;font-size:.8rem;font-weight:800;color:var(--text-light);margin:2px 0 8px;
+  padding:7px 14px;border-radius:999px;justify-self:center;border:1.5px dashed color-mix(in srgb,var(--secondary) 45%,transparent);
+  background:color-mix(in srgb,var(--secondary) 8%,transparent);}
+
 .qz-btn-wrap{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:10px;margin:8px 0 28px;text-align:center;}
 .qz-hint{font-size:.86rem;font-weight:700;color:var(--text-light);max-width:420px;line-height:1.8;}
+.eo-tr-bar{grid-column:1/-1;display:flex;justify-content:center;margin:2px 0 6px;}
+.eo-tr-btn{border:1.5px dashed color-mix(in srgb, var(--secondary) 55%, transparent);background:transparent;color:var(--secondary);font-weight:800;font-size:.82rem;padding:7px 16px;border-radius:999px;cursor:pointer;transition:var(--transition);}
+.eo-tr-btn.on{background:color-mix(in srgb, var(--secondary) 14%, transparent);border-style:solid;}
 .qz-start-btn,.qz-go,.qz-next,.qz-main{font-family:inherit;border:none;cursor:pointer;color:#fff;font-weight:900;border-radius:16px;padding:13px 30px;font-size:1rem;
   background:linear-gradient(135deg,var(--primary),var(--purple));box-shadow:0 10px 26px color-mix(in srgb,var(--primary) 38%,transparent);transition:.2s;}
 .qz-start-btn:hover,.qz-go:hover,.qz-next:hover,.qz-main:hover{transform:translateY(-2px);}
@@ -3894,7 +3949,16 @@ async function qgLockedClick(lesson){
   // أول درس قبله لسه الطالب ما عدّاهوش (ده دايمًا مفتوح، فينفع يدخل اختباره)
   const need = chain.slice(0, Math.max(i, 0)).find(l => !qgCleared(l)) || chain[i - 1] || null;
   // الطالب داس على درس متقدم: بنسأله سؤال واحد سريع. موافق = يتفتح الدرس وكل اللي قبله، إلغاء = تظهر له شاشة فيها زرار اختبار الدرس المطلوب
-  if(confirm('الدرس ده متقدم. تحب تتخطى الاختبارات وتفتحه دلوقتي؟\n\nموافق = يتفتح الدرس وكل اللي قبله\nإلغاء = تختبر نفسك الأول')){
+  const skipNow = await appConfirm({
+    icon:'🚀', title:'الدرس ده متقدم شوية!',
+    text:'تحب تتخطى الاختبارات وتفتحه دلوقتي؟',
+    rows:[
+      {i:'✓', t:'<strong>افتح الدرس</strong> = يتفتح الدرس وكل اللي قبله', c:'var(--secondary)'},
+      {i:'🎯', t:'<strong>اختبر نفسي</strong> = تختبر نفسك الأول وتفتحه بنقاطك', c:'var(--accent)'}
+    ],
+    okText:'🔓 افتح الدرس', cancelText:'🎯 اختبر نفسي الأول'
+  });
+  if(skipNow){
     await qgForceOpen(lesson.id, true); return;
   }
   renderLessonsNav();
@@ -3905,7 +3969,11 @@ async function qgLockedClick(lesson){
 }
 // فتح درس إجباري: كل الدروس اللي قبله بتتفتح (من غير نقاط)، والطالب يقدر يرجع يختبر نفسه في أي درس منها
 async function qgForceOpen(targetId, noConfirm){
-  if(!noConfirm && !confirm('تفتح الدرس ده إجباري؟\nهتتفتح لك كل الدروس اللي قبله من غير اختبارات (من غير نقاط)، وتقدر ترجع تختبر نفسك في أي درس منهم وقت ما تحب.')) return;
+  if(!noConfirm && !(await appConfirm({
+    icon:'⏭️', title:'تفتح الدرس ده إجباري؟',
+    text:'هتتفتح لك كل الدروس اللي قبله من غير اختبارات (ومن غير نقاط)، وتقدر ترجع تختبر نفسك في أي درس منهم وقت ما تحب.',
+    okText:'🔓 أيوه، افتحه', cancelText:'لأ، خليني'
+  }))) return;
   await qgLoadProgress();
   const chain = qgChain(), i = chain.findIndex(l => l.id === targetId);
   if(i < 1) return;
@@ -4046,9 +4114,12 @@ function qgOverlay(){
   return ov;
 }
 function qgStopRec(){ const r = QG.run; if(r && r.rec){ try{ r.rec.abort(); }catch(e){} r.rec = null; } }
-function qgClose(silent){
+async function qgClose(silent){
   const r = QG.run;
-  if(!silent && r && !r.finished && !confirm('تخرج من الاختبار؟ مش هيتحسب.')) return;
+  if(!silent && r && !r.finished && !(await appConfirm({
+    icon:'🚪', title:'تخرج من الاختبار؟', text:'لو خرجت دلوقتي الاختبار مش هيتحسب.',
+    okText:'أيوه، اخرج', cancelText:'كمّل الاختبار', danger:true
+  }))) return;
   qgStopRec();
   const ov = document.getElementById('qzOverlay'); if(ov) ov.style.display = 'none';
   QG.run = null;
@@ -4234,7 +4305,10 @@ async function qgSave(lessonId, score, total, mode){
   }catch(e){ console.error(e); showToast('⚠️ تعذّر حفظ تقدمك، اتأكد من النت وجرّب تاني'); return { ok:false, earned:0 }; }
 }
 async function qgSkipFor(lessonId, thenOpenId){
-  if(!confirm('تتخطى الاختبار؟ هيتفتحلك الدرس اللي بعده من غير نقاط الاختبار.')) return;
+  if(!(await appConfirm({
+    icon:'⏭️', title:'تتخطى الاختبار؟', text:'هيتفتحلك الدرس اللي بعده من غير نقاط الاختبار.',
+    okText:'تخطّي', cancelText:'لأ، هختبر'
+  }))) return;
   qgStopRec();
   await qgLoadProgress();
   const res = await qgSave(lessonId, 0, 0, 'skip');
@@ -4303,7 +4377,11 @@ async function qgSetStudentView(on){
 }
 // يمسح تقدم حسابك إنت بس (عشان تجرّب تجربة الطالب الجديد من الأول)
 async function qgResetStudentView(){
-  if(!confirm('تمسح تقدمك كطالب (الدروس اللي عدّيتها أو تخطّيتها) وتبدأ من الأول؟\nده بيمسح تقدم حسابك إنت بس.')) return;
+  if(!(await appConfirm({
+    icon:'🗑️', title:'تمسح تقدمك وتبدأ من الأول؟',
+    text:'الدروس اللي عدّيتها أو تخطّيتها هتتمسح.\nده بيمسح تقدم حسابك إنت بس.',
+    okText:'امسح وابدأ', cancelText:'إلغاء', danger:true
+  }))) return;
   try{
     if(studentCode){
       const { error } = await _supabase.from('lesson_progress').delete().eq('student_code', studentCode);
@@ -4699,6 +4777,65 @@ function getVisibleWords(){
 }
 
 
+// 🌐 دروس «إنجليزي فقط»: الكلمة والمثال بالإنجليزي، والعربي مخفي (بيظهر في الاختبار بعد الإجابة، أو بزر اختياري)
+let eoShowTrFor = null;
+function curLessonEnglishOnly(){ const l = lessons.find(x => x.id === currentLessonId); return !!(l && l.english_only === true); }
+
+// 💬 نافذة تأكيد بتصميم البرنامج بدل confirm() بتاع المتصفح (بترجع Promise<boolean>)
+function appConfirm(o){
+  o = o || {};
+  return new Promise(resolve => {
+    let ov = document.getElementById('appConfirmOverlay');
+    if(ov) ov.remove();
+    ov = document.createElement('div');
+    ov.id = 'appConfirmOverlay';
+    ov.className = 'ac-overlay';
+    const rows = (o.rows || []).map(r => `<div class="ac-row" style="--c:${r.c || 'var(--secondary)'}"><b>${r.i}</b><span>${r.t}</span></div>`).join('');
+    ov.innerHTML = `<div class="ac-box" role="dialog" aria-modal="true">
+      <div class="ac-icon">${o.icon || '❓'}</div>
+      <div class="ac-title">${o.title || ''}</div>
+      ${o.text ? `<div class="ac-text">${o.text}</div>` : ''}
+      ${rows ? `<div class="ac-rows">${rows}</div>` : ''}
+      <div class="ac-btns">
+        <button type="button" class="ac-btn ac-ok ${o.danger ? 'danger' : ''}" data-r="1">${o.okText || 'تمام'}</button>
+        <button type="button" class="ac-btn ac-cancel" data-r="0">${o.cancelText || 'إلغاء'}</button>
+      </div></div>`;
+    document.body.appendChild(ov);
+    const done = v => { ov.classList.remove('show'); setTimeout(() => ov.remove(), 150); resolve(v); };
+    ov.querySelectorAll('.ac-btn').forEach(b => b.onclick = () => done(b.dataset.r === '1'));
+    ov.addEventListener('click', e => { if(e.target === ov) done(false); });
+    requestAnimationFrame(() => ov.classList.add('show'));
+  });
+}
+
+// 👁️ عين الترجمة: بتظهر الترجمة طول ما الطالب ضاغط عليها، ولما يشيل إيده بتختفي
+function makeEyeHold(card, slots){
+  const eye = document.createElement('span');
+  eye.className = 'eye-hold';
+  eye.setAttribute('role', 'button');
+  eye.setAttribute('aria-label', 'اضغط واستمر لإظهار الترجمة');
+  eye.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+  const icon = eye.firstChild;
+  const on = e => {
+    e.preventDefault(); e.stopPropagation();
+    try{ eye.setPointerCapture(e.pointerId); }catch(_){}
+    eye.classList.add('held'); card.classList.add('revealing');
+    slots.forEach((sl, k) => { sl.style.transitionDelay = (k * 90) + 'ms'; sl.classList.add('show'); });
+    icon.className = 'fa-solid fa-eye';
+  };
+  const off = e => {
+    if(e) e.stopPropagation();
+    eye.classList.remove('held'); card.classList.remove('revealing');
+    slots.forEach(sl => { sl.style.transitionDelay = '0ms'; sl.classList.remove('show'); });
+    icon.className = 'fa-solid fa-eye-slash';
+  };
+  eye.addEventListener('pointerdown', on);
+  ['pointerup','pointercancel','lostpointercapture'].forEach(t => eye.addEventListener(t, off));
+  eye.addEventListener('click', e => e.stopPropagation());
+  eye.addEventListener('contextmenu', e => e.preventDefault());
+  return eye;
+}
+function toggleEoTranslation(){ eoShowTrFor = (eoShowTrFor === currentLessonId) ? null : currentLessonId; renderWordsGrid(); }
 function renderWordsGrid(){
   const container = document.getElementById('wordsContainer');
   container.innerHTML = '';
@@ -4713,6 +4850,16 @@ function renderWordsGrid(){
     const names = {1:'الأول', 2:'الثاني', 3:'الثالث'};
     container.innerHTML = `<div class="status-message">لسه معندناش كلمات في المستوى ${names[selectedLevel || 1] || ''} لهذا الدرس. 🎯<br>جرّب تختار مستوى تاني من لوحة التحكم فوق!</div>`;
     return;
+  }
+
+  const eoLesson = curLessonEnglishOnly();
+  const hideAr = isTestMode;                       // وضع الاختبار: مفيش ترجمة خالص
+  const eyeMode = eoLesson && !isTestMode;         // درس «إنجليزي فقط»: عين ضغط مطوّل جنب كل كلمة ومثال
+  if(eyeMode){
+    const hint = document.createElement('div');
+    hint.className = 'eo-hint';
+    hint.innerHTML = '👁️ محتاج ترجمة؟ اضغط واستمر على العين في ركن الكارت، ولما تشيل إيدك تختفي';
+    container.appendChild(hint);
   }
 
   visibleWords.forEach((w, index) => {
@@ -4747,6 +4894,7 @@ function renderWordsGrid(){
     }
     
     // Word block
+    const trSlots = [];
     const wordBlock = document.createElement('div');
     wordBlock.className = 'word-block';
     wordBlock.onclick = () => speakWord(null, w.word_en, card, 'word');
@@ -4754,18 +4902,29 @@ function renderWordsGrid(){
     const speakIcon1 = document.createElement('div');
     speakIcon1.className = 'speak-icon';
     speakIcon1.textContent = '🔊 الكلمة';
-    wordBlock.appendChild(speakIcon1);
+    const head1 = document.createElement('div');
+    head1.className = 'blk-head';
+    head1.appendChild(speakIcon1);
+    wordBlock.appendChild(head1);
     
     const wordEn = document.createElement('div');
     wordEn.className = 'word-en';
     wordEn.textContent = w.word_en;
     wordBlock.appendChild(wordEn);
     
-    if(!isTestMode && w.word_ar){
+    if(!hideAr && w.word_ar){
       const wordAr = document.createElement('div');
       wordAr.className = 'word-ar';
       wordAr.textContent = w.word_ar;
-      wordBlock.appendChild(wordAr);
+      if(eyeMode){
+        const slot = document.createElement('div');
+        slot.className = 'tr-slot';
+        const inner = document.createElement('div');
+        inner.appendChild(wordAr);
+        slot.appendChild(inner);
+        wordBlock.appendChild(slot);
+        trSlots.push(slot);
+      } else wordBlock.appendChild(wordAr);
     }
     card.appendChild(wordBlock);
     
@@ -4778,22 +4937,34 @@ function renderWordsGrid(){
       const speakIcon2 = document.createElement('div');
       speakIcon2.className = 'speak-icon';
       speakIcon2.textContent = '🔊 المثال';
-      exampleBlock.appendChild(speakIcon2);
+      const head2 = document.createElement('div');
+      head2.className = 'blk-head';
+      head2.appendChild(speakIcon2);
+      exampleBlock.appendChild(head2);
       
       const exampleEn = document.createElement('div');
       exampleEn.className = 'example-en';
       exampleEn.textContent = w.example_en;
       exampleBlock.appendChild(exampleEn);
       
-      if(!isTestMode && w.example_ar){
+      if(!hideAr && w.example_ar){
         const exampleAr = document.createElement('div');
         exampleAr.className = 'example-ar';
         exampleAr.textContent = w.example_ar;
-        exampleBlock.appendChild(exampleAr);
+        if(eyeMode){
+          const slot2 = document.createElement('div');
+          slot2.className = 'tr-slot';
+          const inner2 = document.createElement('div');
+          inner2.appendChild(exampleAr);
+          slot2.appendChild(inner2);
+          exampleBlock.appendChild(slot2);
+          trSlots.push(slot2);
+        } else exampleBlock.appendChild(exampleAr);
       }
       card.appendChild(exampleBlock);
     }
     
+    if(eyeMode && trSlots.length){ card.classList.add('has-eye'); card.appendChild(makeEyeHold(card, trSlots)); }
     container.appendChild(card);
   });
   qgAppendStart(container);
@@ -7353,7 +7524,8 @@ body.is-king #sqAdmin,body.is-king #sqStudentView,body.is-king #sqStudentReset{d
     +'<div class="sq-row"><span class="sq-ic t"><i class="fa-solid fa-bullseye"></i></span><span class="sq-lb">وضع التركيز<small>يوقف التنبيهات ولوحة الشرف</small></span>'+sw('f',LS('sq_focus')==='1','sqFocus')+'</div>'
     +'<div class="sq-row"><span class="sq-ic g"><i class="fa-solid fa-clock-rotate-left"></i></span><span class="sq-lb">تذكير المذاكرة<small>يفكّرك لو غبت يوم أو أكتر</small></span>'+sw('r',LS('sq_remind')==='1','sqRemind')+'</div>'
     +'<div class="sq-div"></div><div class="sq-h"><i class="fa-solid fa-palette"></i> الألوان (سيمز)</div><div class="sq-pal">'+dots+'</div>'
-    +'<div class="sq-h"><i class="fa-solid fa-text-height"></i> حجم الخط</div><div class="sq-size"><button onclick="sqSize(-6)">A−</button><b>'+(LS('sq_size')||'100')+'%</b><button onclick="sqSize(6)">A+</button></div>';
+    +'<div class="sq-h"><i class="fa-solid fa-text-height"></i> حجم الخط</div><div class="sq-size"><button onclick="sqSize(-6)">A−</button><b>'+(LS('sq_size')||'100')+'%</b><button onclick="sqSize(6)">A+</button></div>'
+    +'<div style="text-align:center;font-size:.7rem;opacity:.55;margin-top:10px">إصدار الاختبارات: QZ-5</div>';
   }
   document.addEventListener('click',function(e){if(!e.target.closest('#sqPanel,#sqBtn'))sqClose()});
   window.addEventListener('scroll',function(){$('sqTop').classList.toggle('show',window.scrollY>500)},{passive:true});
