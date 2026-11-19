@@ -2209,6 +2209,7 @@ function examMcqFromSentence(it, wrong){
   return q;
 }
 function examRenderSpeak(q){
+  examStopRec();
   document.getElementById('examQuestionText').innerText = '🎤 ترجم الجملة دي بصوتك بالإنجليزي:\n' + q.ar;
   const wrap = document.getElementById('examOptionsWrap');
   wrap.innerHTML = `<button type="button" class="exam-option-btn" id="examMicBtn" onclick="examRecord()">🎤 دوس وقولها بالإنجليزي</button>
@@ -2218,6 +2219,7 @@ function examRenderSpeak(q){
 }
 function examSpeakToMcq(){
   if(!currentExam || currentExam.pendingAnswer !== undefined) return;
+  examStopRec();
   const q = currentExam.questions[currentExam.index]; if(q.type !== 'speak') return;
   const wrong = shuffleArray((currentExam.speakPool || []).filter(x => x.en !== q.text)).slice(0, 3).map(x => x.en);
   if(wrong.length < 2){ examSpeakDone(false); return; }
@@ -2225,41 +2227,81 @@ function examSpeakToMcq(){
   delete q.type; Object.assign(q, m);
   renderExamQuestion();
 }
-function examRecord(){
-  if(!currentExam || currentExam.pendingAnswer !== undefined) return;
-  const q = currentExam.questions[currentExam.index];
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const heard = document.getElementById('examHeard'), btn = document.getElementById('examMicBtn');
-  let rec; try{ rec = new SR(); }catch(e){ examSpeakToMcq(); return; }
-  rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 3; rec.continuous = false;
-  let got = false, err = null;
-  examMicGrace = true; setTimeout(() => { examMicGrace = false; }, 15000);
-  rec.onstart = () => { if(btn) btn.innerText = '🔴 بسمعك...'; if(heard) heard.innerText = ''; };
-  rec.onresult = (ev) => {
-    got = true;
-    const res = ev.results[0]; let best = 0, txt = '';
-    for(let k = 0; k < res.length; k++){ const sim = qgSim(res[k].transcript, q.text); if(sim >= best){ best = sim; txt = res[k].transcript; } }
-    if(!currentExam || currentExam.questions[currentExam.index] !== q) return;
-    if(best >= 0.8) examSpeakDone(true, txt);
-    else { currentExam.speakTries++; if(currentExam.speakTries >= 2) examSpeakDone(false, txt); else if(heard) heard.innerText = 'سمعتك: ' + txt + ' — قريب، جرّب تاني 💪'; }
-  };
-  rec.onerror = (ev) => { err = ev.error; };
-  rec.onend = () => {
-    if(btn && currentExam && currentExam.pendingAnswer === undefined) btn.innerText = '🎤 دوس وقولها بالإنجليزي';
-    setTimeout(() => { examMicGrace = false; try{ if(examMonitorActive) requestExamFullscreen(); }catch(e){} }, 1200);
-    if(got || !currentExam || currentExam.pendingAnswer !== undefined) return;
-    if(['not-allowed','service-not-allowed','audio-capture','network','language-not-supported'].indexOf(err) !== -1) examSpeakToMcq();
-    else if(heard) heard.innerText = 'ما سمعتش حاجة... جرّب تاني بصوت أوضح 🎤';
-  };
-  try{ rec.start(); }catch(e){ examMicGrace = false; examSpeakToMcq(); }
+const SPEAK_PASS = 0.7;   // نسبة النطق المطلوبة للدرجة الكاملة (70%)
+let examRec = null, examRecWanted = false;
+function examSetMicBtn(listening){
+  const b = document.getElementById('examMicBtn');
+  if(b) b.innerText = listening ? '🔴 بسمعك... (دوس تاني للإيقاف)' : '🎤 دوس وقولها بالإنجليزي';
 }
-function examSpeakDone(ok, txt){
+function examStopRec(){
+  const was = examRecWanted; examRecWanted = false;
+  if(examRec){ try{ examRec.abort(); }catch(e){} examRec = null; }
+  examSetMicBtn(false);
+  if(was) setTimeout(() => { if(examRecWanted) return; examMicGrace = false; try{ if(examMonitorActive) requestExamFullscreen(); }catch(e){} }, 1200);
+}
+// الميكروفون بيفضل شغال ويتجدد لوحده لحد ما الطالب يدوس على الزرار تاني
+function examRecord(){
   if(!currentExam) return;
   const q = currentExam.questions[currentExam.index];
-  currentExam.pendingAnswer = ok ? 'speak_ok' : 'speak_bad';
+  if(!q || q.type !== 'speak') return;
+  if(examRecWanted){ examStopRec(); return; }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ if(currentExam.pendingAnswer === undefined) examSpeakToMcq(); return; }
+  examRecWanted = true; examMicGrace = true;
+  let quick = 0;
+  const begin = () => {
+    if(!examRecWanted || !currentExam || currentExam.questions[currentExam.index] !== q) return;
+    let rec; try{ rec = new SR(); }catch(e){ examStopRec(); if(currentExam.pendingAnswer === undefined) examSpeakToMcq(); return; }
+    rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 3; rec.continuous = true;
+    examRec = rec;
+    const t0 = Date.now(); let gotAny = false, fatal = null;
+    rec.onstart = () => { examSetMicBtn(true); };
+    rec.onresult = (ev) => {
+      gotAny = true; quick = 0;
+      for(let i = ev.resultIndex; i < ev.results.length; i++){
+        const res = ev.results[i]; if(!res.isFinal) continue;
+        let best = 0, txt = '';
+        for(let k = 0; k < res.length; k++){ const sim = qgSim(res[k].transcript, q.text); if(sim >= best){ best = sim; txt = res[k].transcript; } }
+        examSpeakEval(q, best, txt);
+      }
+    };
+    rec.onerror = (ev) => { if(['not-allowed','service-not-allowed','audio-capture','language-not-supported'].indexOf(ev.error) !== -1) fatal = ev.error; };
+    rec.onend = () => {
+      if(examRec !== rec) return;
+      examRec = null;
+      if(!examRecWanted) return;
+      const heard = document.getElementById('examHeard');
+      if(fatal){ examStopRec(); if(currentExam && currentExam.pendingAnswer === undefined) examSpeakToMcq(); else if(heard) heard.innerText = 'الميكروفون مش متاح دلوقتي'; return; }
+      if(!gotAny && Date.now() - t0 < 600){ quick++; if(quick >= 4){ examStopRec(); if(heard) heard.innerText = 'الميكروفون مش بيشتغل، جرّب تاني 🎤'; return; } }
+      setTimeout(begin, 250);
+    };
+    try{ rec.start(); }catch(e){ examRec = null; quick++; if(quick >= 4) examStopRec(); else setTimeout(begin, 400); }
+  };
+  begin();
+}
+function examSpeakEval(q, sim, txt){
+  if(!currentExam || currentExam.questions[currentExam.index] !== q) return;
+  const pct = Math.round(sim * 100), heard = document.getElementById('examHeard');
+  const safe = (txt || '').replace(/</g, '&lt;');
+  if(sim >= SPEAK_PASS){ examSpeakDone(true, safe, pct); return; }
+  if(currentExam.pendingAnswer === 'speak_ok'){ if(heard) heard.innerHTML = `✅ الدرجة محسوبة لك. المرة دي سمعتك: <b dir="ltr">${safe}</b> (${pct}%)`; return; }
+  currentExam.speakTries = (currentExam.speakTries || 0) + 1;
+  if(currentExam.pendingAnswer === undefined && currentExam.speakTries >= 2){ examSpeakDone(false, safe, pct); return; }
+  if(heard) heard.innerHTML = `سمعتك: <b dir="ltr">${safe}</b> (${pct}%)` + (currentExam.pendingAnswer === 'speak_bad' ? '<br>جرّب تاني لو عايز 🎤' : ' — قريب، جرّب تاني 💪');
+}
+function examSpeakDone(ok, txt, pct){
+  if(!currentExam) return;
+  const q = currentExam.questions[currentExam.index];
+  if(ok) currentExam.pendingAnswer = 'speak_ok';
+  else if(currentExam.pendingAnswer === undefined) currentExam.pendingAnswer = 'speak_bad';
   const heard = document.getElementById('examHeard');
-  if(heard) heard.innerHTML = (ok ? '✅ ' : '❌ ') + 'الجملة بالإنجليزي: <b dir="ltr">' + q.text.replace(/</g, '&lt;') + '</b>';
-  const btn = document.getElementById('examMicBtn'); if(btn){ btn.disabled = true; btn.classList.add(ok ? 'correct-answer' : 'wrong-answer'); }
+  const ans = '<b dir="ltr">' + q.text.replace(/</g, '&lt;') + '</b>';
+  const pctTxt = (pct === undefined || pct === null) ? '' : ` نطقك ${pct}%`;
+  if(heard) heard.innerHTML = ok
+    ? `✅${pctTxt} — برافو! خدت الدرجة كاملة 🎉<br>الجملة بالإنجليزي: ${ans}<br><span style="font-size:.78rem;opacity:.8">لو عايز تعيدها دوس على الزرار تاني</span>`
+    : `❌${pctTxt}<br>الجملة بالإنجليزي: ${ans}<br><span style="font-size:.78rem;opacity:.8">ممكن تسجّلها تاني لو حسيت إن الترجمة ما كانتش دقيقة</span>`;
+  const btn = document.getElementById('examMicBtn');
+  if(btn){ btn.classList.remove('correct-answer','wrong-answer'); btn.classList.add(ok ? 'correct-answer' : 'wrong-answer'); btn.disabled = false; }
   document.getElementById('examNextBtn').disabled = false;
 }
 
@@ -2278,6 +2320,7 @@ function startExamProctoring(){
 }
 
 function stopExamProctoring(){
+  examStopRec();
   examMonitorActive = false;
   document.removeEventListener('visibilitychange', checkExamAway);
   document.removeEventListener('fullscreenchange', checkExamAway);
@@ -2448,6 +2491,7 @@ function selectExamAnswer(key, btnEl){
 
 function nextExamQuestion(){
   if(!currentExam || currentExam.pendingAnswer === undefined) return;
+  examStopRec();
   const q = currentExam.questions[currentExam.index];
   const correct = q.type === 'speak' ? 'speak_ok' : (q.correct_option || '').toLowerCase().trim();
   const chosen = currentExam.pendingAnswer;
@@ -4113,7 +4157,12 @@ function qgOverlay(){
   ov.style.display = 'flex';
   return ov;
 }
-function qgStopRec(){ const r = QG.run; if(r && r.rec){ try{ r.rec.abort(); }catch(e){} r.rec = null; } }
+function qgStopRec(){
+  const r = QG.run;
+  if(r){ r.recWanted = false; if(r.rec){ try{ r.rec.abort(); }catch(e){} r.rec = null; } }
+  const mic = document.getElementById('qzMic');
+  if(mic){ mic.classList.remove('rec'); mic.innerHTML = '<i class="fa-solid fa-microphone"></i> دوس وقولها'; }
+}
 async function qgClose(silent){
   const r = QG.run;
   if(!silent && r && !r.finished && !(await appConfirm({
@@ -4165,7 +4214,7 @@ function qgRenderQ(){
       <div class="qz-bar"><i style="width:${pct}%"></i></div><span class="qz-count">${r.i + 1}/${r.qs.length}</span></div>
     ${body}<div class="qz-fb" id="qzFb"></div>
     ${qgOn() ? '<button class="qz-skip" onclick="qgSkipQuiz()">تخطّي الاختبار ⏭️</button>' : ''}</div>`;
-  r.locked = false; r.tries = 0;
+  r.locked = false; r.tries = 0; r.speakCredited = false; r.wrongIdx = -1; r.recWanted = false;
 }
 function qgLessonOf(item){ return (QG.itemLesson && QG.itemLesson.get(item)) || 'الدرس ده'; }
 // شرح الغلط: الإجابة الصح + في أنهي درس + اللي الطالب اختاره معناه إيه
@@ -4231,44 +4280,74 @@ function qgSpeakToMcq(msg){
   if(msg) showToast(msg);
 }
 function qgRecord(){
-  const r = QG.run; if(!r || r.locked) return;
-  if(r.rec){ try{ r.rec.stop(); }catch(e){} return; }
-  const q = r.qs[r.i];
+  const r = QG.run; if(!r) return;
+  const q = r.qs[r.i]; if(!q || q.type !== 'speak') return;
+  if(r.recWanted){ qgStopRec(); return; }   // دوسة تانية = إيقاف
   pauseSpeaking();
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  let rec;
-  try{ rec = new SR(); }catch(e){ qgSpeakToMcq('التسجيل مش مدعوم هنا، حوّلناها لاختيار 👍'); return; }
-  rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 3; rec.continuous = false;
-  const mic = document.getElementById('qzMic'), heard = document.getElementById('qzHeard');
-  let got = false, err = null;
-  rec.onstart = () => { if(mic){ mic.classList.add('rec'); mic.innerHTML = '<i class="fa-solid fa-circle"></i> بسمعك... (دوس تاني للإيقاف)'; } if(heard) heard.textContent = ''; };
-  rec.onresult = (ev) => {
-    got = true;
-    const res = ev.results[0]; let best = 0, txt = '';
-    for(let k = 0; k < res.length; k++){ const s = qgSim(res[k].transcript, q.text); if(s >= best){ best = s; txt = res[k].transcript; } }
-    qgSpeakResult(best, txt);
+  if(!SR){ qgSpeakToMcq('التسجيل مش مدعوم هنا، حوّلناها لاختيار 👍'); return; }
+  r.recWanted = true;
+  let quick = 0;
+  const begin = () => {
+    if(QG.run !== r || !r.recWanted || r.qs[r.i] !== q) return;
+    let rec; try{ rec = new SR(); }catch(e){ qgStopRec(); qgSpeakToMcq('التسجيل مش مدعوم هنا، حوّلناها لاختيار 👍'); return; }
+    rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 3; rec.continuous = true;
+    r.rec = rec;
+    const t0 = Date.now(); let gotAny = false, fatal = null;
+    rec.onstart = () => {
+      const mic = document.getElementById('qzMic');
+      if(mic){ mic.classList.add('rec'); mic.innerHTML = '<i class="fa-solid fa-circle"></i> بسمعك... (دوس تاني للإيقاف)'; }
+    };
+    rec.onresult = (ev) => {
+      gotAny = true; quick = 0;
+      for(let i = ev.resultIndex; i < ev.results.length; i++){
+        const res = ev.results[i]; if(!res.isFinal) continue;
+        let best = 0, txt = '';
+        for(let k = 0; k < res.length; k++){ const sm = qgSim(res[k].transcript, q.text); if(sm >= best){ best = sm; txt = res[k].transcript; } }
+        qgSpeakResult(best, txt);
+      }
+    };
+    rec.onerror = (ev) => { if(['not-allowed','service-not-allowed','audio-capture','language-not-supported'].indexOf(ev.error) !== -1) fatal = ev.error; };
+    rec.onend = () => {
+      if(r.rec !== rec) return;
+      r.rec = null;
+      if(QG.run !== r || !r.recWanted){ return; }
+      const heard = document.getElementById('qzHeard');
+      if(fatal){
+        qgStopRec();
+        if(!r.locked) qgSpeakToMcq('الميكروفون مش شغال هنا، حوّلناها لاختيار من متعدد 👍');
+        else if(heard) heard.textContent = 'الميكروفون مش متاح دلوقتي';
+        return;
+      }
+      if(!gotAny && Date.now() - t0 < 600){ quick++; if(quick >= 4){ qgStopRec(); if(heard) heard.textContent = 'الميكروفون مش بيشتغل، جرّب تاني 🎤'; return; } }
+      setTimeout(begin, 250);   // بيكمّل سمع لوحده لحد ما الطالب يدوس تاني
+    };
+    try{ rec.start(); }catch(e){ r.rec = null; quick++; if(quick >= 4) qgStopRec(); else setTimeout(begin, 400); }
   };
-  rec.onerror = (ev) => { err = ev.error; };
-  rec.onend = () => {
-    if(QG.run === r) r.rec = null;
-    if(mic){ mic.classList.remove('rec'); mic.innerHTML = '<i class="fa-solid fa-microphone"></i> دوس وقولها'; }
-    if(got || !QG.run || QG.run !== r || r.locked) return;
-    if(['not-allowed', 'service-not-allowed', 'audio-capture', 'network', 'language-not-supported'].indexOf(err) !== -1) qgSpeakToMcq('الميكروفون مش شغال هنا، حوّلناها لاختيار من متعدد 👍');
-    else if(heard) heard.textContent = 'ما سمعتش حاجة... جرّب تاني بصوت أوضح 🎤';
-  };
-  r.rec = rec;
-  try{ rec.start(); }catch(e){ r.rec = null; qgSpeakToMcq('التسجيل مش مدعوم هنا، حوّلناها لاختيار 👍'); }
+  begin();
 }
 function qgSpeakResult(sim, txt){
   const r = QG.run; if(!r) return;
   const q = r.qs[r.i], heard = document.getElementById('qzHeard');
-  if(heard) heard.innerHTML = `سمعتك بتقول: <b dir="ltr">${escapeHtml(txt)}</b> (${Math.round(sim * 100)}%)`;
-  if(sim >= 0.8){ r.locked = true; r.score++; qgShowNext(true, q.text); }
-  else {
-    r.tries++;
-    if(r.tries >= 2){ r.locked = true; qgNoteWrong(q); qgShowNext(false, q.text, qgWrongInfo(q, '')); }
-    else if(heard) heard.innerHTML += '<br>قريب... جرّب تاني 💪';
+  if(!q || q.type !== 'speak') return;
+  const pct = Math.round(sim * 100);
+  const base = `سمعتك بتقول: <b dir="ltr">${escapeHtml(txt)}</b> (${pct}%)`;
+  if(sim >= 0.7){                                   // 70% وأكتر = الدرجة كاملة
+    if(heard) heard.innerHTML = base;
+    if(!r.speakCredited){
+      r.speakCredited = true; r.locked = true; r.score++;
+      if(r.wrongIdx >= 0 && r.wrong){ r.wrong.splice(r.wrongIdx, 1); r.wrongIdx = -1; }   // كان متسجّل غلط، نشيله
+      qgShowNext(true, q.text, `<div class="qz-why">🎯 نطقك ${pct}% — خدت الدرجة كاملة 👏</div><div class="qz-why">لو عايز تعيدها دوس على الميكروفون تاني</div>`);
+    } else if(heard) heard.innerHTML += '<br>✅ الدرجة محسوبة لك';
+    return;
   }
+  if(r.speakCredited){ if(heard) heard.innerHTML = base + '<br>✅ الدرجة محسوبة لك من محاولتك الصح'; return; }
+  r.tries++;
+  if(r.tries >= 2 && !r.locked){
+    r.locked = true; qgNoteWrong(q); r.wrongIdx = (r.wrong || []).length - 1;
+    if(heard) heard.innerHTML = base;
+    qgShowNext(false, q.text, qgWrongInfo(q, '') + '<div class="qz-why">ممكن تسجّلها تاني لو حسيت إن الترجمة ما كانتش دقيقة 🎤</div>');
+  } else if(heard) heard.innerHTML = base + (r.tries >= 2 ? '<br>جرّب تاني لو عايز 🎤' : '<br>قريب... جرّب تاني 💪');
 }
 
 // mode: 'quiz' (نتيجة اختبار) | 'skip' (الطالب تخطّى) | 'auto' (درس مفيهوش أسئلة)
@@ -4809,6 +4888,11 @@ function appConfirm(o){
 }
 
 // 👁️ عين الترجمة: بتظهر الترجمة طول ما الطالب ضاغط عليها، ولما يشيل إيده بتختفي
+function eyeHintSeen(){ try{ return localStorage.getItem('eyeHintSeen') === '1'; }catch(e){ return false; } }
+function eyeHintDone(){
+  try{ localStorage.setItem('eyeHintSeen', '1'); }catch(e){}
+  document.querySelectorAll('.eo-hint').forEach(h => h.remove());
+}
 function makeEyeHold(card, slots){
   const eye = document.createElement('span');
   eye.className = 'eye-hold';
@@ -4819,6 +4903,7 @@ function makeEyeHold(card, slots){
   const on = e => {
     e.preventDefault(); e.stopPropagation();
     try{ eye.setPointerCapture(e.pointerId); }catch(_){}
+    eyeHintDone();
     eye.classList.add('held'); card.classList.add('revealing');
     slots.forEach((sl, k) => { sl.style.transitionDelay = (k * 90) + 'ms'; sl.classList.add('show'); });
     icon.className = 'fa-solid fa-eye';
@@ -4855,11 +4940,12 @@ function renderWordsGrid(){
   const eoLesson = curLessonEnglishOnly();
   const hideAr = isTestMode;                       // وضع الاختبار: مفيش ترجمة خالص
   const eyeMode = eoLesson && !isTestMode;         // درس «إنجليزي فقط»: عين ضغط مطوّل جنب كل كلمة ومثال
-  if(eyeMode){
+  if(eyeMode && !eyeHintSeen()){
     const hint = document.createElement('div');
     hint.className = 'eo-hint';
-    hint.innerHTML = '👁️ محتاج ترجمة؟ اضغط واستمر على العين في ركن الكارت، ولما تشيل إيدك تختفي';
+    hint.innerHTML = '👁️ محتاج ترجمة؟ اضغط واستمر على العين في ركن الكارت';
     container.appendChild(hint);
+    setTimeout(eyeHintDone, 12000);   // التلميح بيظهر أول مرة بس وبعدها بيتشال نهائيًا
   }
 
   visibleWords.forEach((w, index) => {
@@ -7612,11 +7698,27 @@ u();document.addEventListener('visibilitychange',function(){if(!document.hidden)
 <script id="secret-admin-js">
 (function(){
   try{ if(typeof adminVerifiedNow==="function" && adminVerifiedNow()) document.body.classList.add("is-king"); }catch(e){}
-  var n=0,last=0;
-  var SKIP='a,button,input,select,textarea,label,video,iframe,audio,[onclick],[role="button"],#adminModal,#sqPanel,#sqModal,#sqBtn,.honor-card,.hp,.honor-row,.social-btn';
+  // الإدارة بتفتح بـ 5 ضغطات سريعة على مكان فاضي بس. أي كلمة أو زرار أو كارت أو حاجة تفاعلية = مش بتتحسب
+  var n=0,last=0,sx=0,sy=0,moved=false;
+  var SKIP='a,button,input,select,textarea,label,video,iframe,audio,summary,[onclick],[role="button"],[tabindex],[contenteditable],'
+    +'#adminModal,#sqPanel,#sqModal,#sqBtn,.honor-card,.hp,.honor-row,.social-btn,'
+    +'.word-card,.word-block,.example-block,.star-btn,.eye-hold,.unit-tab,.lesson-tab,.repeat-circle,.slider-toggle,.switch,'
+    +'.qz-overlay,.exam-run-overlay,.exam-cheat-overlay,.ac-overlay,.gate-card,#toastMessage';
+  function interactive(t){
+    if(!t||!t.closest) return true;
+    if(t.closest(SKIP)) return true;
+    // أي عنصر (أو أبوه) شكل الماوس عليه pointer يعتبر تفاعلي، حتى لو الضغط متعمل بالـ JS
+    for(var el=t; el && el!==document.documentElement; el=el.parentElement){
+      try{ if(getComputedStyle(el).cursor==='pointer') return true; }catch(e){}
+    }
+    return false;
+  }
+  document.addEventListener('pointerdown',function(e){ sx=e.clientX; sy=e.clientY; moved=false; },true);
+  document.addEventListener('pointermove',function(e){ if(Math.abs(e.clientX-sx)>12||Math.abs(e.clientY-sy)>12) moved=true; },true);
+  document.addEventListener('pointercancel',function(){ n=0; },true);
   document.addEventListener('pointerup',function(e){
-    var t=e.target;
-    if(t&&t.closest&&t.closest(SKIP)){n=0;return}
+    if(moved){ n=0; return; }                    // سحب/سكرول مش ضغطة
+    if(interactive(e.target)){ n=0; return; }
     var now=Date.now();
     n=(now-last<1200)?n+1:1; last=now;
     if(n>=5){ n=0; if(typeof openAdminModal==='function') openAdminModal(); }
